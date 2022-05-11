@@ -9,5 +9,5 @@ public:
 	void move(float deltaTime);
 
 private:
-	sf::Vector2f m_dierction;
+	sf::Vector2f m_direction;
 };

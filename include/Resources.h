@@ -7,7 +7,7 @@
 class Resources
 {
 public:
-	sf::Texture* getTexture(Objects texture);
+	const sf::Texture* getTexture(Objects texture);
 
 private:
 	std::vector<std::unique_ptr<sf::Texture>> m_texture;

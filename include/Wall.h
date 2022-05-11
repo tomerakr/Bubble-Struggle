@@ -1,8 +1,11 @@
 #pragma once
 
-#include "StsticObject.h"
+#include "StaticObject.h"
 
 class Wall : public StaticObject
 {
+public:
 	using StaticObject::GameObject;
+
+private:
 };
