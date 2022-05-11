@@ -1,8 +1,12 @@
 #pragma once
 
-#include "GameObject.h"
+#include "MovingObject.h"
 
-class Bear : public GameObject
+class Bear : public MovingObject
 {
+public:
+	using MovingObject();
+	void shoot();
+	void jump();
 };
 
