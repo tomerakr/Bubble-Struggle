@@ -1,4 +1,6 @@
-#pragma once
+   #pragma once
+
+#include "SFML/Graphics/hpp"
 
 class Animation
 {
@@ -7,6 +9,6 @@ public:
 	void update();
 
 private:
-
+	sf::UVrect m_UVrect;
 };
 

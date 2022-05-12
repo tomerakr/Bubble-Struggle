@@ -5,10 +5,15 @@
 
 constexpr float defRadius = 30.f;
 
+class Board;
+
 class Ball : public MovingObject
 {
 public:
-	Ball(float radius = defRadius, sf::Color = sf::Color::Red, sf::Vector2i = sf::Vector2i(1, 0));
+	Ball(Board* board, float radius = defRadius, sf::Color = sf::Color::Red, sf::Vector2i = sf::Vector2i(1, 0));
 	void pop();
+
+private:
+	Board* m_board;
 };
 
