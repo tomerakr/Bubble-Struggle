@@ -6,14 +6,14 @@
 class Controller
 {
 public:
-    Controller();
-    void play();
-    void restartLevel();
-    void run();
+	Controller();
+	void play();
+	void restartLevel();
+	void run();
 
 private:
-    void draw();
+	void draw();
 
-    Bear m_bear;
-    Window m_window;
+	Bear m_bear;
+	Window m_window;
 };
