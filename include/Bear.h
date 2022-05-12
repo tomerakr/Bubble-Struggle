@@ -7,7 +7,8 @@
 class Bear : public MovingObject
 {
 public:
-	using MovingObject::MovingObject;
+	//using MovingObject::MovingObject;
+	Bear() = default;
 	void shoot();
 	void jump();
 
