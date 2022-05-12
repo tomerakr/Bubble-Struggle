@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
-class Time
+class Timer
 {
-	Time();
+	Timer();
 	const int getTimeLeft(); //in seconds
 
 private:
