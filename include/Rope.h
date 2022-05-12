@@ -1,6 +1,9 @@
 #pragma once
-#include "GameObject.h"
-class Rope : public GameObject
+
+#include "MovingObject.h"
+
+class Rope : public MovingObject
 {
+	using MovingObject::GameObject;
 };
 

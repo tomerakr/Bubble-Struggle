@@ -1,6 +1,10 @@
 #pragma once
-#include "GameObject.h"
-class Floor : public GameObject
+
+#include "StaticObject.h"
+
+class Floor : public StaticObject
 {
+public:
+	using StaticObject::StaticObject;
 };
 
