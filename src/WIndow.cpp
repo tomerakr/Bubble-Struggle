@@ -1,1 +1,5 @@
-#include "Window.h"
+#include "Bubble/Window.h"
+
+Window::Window()
+{
+}
