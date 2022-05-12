@@ -4,6 +4,7 @@
 
 class Rope : public MovingObject
 {
+public:
 	using MovingObject::GameObject;
 };
 

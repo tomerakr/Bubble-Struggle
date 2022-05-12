@@ -5,7 +5,7 @@
 class Time
 {
 	Time();
-	int getTimeLeft();
+	const int getTimeLeft(); //in seconds
 
 private:
 	sf::Time m_time;
