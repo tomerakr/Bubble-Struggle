@@ -3,4 +3,6 @@
                                               "Resources.cpp"
                                               "Ball.cpp"
                                               "Window.cpp"
+                                              "MovingObject.cpp"
+                                              "Controller.cpp"
                                               )
