@@ -6,5 +6,5 @@
                                               #"Ball.cpp"
                                               "Window.cpp"
                                               "MovingObject.cpp"
-                                              "Controller.cpp"
+                                              "Controller.cpp" 
                                               )
