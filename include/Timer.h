@@ -4,6 +4,7 @@
 
 class Timer
 {
+public:
 	Timer();
 	const int getTimeLeft(); //in seconds
 

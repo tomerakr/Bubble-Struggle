@@ -2,9 +2,12 @@
 
 #include "StaticObject.h"
 
-class Floor : public StaticObject
+class Tile : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
+
+private:
+	bool m_vertical;
 };
 
