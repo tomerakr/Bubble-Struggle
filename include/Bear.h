@@ -5,7 +5,7 @@
 class Bear : public MovingObject
 {
 public:
-	using MovingObject::GameObject;
+	using MovingObject::MovingObject;
 	void shoot();
 	void jump();
 
