@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Macros.h"
 #include <SFML/Graphics.hpp>
 
 class Window

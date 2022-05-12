@@ -7,11 +7,11 @@ class MovingObject : public GameObject
 public:
 	using GameObject::GameObject;
 	void move(float deltaTime);
-	void setDirection(/*sf::Vector2i direction*/);
+	void setDirection();
 
 private:
 	sf::Vector2f m_prevPos;
 	sf::Vector2f m_direction;
 
-	float m_speedPerSecond = 130.f;
+	float m_speedPerSecond = 5000.f;
 };
