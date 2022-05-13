@@ -1,3 +1,4 @@
+#include "..\include\Bear.h"
 #include "Bear.h"
 
 constexpr int bearWitdh = 80;
@@ -16,4 +17,9 @@ void Bear::shoot()
 
 void Bear::jump()
 {
+}
+
+sf::Vector2f Bear::getPos()
+{
+	return m_icon.getPosition();
 }
