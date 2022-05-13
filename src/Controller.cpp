@@ -12,6 +12,7 @@ void Controller::play()
 	{
 		draw();
 		const auto deltaTime = clock.restart();
+		m_board.update();
 
 		if (sf::Event event; m_window.getWindow().pollEvent(event))
 		{
