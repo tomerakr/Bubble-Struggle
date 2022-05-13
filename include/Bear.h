@@ -10,6 +10,7 @@ public:
 	Bear();
 	void shoot();
 	void jump();
+	sf::Vector2f getPos();
 
 private:
 	int m_numOfShots = 1;
