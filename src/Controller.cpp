@@ -1,16 +1,17 @@
 #include "Controller.h"
 
 Controller::Controller()
-	: m_window()
+	: m_window(), m_bear()
 {
-
 }
 
-void Controller::run()
+void Controller::play()
 {
+	sf::Clock clock;
 	while (m_window.isOpen())
 	{
 		draw();
+		const auto deltaTime = clock.restart();
 
 		if (sf::Event event; m_window.getWindow().pollEvent(event))
 		{
@@ -20,6 +21,10 @@ void Controller::run()
 				m_window.getWindow().close();
 				break;
 
+			case sf::Event::KeyPressed:
+				handleKeyboard(deltaTime.asSeconds());
+				break;
+
 			default:
 				break;
 			}
@@ -27,8 +32,18 @@ void Controller::run()
 	}
 }
 
+void Controller::handleKeyboard(float deltaTime)
+{
+	m_bear.setDirection();
+	m_bear.move(deltaTime);
+}
+
 void Controller::draw()
 {
 	m_window.clear();
+
+	m_bear.draw(m_window.getWindow());
+	m_board.draw(m_window.getWindow());
+
 	m_window.display();
 }

@@ -2,9 +2,9 @@
                                               "GameObject.cpp"
                                               "MovingObject.cpp"
                                               "Controller.cpp"
-                                              #"Resources.cpp"
-                                              #"Ball.cpp"
+                                              "Bear.cpp"
+                                              "Board.cpp"
+                                              "Ball.cpp"
                                               "Window.cpp"
-                                              "MovingObject.cpp"
                                               "Controller.cpp" 
                                               )
