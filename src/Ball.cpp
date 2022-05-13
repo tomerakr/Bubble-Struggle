@@ -8,7 +8,7 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos, sf::Ve
 	m_ball.setRadius(radius);
 	m_ball.setFillColor(color);
 
-	m_ball2D.m_radius = radius;
+	//m_ball2D.m_radius = radius;
 
 }
 

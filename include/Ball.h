@@ -17,7 +17,7 @@ public:
 
 private:
 	sf::CircleShape m_ball;
-	b2CircleShape m_ball2D;
+	//b2CircleShape m_ball2D;
 	Board* m_board;
 };
 
