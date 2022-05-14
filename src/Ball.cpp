@@ -11,7 +11,7 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos, sf::Ve
     //set up dynamic body
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(pos.x, 5.f); //what is that 5?
+    bodyDef.position.Set(pos.x, 5.f);//what is that 5?
     bodyDef.angularVelocity = true;
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
     //m_body->SetAngularVelocity(true); // set with true? can we +a and -a?
