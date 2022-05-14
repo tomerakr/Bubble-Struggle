@@ -18,9 +18,9 @@ void Board::createBoard()
 {
 	m_balls.emplace_back(Ball{ this/*, pos = sf::Vector2f(200, 100)*/ });
 
-	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight)});
-	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(0.f, windowHieght)});
-	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh - 5, windowHieght)});
+	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight)});	//floor
+	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(0.f, windowHieght)});					//left wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh - 5, windowHieght)});		//right wall
 }
 
 void Board::draw(sf::RenderWindow& window)
@@ -28,6 +28,10 @@ void Board::draw(sf::RenderWindow& window)
 	for (auto ball : m_balls)
 	{
 		ball.draw(window);
+	}
+	for (auto tile : m_tiles)
+	{
+		tile.draw(window);
 	}
 }
 

@@ -29,7 +29,7 @@ void Bear::jump()
 {
 }
 
-sf::Vector2f Bear::getPos()
+const sf::Vector2f Bear::getPos() const
 {
 	return m_icon.getPosition();
 }

@@ -18,6 +18,12 @@ public:
 	b2World* getWorld() { return m_world.get(); }
 	std::vector<Ball> getBalls() { return m_balls; }
 
+	class ballIterator : public std::iterator<std::input_iterator_tag, int>
+	{
+		ballIterator();
+
+	};
+
 private:
 	void setWorld();
 	std::vector<Ball> m_balls;
