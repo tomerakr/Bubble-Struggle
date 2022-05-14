@@ -9,17 +9,23 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos, sf::Ve
 	m_ball.setFillColor(color);
 
     //set up dynamic body
-    m_bodyDef.type = b2_dynamicBody;
-    m_bodyDef.position.Set(pos.x, 5.f);
-    m_body = m_board->getWorld()->CreateBody(&m_bodyDef);
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(pos.x, 5.f); //what is that 5?
+    bodyDef.angularVelocity = true;
+    m_body = m_board->getWorld()->CreateBody(&bodyDef);
+    //m_body->SetAngularVelocity(true); // set with true? can we +a and -a?
 
     //add circle fixture
     m_ball2D.m_p.Set(1.f, 1.f);
     m_ball2D.m_radius = radius;
     
-    m_fixtureDef.shape = &m_ball2D;
-    m_fixtureDef.density = 1.0f;
-    m_body->CreateFixture(&m_fixtureDef);
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &m_ball2D;
+    fixtureDef.density = 1.f;
+    fixtureDef.friction = 0.4f;
+    fixtureDef.restitution = 1.f;
+    m_body->CreateFixture(&fixtureDef);
 }
 
 void Ball::pop()
@@ -30,6 +36,5 @@ void Ball::pop()
 void Ball::updatePos()
 {
     auto pos = m_body->GetPosition();
-    pos *= 100.f;
     m_ball.setPosition(pos.x, pos.y);
 }
