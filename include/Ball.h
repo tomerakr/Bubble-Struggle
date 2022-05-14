@@ -21,11 +21,7 @@ private:
 	sf::CircleShape m_ball;
 	Board* m_board;
 
-	sf::Vector2f m_pos2;
-
 	b2CircleShape m_ball2D;
-	b2FixtureDef m_fixtureDef;
-	b2BodyDef m_bodyDef;
 	b2Body* m_body;
 };
 

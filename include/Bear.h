@@ -14,6 +14,5 @@ public:
 
 private:
 	int m_numOfShots = 1;
-
 };
 

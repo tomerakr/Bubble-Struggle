@@ -10,11 +10,14 @@ Board::Board()
 
 void Board::setWorld()
 {
-	b2Vec2 gravity(1.0f, 10.0f);
+	b2Vec2 gravity(0.0f, 10.0f);
 	m_world = std::make_unique<b2World>(gravity);
 
-	m_groundBodyDef.position.Set(0.0f, windowHieght - 10.0f);
+	b2PolygonShape groundBox;
+	m_groundBodyDef.position.Set(0.0f, windowHieght - 20.0f - barHeight);
 	m_groundBody = m_world->CreateBody(&m_groundBodyDef);
+	groundBox.SetAsBox(windowWitdh, 10.0f);
+	m_groundBody->CreateFixture(&groundBox, 0.0f);
 }
 
 void Board::draw(sf::RenderWindow& window)
@@ -29,7 +32,7 @@ void Board::update()
 {
 	m_world->Step(m_timeStep, m_velocityIteration, m_positionIteration);
 
-	for (auto ball : m_balls)
+	for (auto& ball : m_balls)
 	{
 		ball.updatePos();
 	}

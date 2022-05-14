@@ -24,7 +24,7 @@ private:
 	//std::vector<Tile> m_tiles;
 	
 	//word definition
-	std::unique_ptr<b2World, std::default_delete<b2World>> m_world;
+	std::unique_ptr<b2World> m_world;
 	b2BodyDef m_groundBodyDef;
 	b2Body* m_groundBody;
 	b2PolygonShape m_groundBox;
