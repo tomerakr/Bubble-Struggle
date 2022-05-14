@@ -4,11 +4,13 @@
 #include "MovingObject.h"
 #include "Macros.h"
 
+class Board;
+
 class Bear : public MovingObject
 {
 public:
 	Bear();
-	void shoot();
+	void shoot(Board* board);
 	void jump();
 	sf::Vector2f getPos();
 

@@ -15,6 +15,7 @@ public:
 		sf::Vector2i direction = sf::Vector2i(1, 0));
 	void pop();
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
+	sf::Vector2f getPos() { return m_ball.getPosition(); }
 	void updatePos();
 
 private:

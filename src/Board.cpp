@@ -4,20 +4,23 @@
 Board::Board()
 {
 	setWorld();
-	m_balls.emplace_back(Ball{ this/*, pos = sf::Vector2f(200, 100)*/ });
-	m_balls[0].pop();
+	createBoard();
+	//m_balls[0].pop();
 }
 
 void Board::setWorld()
 {
 	b2Vec2 gravity(0.0f, 10.0f);
 	m_world = std::make_unique<b2World>(gravity);
+}
 
-	b2PolygonShape groundBox;
-	m_groundBodyDef.position.Set(0.0f, windowHieght - 20.0f - barHeight);
-	m_groundBody = m_world->CreateBody(&m_groundBodyDef);
-	groundBox.SetAsBox(windowWitdh, 10.0f);
-	m_groundBody->CreateFixture(&groundBox, 0.0f);
+void Board::createBoard()
+{
+	m_balls.emplace_back(Ball{ this/*, pos = sf::Vector2f(200, 100)*/ });
+
+	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight)});
+	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(0.f, windowHieght)});
+	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh - 5, windowHieght)});
 }
 
 void Board::draw(sf::RenderWindow& window)
