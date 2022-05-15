@@ -5,7 +5,7 @@
 
 float pixelToMeter(const int pixels) { return pixels * pToMeter; }
 
-Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos)
+Ball::Ball(Board* board, int direction, float radius, sf::Color color, sf::Vector2f pos)
 	:m_board(board)
 {
 	m_ball.setPosition(sf::Vector2f(pos));
@@ -16,7 +16,7 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos)
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(pos.x, pos.y);
-    bodyDef.angularVelocity = -1; // set with true? can we +a and -a?
+    bodyDef.angularVelocity = direction; // set with true? can we +a and -a?
     //bodyDef.linearVelocity.y = 7;
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
 
@@ -30,9 +30,8 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos)
     fixtureDef.friction = 0.4f;
     fixtureDef.restitution = 1.f;
     fixtureDef.filter.groupIndex = -1;
-
+ 
     m_body->CreateFixture(&fixtureDef);
-
 }
 
 void Ball::split() //find good name
@@ -79,7 +78,6 @@ void Ball::collision(Board* b)
         }
     }
 }
-
 //Ball::~Ball()
 //{
 //    m_board->getWorld()->DestroyBody(m_body);

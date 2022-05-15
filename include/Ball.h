@@ -11,7 +11,7 @@ class Board;
 class Ball
 {
 public:
-	Ball(Board* board, float radius = defRadius, sf::Color = sf::Color::Red, sf::Vector2f pos = sf::Vector2f(300, 100));
+	Ball(Board* board, int direction = 1, float radius = defRadius, sf::Color = sf::Color::Red, sf::Vector2f pos = sf::Vector2f(300, 100));
 	//~Ball();
 	void pop();
 	void collision(Board* b);
