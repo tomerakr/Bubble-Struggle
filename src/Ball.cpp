@@ -29,7 +29,7 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos)
     m_body->CreateFixture(&fixtureDef);
 }
 
-void Ball::foo() //find good name
+void Ball::split() //find good name
 {
     m_board->getWorld()->DestroyBody(m_body);
     m_board->addBalls(m_ball.getRadius() / 2, sf::Color::Magenta, m_ball.getPosition());

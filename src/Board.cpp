@@ -37,24 +37,35 @@ void Board::update()
 {
 	m_world->Step(m_timeStep, m_velocityIteration, m_positionIteration);
 
-	for (auto& ball : m_balls)
+
+
+	//for (auto& ball : m_balls)
+	//{
+		//ball.updatePos();
+		//if (ball.isPopped())
+		//{
+		//	ball.split();
+		//}
+	//}
+
+	for (int i = 0; i < m_balls.size(); ++i)
 	{
-		ball.updatePos();
-		if (ball.isPopped())
+		m_balls[i].updatePos();
+		if (m_balls[i].isPopped())
 		{
-			ball.foo();
+			m_balls[i].split();
 		}
 	}
+
 	std::erase_if(m_balls, [](const auto& ball) { return ball.isPopped(); });
 }
 
 void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
 {
 
+	auto posLeft = sf::Vector2f(pos.x - radius, pos.y);
+	auto posRight = sf::Vector2f(pos.x + radius, pos.y);
 
-	auto posFirst = sf::Vector2f(pos.x - radius, pos.y);
-	auto posSecond = sf::Vector2f(pos.x + radius, pos.y);
-
-	m_balls.emplace_back(Ball{ this, radius, color, posFirst });
-	m_balls.emplace_back(Ball{ this, radius, color, posSecond });
+	m_balls.emplace_back(Ball{ this, radius, color, posLeft });
+	m_balls.emplace_back(Ball{ this, radius, color, posRight });
 }

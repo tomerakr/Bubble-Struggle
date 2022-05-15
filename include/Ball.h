@@ -15,7 +15,7 @@ public:
 	//~Ball();
 	void pop();
 	const bool isPopped() const			{ return m_pooped; }
-	void foo();
+	void split();
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	sf::Vector2f getPos()				{ return m_ball.getPosition(); }
 	void updatePos();
