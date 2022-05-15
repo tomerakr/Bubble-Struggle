@@ -17,7 +17,7 @@ void Board::createBoard()
 	m_balls.emplace_back(Ball{ this/*, pos = sf::Vector2f(200, 100)*/ });
 
 	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight)});	//floor
-	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(0.f, windowHieght)});					//left wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(-180, windowHieght)});					//left wall
 	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh, windowHieght)});			//right wall
 }
 

@@ -1,10 +1,7 @@
 #include "Tile.h"
 #include "Board.h"
 
-float pixelToMeter(const int pixels)
-{
-	return pixels * pToMeter;
-}
+
 
 Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos)
 	:StaticObject(pos, size, Objects::Tile)
