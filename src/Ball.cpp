@@ -78,6 +78,12 @@ void Ball::collision(Board* b)
         }
     }
 }
+
+void Ball::pushBallUP()
+{
+    m_body->ApplyLinearImpulseToCenter(b2Vec2(0, m_body->GetMass()*-40), true);
+}
+
 //Ball::~Ball()
 //{
 //    m_board->getWorld()->DestroyBody(m_body);

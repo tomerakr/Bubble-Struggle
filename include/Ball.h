@@ -15,6 +15,7 @@ public:
 	//~Ball();
 	void pop();
 	void collision(Board* b);
+	void pushBallUP();
 	const bool needToDelete() const			{ return (m_popped || m_ball.getRadius() < 10); }
 	void split();
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }

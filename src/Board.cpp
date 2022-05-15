@@ -71,4 +71,7 @@ void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
 	m_balls.emplace_back(Ball{ this, -1, radius, color, posLeft });
 	m_balls.emplace_back(Ball{ this, 1, radius, color, posRight });
 
+	m_balls[m_balls.size() - 1].pushBallUP();
+	m_balls[m_balls.size() - 2].pushBallUP();
+
 }
