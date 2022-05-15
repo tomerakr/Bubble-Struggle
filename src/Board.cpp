@@ -19,10 +19,20 @@ void Board::createBoard()
 
 
 
-	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight)});	//floor
-	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(-180, windowHieght)});					//left wall
-	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh, windowHieght)});			//right wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight), -2});	//floor
+	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(-180, windowHieght), -3});					//left wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh, windowHieght), -3});			//right wall
 }
+
+//--------------- FOR DEBUG -----------------
+void Board::colorBalll() 
+{
+	for (int i = 0; i < m_balls.size(); ++i)
+	{
+		m_balls[i].colorBall();
+	}
+}
+//-------------------------------------------
 
 void Board::draw(sf::RenderWindow& window)
 {
@@ -43,7 +53,9 @@ void Board::update()
 
 	for (auto& ball : m_balls)
 	{
+		ball.collision(this);
 		ball.updatePos();
+
 		if (ball.needToDelete())
 		{
 			ball.split();
@@ -52,6 +64,9 @@ void Board::update()
 	}
 
 	std::erase_if(m_balls, [](const auto& ball) { return ball.needToDelete(); });
+	
+	
+
 }
 
 void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)

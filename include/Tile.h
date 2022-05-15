@@ -8,7 +8,8 @@ class Board;
 class Tile : public StaticObject
 {
 public:
-	Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos);
+	Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int group);
+	void collision(Board* b);
 
 private:
 	b2BodyDef m_groundBodyDef;

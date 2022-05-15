@@ -1,5 +1,7 @@
 #include "Ball.h"
 #include "Board.h"
+#include <time.h>
+#include <math.h>
 
 float pixelToMeter(const int pixels) { return pixels * pToMeter; }
 
@@ -15,6 +17,7 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos)
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(pos.x, pos.y);
     bodyDef.angularVelocity = -1; // set with true? can we +a and -a?
+    //bodyDef.linearVelocity.y = 7;
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
 
     //add circle fixture
@@ -27,8 +30,8 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos)
     fixtureDef.friction = 0.4f;
     fixtureDef.restitution = 1.f;
     fixtureDef.filter.groupIndex = -1;
-    m_body->CreateFixture(&fixtureDef);
 
+    m_body->CreateFixture(&fixtureDef);
 
 }
 
@@ -44,9 +47,37 @@ void Ball::updatePos()
     m_ball.setPosition(pos.x, pos.y);
 }
 
+void Ball::colorBall() //for DEBUG
+{
+    srand(time(NULL));
+
+    m_ball.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
+}
+
 void Ball::pop()
 {
     m_popped = true;
+}
+
+
+void Ball::collision(Board* b)
+{
+    for (b2ContactEdge* edge = m_body->GetContactList(); edge; edge = edge->next)
+    {
+        auto angle = edge->contact->GetFixtureB()->GetBody()->GetAngle();  // ball angle
+
+        if (edge->contact->GetFixtureA()->GetFilterData().groupIndex == -3) // If the ball touches the wall
+        {
+            edge->contact->GetFixtureB()->SetFriction(0);
+            edge->contact->GetFixtureB()->GetBody()->SetAngularVelocity(0);
+            b->colorBalll();
+
+            //if (edge->contact->GetFixtureA()->GetFilterData().groupIndex == -2) // // If the ball touches the floor
+            //{
+            //    edge->contact->GetFixtureB()->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(cos(angle)*2, sin(angle)*100), true);
+            //}
+        }
+    }
 }
 
 //Ball::~Ball()

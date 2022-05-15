@@ -30,8 +30,6 @@ void Controller::play()
 				break;
 			}
 		}
-
-
 	}
 }
 
