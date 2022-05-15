@@ -13,7 +13,7 @@ class Ball
 public:
 	Ball(Board* board, float radius = defRadius, sf::Color = sf::Color::Red, sf::Vector2f pos = sf::Vector2f(300, 100));
 	//~Ball();
-	void pop()							{ m_pooped = true; }
+	void pop();
 	const bool isPopped() const			{ return m_pooped; }
 	void foo();
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }

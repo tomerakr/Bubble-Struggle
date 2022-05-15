@@ -50,6 +50,8 @@ void Board::update()
 
 void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
 {
+
+
 	auto posFirst = sf::Vector2f(pos.x - radius, pos.y);
 	auto posSecond = sf::Vector2f(pos.x + radius, pos.y);
 
