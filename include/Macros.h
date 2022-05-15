@@ -16,3 +16,8 @@ enum class Objects
 	GiftDoubleShot,
 	GiftTime,
 };
+
+enum class Balls
+{
+
+};

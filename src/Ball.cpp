@@ -17,7 +17,7 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos)
 
     //add circle fixture
     m_ball2D.m_p.Set(1.f, 1.f);
-    m_ball2D.m_radius = radius;
+    m_ball2D.m_radius = radius; //needs convert
     
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &m_ball2D;
@@ -36,10 +36,9 @@ void Ball::updatePos()
 {
     auto pos = m_body->GetPosition();
     m_ball.setPosition(pos.x, pos.y);
-    m_ball.setFillColor(sf::Color::Blue);
 }
 
-Ball::~Ball()
-{
-    m_board->getWorld()->DestroyBody(m_body);
-}
+//Ball::~Ball()
+//{
+//    m_board->getWorld()->DestroyBody(m_body);
+//}

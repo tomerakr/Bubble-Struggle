@@ -1,6 +1,5 @@
 #include "Board.h"
 
-
 Board::Board()
 {
 	setWorld();
@@ -19,16 +18,16 @@ void Board::createBoard()
 
 	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight)});	//floor
 	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(0.f, windowHieght)});					//left wall
-	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh, windowHieght)});		//right wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh, windowHieght)});			//right wall
 }
 
 void Board::draw(sf::RenderWindow& window)
 {
-	for (auto ball : m_balls)
+	for (auto& ball : m_balls)
 	{
 		ball.draw(window);
 	}
-	for (auto tile : m_tiles)
+	for (auto& tile : m_tiles)
 	{
 		tile.draw(window);
 	}
@@ -46,7 +45,7 @@ void Board::update()
 			ball.foo();
 		}
 	}
-	std::erase_if(m_balls, [](const auto& object) { return object.isPopped(); });  // delete object after collision
+	std::erase_if(m_balls, [](const auto& ball) { return ball.isPopped(); });
 }
 
 void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
@@ -54,7 +53,6 @@ void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
 	auto posFirst = sf::Vector2f(pos.x - radius, pos.y);
 	auto posSecond = sf::Vector2f(pos.x + radius, pos.y);
 
-	m_balls.erase(m_balls.begin()); // change 
 	m_balls.emplace_back(Ball{ this, radius, color, posFirst });
 	m_balls.emplace_back(Ball{ this, radius, color, posSecond });
 }

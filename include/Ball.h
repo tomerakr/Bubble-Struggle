@@ -4,7 +4,7 @@
 #include "MovingObject.h"
 #include "box2d/box2d.h"
 
-constexpr float defRadius = 60.f;
+constexpr float defRadius = 90.f;
 
 class Board;
 
@@ -12,7 +12,7 @@ class Ball
 {
 public:
 	Ball(Board* board, float radius = defRadius, sf::Color = sf::Color::Red, sf::Vector2f pos = sf::Vector2f(300, 100));
-	~Ball();
+	//~Ball();
 	void pop()							{ m_pooped = true; }
 	const bool isPopped() const			{ return m_pooped; }
 	void foo();
