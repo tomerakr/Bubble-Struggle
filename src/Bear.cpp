@@ -15,11 +15,11 @@ void Bear::shoot(Board* board)
 {
 	auto balls = board->getBalls();
 
-	for (int i = 0; i < balls.size(); ++i)
+	for (int i = 0; i < balls->size(); ++i)
 	{
-		if (m_icon.getGlobalBounds().contains(sf::Vector2f(balls[i].getPos().x, m_icon.getPosition().y)))
+		if (m_icon.getGlobalBounds().contains(sf::Vector2f((*balls)[i].getPos().x, m_icon.getPosition().y)))
 		{
-			balls[i].pop();
+			(*balls)[i].pop();
 		}
 	}
 	/*add ball iterator in board so can pop it*/
