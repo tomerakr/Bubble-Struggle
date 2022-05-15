@@ -36,6 +36,7 @@ void Ball::updatePos()
 {
     auto pos = m_body->GetPosition();
     m_ball.setPosition(pos.x, pos.y);
+    m_ball.setFillColor(sf::Color::Blue);
 }
 
 Ball::~Ball()
