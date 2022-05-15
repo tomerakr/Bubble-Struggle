@@ -46,7 +46,7 @@ void Ball::updatePos()
 
 void Ball::pop()
 {
-    m_pooped = true;
+    m_popped = true;
 }
 
 //Ball::~Ball()
