@@ -5,7 +5,6 @@ Board::Board()
 {
 	setWorld();
 	createBoard();
-	//m_balls[0].pop();
 }
 
 void Board::setWorld()
@@ -20,7 +19,7 @@ void Board::createBoard()
 
 	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight)});	//floor
 	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(0.f, windowHieght)});					//left wall
-	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh - 5, windowHieght)});		//right wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh, windowHieght)});		//right wall
 }
 
 void Board::draw(sf::RenderWindow& window)
@@ -42,7 +41,12 @@ void Board::update()
 	for (auto& ball : m_balls)
 	{
 		ball.updatePos();
+		if (ball.isPopped())
+		{
+			ball.foo();
+		}
 	}
+	std::erase_if(m_balls, [](const auto& object) { return object.isPopped(); });  // delete object after collision
 }
 
 void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
