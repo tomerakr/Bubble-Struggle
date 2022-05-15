@@ -26,7 +26,10 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos)
     fixtureDef.density = 1.f;
     fixtureDef.friction = 0.4f;
     fixtureDef.restitution = 1.f;
+    fixtureDef.filter.groupIndex = -1;
     m_body->CreateFixture(&fixtureDef);
+
+
 }
 
 void Ball::split() //find good name
