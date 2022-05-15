@@ -44,14 +44,14 @@ void Board::update()
 	for (auto& ball : m_balls)
 	{
 		ball.updatePos();
-		if (ball.isPopped())
+		if (ball.needToDelete())
 		{
 			ball.split();
 			break;
 		}
 	}
 
-	std::erase_if(m_balls, [](const auto& ball) { return ball.isPopped(); });
+	std::erase_if(m_balls, [](const auto& ball) { return ball.needToDelete(); });
 }
 
 void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)

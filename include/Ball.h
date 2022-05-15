@@ -14,7 +14,7 @@ public:
 	Ball(Board* board, float radius = defRadius, sf::Color = sf::Color::Red, sf::Vector2f pos = sf::Vector2f(300, 100));
 	//~Ball();
 	void pop();
-	const bool isPopped() const			{ return m_pooped; }
+	const bool needToDelete() const			{ return (m_popped || m_ball.getRadius() < 10); }
 	void split();
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	sf::Vector2f getPos()				{ return m_ball.getPosition(); }
@@ -22,7 +22,7 @@ public:
 
 private:
 	sf::CircleShape m_ball;
-	bool m_pooped = false;
+	bool m_popped = false;
 	Board* m_board;
 
 	b2CircleShape m_ball2D;
