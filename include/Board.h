@@ -4,8 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Ball.h"
-
-//class Tile;
+#include "Tile.h"
 
 class Board
 {
@@ -17,17 +16,21 @@ public:
 	void reset();
 	void createBoard();
 	b2World* getWorld() { return m_world.get(); }
+	std::vector<Ball> getBalls() { return m_balls; }
+
+	class ballIterator : public std::iterator<std::input_iterator_tag, int>
+	{
+		ballIterator();
+
+	};
 
 private:
 	void setWorld();
 	std::vector<Ball> m_balls;
-	//std::vector<Tile> m_tiles;
+	std::vector<Tile> m_tiles;
 	
 	//word definition
 	std::unique_ptr<b2World> m_world;
-	b2BodyDef m_groundBodyDef;
-	b2Body* m_groundBody;
-	b2PolygonShape m_groundBox;
 
 	float m_timeStep = 1.f / 60.f;
 	int32 m_velocityIteration = 6;

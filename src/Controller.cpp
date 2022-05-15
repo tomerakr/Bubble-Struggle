@@ -35,6 +35,11 @@ void Controller::play()
 
 void Controller::handleKeyboard(float deltaTime)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		m_bear.shoot(&m_board);
+	}
+
 	m_bear.setDirection();
 	m_bear.move(deltaTime);
 }

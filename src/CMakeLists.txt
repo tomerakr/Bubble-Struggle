@@ -6,5 +6,6 @@
                                               "Board.cpp"
                                               "Ball.cpp"
                                               "Window.cpp"
+                                              "Tile.cpp"
                                               "Controller.cpp" 
                                               )
