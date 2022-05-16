@@ -12,7 +12,7 @@ public:
 	void collision(Board* b);
 
 private:
-	b2BodyDef m_groundBodyDef;
+	b2BodyDef m_groundBodyDef; //change name to tile
 	b2Body* m_groundBody;
 	//bool m_vertical;
 };

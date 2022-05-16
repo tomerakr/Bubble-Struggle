@@ -12,7 +12,6 @@ Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int gr
 
 	b2PolygonShape groundBox;
 	groundBox.SetAsBox(size.x, size.y);
-	//m_groundBody->CreateFixture(&groundBox, 0.0f);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &groundBox;

@@ -20,9 +20,10 @@ public:
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	sf::Vector2f getPos()				{ return m_ball.getPosition(); }
 	void updatePos();
-	void colorBall();
+	void colorBall();			//debug
 
 private:
+
 	sf::CircleShape m_ball;
 	bool m_popped = false;
 	Board* m_board;
