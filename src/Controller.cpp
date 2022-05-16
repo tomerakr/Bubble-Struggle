@@ -1,9 +1,8 @@
 #include "Controller.h"
 
 Controller::Controller()
-	: m_window(), m_bear()
-{
-}
+	: m_window(), m_bear() 
+{}
 
 void Controller::play()
 {

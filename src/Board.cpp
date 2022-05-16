@@ -14,7 +14,7 @@ void Board::setWorld()
 
 void Board::createBoard()
 {
-	m_balls.emplace_back(Ball{ this/*, pos = sf::Vector2f(200, 100)*/ });
+	m_balls.emplace_back(Ball{ this, b2Vec2(20, 20)/*, pos = sf::Vector2f(200, 100)*/});
 	
 	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight), -2});	//floor
 	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(-180, windowHieght), -3});					//left wall
@@ -68,10 +68,6 @@ void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
 	auto posLeft = sf::Vector2f(pos.x - radius, pos.y);
 	auto posRight = sf::Vector2f(pos.x + radius, pos.y);
 
-	m_balls.emplace_back(Ball{ this, -1, radius, color, posLeft });
-	m_balls.emplace_back(Ball{ this, 1, radius, color, posRight });
-
-	m_balls[m_balls.size() - 1].pushBallUP();
-	m_balls[m_balls.size() - 2].pushBallUP();
-
+	m_balls.emplace_back(Ball{ this, b2Vec2(-20, -30), radius, color, posLeft });
+	m_balls.emplace_back(Ball{ this, b2Vec2(20, -30), radius, color, posRight });
 }
