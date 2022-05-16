@@ -17,13 +17,13 @@ Ball::Ball(Board* board, float radius, sf::Color color, sf::Vector2f pos)
 
     //add circle fixture
     m_ball2D.m_p.Set(1.f, 1.f);
-    m_ball2D.m_radius = radius; //needs convert
+    m_ball2D.m_radius = radius * 1.9; //needs convert
     
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &m_ball2D;
     fixtureDef.density = 1.f;
     fixtureDef.friction = 0.4f;
-    fixtureDef.restitution = 1.f;
+    fixtureDef.restitution = 0.f;
     m_body->CreateFixture(&fixtureDef);
 }
 
