@@ -49,7 +49,7 @@ void Board::update()
 
 	for (auto& ball : m_balls)
 	{
-		ball.collision(this); // dont sent "this"
+		
 		
 		ball.updatePos();
 
