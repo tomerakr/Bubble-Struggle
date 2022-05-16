@@ -14,6 +14,7 @@ public:
 	bool isOpen()					{ return m_window.isOpen(); }
 	void clear()					{ m_window.clear(sf::Color::White); }
 	void display()					{ m_window.display(); }
+	void close()					{ m_window.close(); }
 
 private:
 	sf::RenderWindow m_window;

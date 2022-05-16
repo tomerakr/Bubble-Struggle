@@ -5,7 +5,9 @@
                                               "Bear.cpp"
                                               "Board.cpp"
                                               "Ball.cpp"
+                                              "Button.cpp"
                                               "Window.cpp"
+                                              "MenuScreen.cpp"
                                               "Tile.cpp"
                                               "Controller.cpp" 
                                               )

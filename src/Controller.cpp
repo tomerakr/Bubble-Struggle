@@ -19,7 +19,7 @@ void Controller::play()
 			switch (event.type)
 			{
 			case sf::Event::Closed:
-				m_window.getWindow().close();
+				m_window.close();
 				break;
 
 			case sf::Event::KeyPressed:

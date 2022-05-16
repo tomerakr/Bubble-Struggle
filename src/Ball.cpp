@@ -34,9 +34,9 @@ Ball::Ball(Board* board, int direction, float radius, sf::Color color, sf::Vecto
     m_body->CreateFixture(&fixtureDef);
 }
 
-void Ball::split() //find good name
+void Ball::split()
 {
-    m_board->getWorld()->DestroyBody(m_body);
+    m_board->getWorld()->DestroyBody(m_body); //why here
     m_board->addBalls(m_ball.getRadius() / 2, sf::Color::Magenta, m_ball.getPosition());
 }
 
@@ -53,23 +53,17 @@ void Ball::colorBall() //for DEBUG
     m_ball.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
 }
 
-void Ball::pop()
-{
-    m_popped = true;
-}
-
-
-void Ball::collision(Board* b)
+void Ball::collision(Board* board)
 {
     for (b2ContactEdge* edge = m_body->GetContactList(); edge; edge = edge->next)
     {
-        auto angle = edge->contact->GetFixtureB()->GetBody()->GetAngle();  // ball angle
+        //auto angle = edge->contact->GetFixtureB()->GetBody()->GetAngle();  // ball angle
 
         if (edge->contact->GetFixtureA()->GetFilterData().groupIndex == -3) // If the ball touches the wall
         {
             edge->contact->GetFixtureB()->SetFriction(0);
             edge->contact->GetFixtureB()->GetBody()->SetAngularVelocity(0);
-            b->colorBalll();
+            board->colorBalll();
 
             //if (edge->contact->GetFixtureA()->GetFilterData().groupIndex == -2) // // If the ball touches the floor
             //{

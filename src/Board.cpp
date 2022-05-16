@@ -49,7 +49,7 @@ void Board::update()
 
 	for (auto& ball : m_balls)
 	{
-		ball.collision(this);
+		ball.collision(this); // dont sent "this"
 		
 		ball.updatePos();
 
@@ -64,7 +64,6 @@ void Board::update()
 
 void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
 {
-
 	auto posLeft = sf::Vector2f(pos.x - radius, pos.y);
 	auto posRight = sf::Vector2f(pos.x + radius, pos.y);
 
@@ -73,5 +72,4 @@ void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
 
 	m_balls[m_balls.size() - 1].pushBallUP();
 	m_balls[m_balls.size() - 2].pushBallUP();
-
 }
