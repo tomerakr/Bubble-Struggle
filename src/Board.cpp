@@ -49,8 +49,6 @@ void Board::update()
 
 	for (auto& ball : m_balls)
 	{
-		
-		
 		ball.updatePos();
 
 		if (ball.needToDelete())
