@@ -10,14 +10,31 @@ class MenuScreen
 {
 public:
 	MenuScreen(Window* window);
-	void Menu();
+	void menu();
 
 private:
 	void createButton();
+	void handlePress(sf::Vector2f mousePos);
 	void handleHover(const sf::Vector2f mousePos);
 	void draw();
 
 	int m_lastHovered = 0;
 	Window* m_window;
-	std::vector<Button> m_buttons;
+	int m_wantedMenu = 0;
+	std::vector<std::vector<Button>> m_buttons;
+	std::vector< std::vector<std::string>> m_buttonNames = 
+	{ { "Normal", "Survival", "Create Level", "Help", "Exit" }, { "Solo", "Duo" }, { "Online", "Same PC" } };
+
+	enum class buttonNames
+	{
+		Normal = 0,
+		Survival,
+		CreateLevel,
+		Help,
+		Exit,
+		Solo = 0,
+		Duo,
+		Online = 0,
+		SamePC
+	};
 };

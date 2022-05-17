@@ -3,7 +3,7 @@
 #include <time.h>
 #include <math.h>
 
-float pixelToMeter(const int pixels) { return pixels * pToMeter; }
+float pixelToMeter(const int pixels) { return pixels * UNRATIO; }
 
 Ball::Ball(Board* board, const b2Vec2 initialForce, const float radius, sf::Color color, const sf::Vector2f pos)
 	:m_board(board)
@@ -23,7 +23,7 @@ void Ball::setBall2D(const b2Vec2 initialForce)
 
     bodyDef.linearVelocity = initialForce;
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
-
+    
     //add circle fixture
     m_ball2D.m_p.Set(1.f, 1.f);
     m_ball2D.m_radius = pixelToMeter(m_ball.getRadius()); //needs convert

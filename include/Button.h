@@ -10,7 +10,7 @@ public:
 	void setText(const std::string text);
 	const bool isPressed(const sf::Vector2f mousePos) const;
 	const bool hover(const sf::Vector2f mousePos);
-	void resetColor() { m_icon.setFillColor(sf::Color::White); }
+	void resetColor() { m_icon.setFillColor(sf::Color::Blue); }
 
 private:
 	sf::Text m_text;

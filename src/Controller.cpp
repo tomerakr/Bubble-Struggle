@@ -1,12 +1,13 @@
 #include "Controller.h"
 
 Controller::Controller()
-	: m_window(), m_bear() 
+	: m_window(), m_bear(), m_menu(&m_window)
 {}
 
 void Controller::play()
 {
 	sf::Clock clock;
+	//m_menu.menu();
 	while (m_window.isOpen())
 	{
 		draw();

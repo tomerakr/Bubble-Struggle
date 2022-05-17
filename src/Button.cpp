@@ -3,12 +3,15 @@
 Button::Button(const sf::Vector2f pos, const sf::Vector2f size, const std::string text)
 	:GameObject(pos, size, Objects::Button)
 {
+	auto iconSize = m_icon.getSize();
+	m_icon.setOrigin(iconSize.x / 2, iconSize.y / 2);
 	setText(text);
 }
 
 void Button::setText(const std::string text)
 {
 	m_text.setPosition(m_icon.getPosition());
+	m_text.setColor(sf::Color::Red);
 	m_text.setString(text);
 }
 
