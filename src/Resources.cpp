@@ -17,5 +17,3 @@ Resources::Resources()
 		}
 	}
 }
-
-//tomi.sex(NULL); <3
