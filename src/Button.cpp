@@ -16,3 +16,13 @@ const bool Button::isPressed(const sf::Vector2f mousePos) const
 {
 	return m_icon.getGlobalBounds().contains(mousePos);
 }
+
+const bool Button::hover(const sf::Vector2f mousePos)
+{
+	if (m_icon.getGlobalBounds().contains(mousePos))
+	{
+		m_icon.setFillColor(sf::Color::Yellow);
+		return true;
+	}
+	return false;
+}

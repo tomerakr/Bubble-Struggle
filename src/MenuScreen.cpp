@@ -1,5 +1,5 @@
 #include "MenuScreen.h"
-#include "WIndow.h"
+#include "Window.h"
 
 MenuScreen::MenuScreen(Window* window)
 	:m_window(window)
@@ -46,6 +46,7 @@ void MenuScreen::Menu()
 				break;
 
 			case sf::Event::MouseMoved:
+				handleHover(m_window->getWindow().mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
 				break;
 
 			//we want this so can control menu using keyboard + mouse
@@ -56,6 +57,19 @@ void MenuScreen::Menu()
 			default:
 				break;
 			}
+		}
+	}
+}
+
+void MenuScreen::handleHover(sf::Vector2f mousePos)
+{
+	m_buttons[m_lastHovered].resetColor();
+	for (int i = 0; i < m_buttons.size(); ++i)
+	{
+		if (m_buttons[i].hover(mousePos))
+		{
+			m_lastHovered = i;
+			break;
 		}
 	}
 }

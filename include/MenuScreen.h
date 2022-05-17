@@ -14,8 +14,10 @@ public:
 
 private:
 	void createButton();
+	void handleHover(const sf::Vector2f mousePos);
 	void draw();
 
+	int m_lastHovered = 0;
 	Window* m_window;
 	std::vector<Button> m_buttons;
 };

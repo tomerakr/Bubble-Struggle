@@ -10,8 +10,8 @@ class Resources
 public:
 	static Resources& instance();
 
-	const sf::Texture* getTexture(Objects texture);
-	void playSound(Objects sound);
+	const sf::Texture* getTexture(const Objects texture);
+	void playSound(const Objects sound);
 
 private:
 	Resources();

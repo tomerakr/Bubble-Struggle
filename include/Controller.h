@@ -12,7 +12,7 @@ public:
 	void restartLevel();
 
 private:
-	void handleKeyboard(float deltaTime);
+	void handleKeyboard(const float deltaTime);
 	void draw();
 
 	Bear m_bear;
