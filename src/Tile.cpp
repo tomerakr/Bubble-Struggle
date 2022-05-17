@@ -1,8 +1,6 @@
 #include "Tile.h"
 #include "Board.h"
 
-
-
 Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int group)
 	:StaticObject(pos, size, Objects::Tile)
 {

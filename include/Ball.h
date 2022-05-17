@@ -11,19 +11,19 @@ class Board;
 class Ball
 {
 public:
-	Ball(Board* board, b2Vec2 initialForce, float radius = defRadius,
-				sf::Color = sf::Color::Red, sf::Vector2f pos = sf::Vector2f(300, 100));
+	Ball(Board* board, const b2Vec2 initialForce, const float radius = defRadius,
+				sf::Color = sf::Color::Red, const sf::Vector2f pos = sf::Vector2f(300, 100));
 	//~Ball();
-	void pop();
-	const bool needToDelete() const			{ return (m_popped || m_ball.getRadius() < 10); }
+	void pop()							{ m_popped = true; }
+	const bool needToDelete() const		{ return (m_popped || m_ball.getRadius() < 10); }
 	void split();
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
-	sf::Vector2f getPos()				{ return m_ball.getPosition(); }
+	const sf::Vector2f getPos() const	{ return m_ball.getPosition(); }
 	void updatePos();
 	void colorBall();			//debug
 
 private:
-
+	void setBall2D(const b2Vec2 initialForce);
 	sf::CircleShape m_ball;
 	bool m_popped = false;
 	Board* m_board;

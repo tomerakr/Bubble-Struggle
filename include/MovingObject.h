@@ -6,7 +6,7 @@ class MovingObject : public GameObject
 {
 public:
 	using GameObject::GameObject;
-	void move(float deltaTime);
+	void move(const float deltaTime);
 	void setDirection();
 
 private:

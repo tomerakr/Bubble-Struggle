@@ -3,6 +3,7 @@
 #include "Bear.h"
 #include "Board.h"
 #include "Window.h"
+#include "MenuScreen.h"
 
 class Controller
 {
@@ -12,10 +13,11 @@ public:
 	void restartLevel();
 
 private:
-	void handleKeyboard(float deltaTime);
+	void handleKeyboard(const float deltaTime);
 	void draw();
 
 	Rope m_rope;
+	MenuScreen m_menu;
 	Bear m_bear;
 	Board m_board;
 	Window m_window;

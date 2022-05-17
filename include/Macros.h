@@ -3,6 +3,8 @@
 constexpr int windowHieght = 800;
 constexpr int windowWitdh = 1200;
 constexpr int barHeight = 100;
+constexpr float RATIO = 30.f;
+constexpr float UNRATIO = 1 / RATIO;
 constexpr float pToMeter = 1.89f;
 
 enum class Objects

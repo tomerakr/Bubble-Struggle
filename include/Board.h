@@ -11,12 +11,12 @@ class Board
 public:
 	Board();
 	void draw(sf::RenderWindow& window);
-	void addBalls(float radius, sf::Color color, sf::Vector2f pos);
+	void addBalls(const float radius, const sf::Color color, const sf::Vector2f pos);
 	void update();
 	void reset();
 	void createBoard();
 	b2World* getWorld() { return m_world.get(); }
-	std::vector<Ball>* getBalls() { return &m_balls; }
+	std::vector<Ball>* getBalls() { return &m_balls; } // no good we need iterator
 	void colorBalll();
 
 	class ballIterator : public std::iterator<std::input_iterator_tag, int>
