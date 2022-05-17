@@ -16,8 +16,11 @@ public:
 private:
 	Resources();
 	Resources(const Resources&) = delete;
+	Resources& operator=(const Resources&) = delete;
 
-	std::vector<std::unique_ptr<sf::Texture>> m_texture;
+	std::vector<std::unique_ptr<sf::Texture>> m_backgroundTextures;
+	std::vector<std::unique_ptr<sf::Texture>> m_ObjectTextures;
+
 	std::vector<std::unique_ptr<sf::SoundBuffer>> m_soundBuffer;
 	std::vector<sf::Sound> m_sound;
 };
