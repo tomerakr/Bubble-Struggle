@@ -1,7 +1,11 @@
 #include "Controller.h"
 
+constexpr int ropeWitdh = 20;
+constexpr int ropeHeight = 0;
+
 Controller::Controller()
-	: m_window(), m_bear() 
+	: m_window(), m_rope(sf::Vector2f(0,0), sf::Vector2f(ropeWitdh, ropeHeight), Objects::Rope, sf::Color::Red),
+		m_bear(&m_rope)
 {}
 
 void Controller::play()
@@ -12,6 +16,7 @@ void Controller::play()
 		draw();
 		const auto deltaTime = clock.restart();
 		m_board.update();
+		m_rope.update();
 
 		if (sf::Event event; m_window.getWindow().pollEvent(event))
 		{
@@ -48,6 +53,7 @@ void Controller::draw()
 	m_window.clear();
 
 	m_bear.draw(m_window.getWindow());
+	m_rope.draw(m_window.getWindow());
 	m_board.draw(m_window.getWindow());
 
 	m_window.display();

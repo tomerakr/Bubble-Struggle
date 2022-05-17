@@ -10,4 +10,5 @@
                                               "MenuScreen.cpp"
                                               "Tile.cpp"
                                               "Controller.cpp" 
+                                              "Rope.cpp"
                                               )

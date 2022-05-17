@@ -15,7 +15,9 @@ private:
 	void handleKeyboard(float deltaTime);
 	void draw();
 
+	Rope m_rope;
 	Bear m_bear;
 	Board m_board;
 	Window m_window;
+
 };
