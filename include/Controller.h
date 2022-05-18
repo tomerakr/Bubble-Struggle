@@ -16,10 +16,13 @@ private:
 	void handleKeyboard(const float deltaTime);
 	void draw();
 
+	int currentLevel = 1;
+
 	Rope m_rope;
 	MenuScreen m_menu;
 	Bear m_bear;
 	Board m_board;
 	Window m_window;
+
 
 };

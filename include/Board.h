@@ -3,8 +3,13 @@
 #include "box2d/box2d.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <fstream>
+#include <string>
 #include "Ball.h"
 #include "Tile.h"
+
+
+class Controller;
 
 class Board
 {
@@ -15,6 +20,7 @@ public:
 	void update();
 	void reset();
 	void createBoard();
+	void setLevel(int level);
 	b2World* getWorld() { return m_world.get(); }
 	std::vector<Ball>* getBalls() { return &m_balls; } // no good we need iterator
 	void colorBalll();
@@ -35,4 +41,6 @@ private:
 	float m_timeStep = 1.f / 60.f;
 	int32 m_velocityIteration = 6;
 	int32 m_positionIteration = 2;
+
+	std::ifstream m_file;
 };

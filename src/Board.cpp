@@ -1,9 +1,11 @@
 #include "Board.h"
+#include "Controller.h"
 
 Board::Board()
 {
 	setWorld();
 	createBoard();
+	setLevel(1);
 }
 
 void Board::setWorld()
@@ -14,11 +16,44 @@ void Board::setWorld()
 
 void Board::createBoard()
 {
-	m_balls.emplace_back(Ball{ this, sf::Vector2f(200, 100), b2Vec2(20, 20), 4 });
-	
 	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight), -2});	//floor
+	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, 0.f), -2});	//ceiling
 	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(-180, windowHieght), -3});					//left wall
 	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh, windowHieght), -3});			//right wall
+}
+
+void Board::setLevel(int level)
+{
+	auto file = std::ifstream(Resources::instance().getLevelName(level) + ".txt");
+
+	if (!file.is_open())
+	{
+		exit(EXIT_FAILURE);
+	}
+
+	// ---- BALLS ----
+	auto ballsNum = 0, index = 0, direction = 0; // direction will get 1 or -1
+	auto xPosB = 0.f, yPosB = 0.f;
+
+	file >> ballsNum;
+	for (int i = 0; i < ballsNum; ++i)
+	{
+		file >> xPosB >> yPosB >> index >> direction;
+		m_balls.emplace_back(Ball{ this, sf::Vector2f(xPosB, yPosB), b2Vec2(20, direction * 20), index });
+	}
+
+	// ---- TILES ----
+	auto tilesNum = 0, group = 0;
+	auto xPosT = 0.f, yPosT = 0.f,
+		 xSize = 0.f, ySize = 0.f;
+
+	file >> tilesNum;
+	for (int j = 0; j < tilesNum; ++j)
+	{
+		file >> xSize >> ySize >> xPosT >> yPosT >> group;
+		m_tiles.emplace_back(Tile{ this, sf::Vector2f(xSize, ySize), sf::Vector2f(xPosT, yPosT), group});
+		//Tile::Tile(Board * board, const sf::Vector2f size, const sf::Vector2f pos, int group)
+	}
 }
 
 //--------------- FOR DEBUG -----------------
@@ -62,9 +97,6 @@ void Board::update()
 
 void Board::addBalls(const sf::Vector2f pos, const int index)
 {
-	//auto posLeft = sf::Vector2f(pos.x - radius, pos.y);
-	//auto posRight = sf::Vector2f(pos.x + radius, pos.y);
-
 	m_balls.emplace_back(Ball{ this, pos, b2Vec2(-20, -30), index });
 	m_balls.emplace_back(Ball{ this, pos, b2Vec2( 20, -30), index });
 }

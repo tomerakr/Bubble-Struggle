@@ -8,6 +8,7 @@ float pixelToMeter(const int pixels) { return pixels * UNRATIO; }
 Ball::Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, const int index)
 	:m_index(index), m_board(board)
 {
+    m_ball.setTexture(Resources::instance().getObjectTexture(Objects::Ball));
 	m_ball.setRadius(defRadius - 10 * m_index);
     auto indentation = (initialForce.x > 0 ? m_ball.getRadius() : -m_ball.getRadius());
 	m_ball.setPosition(sf::Vector2f(pos.x + indentation, pos.y));
