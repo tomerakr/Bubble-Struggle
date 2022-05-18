@@ -60,11 +60,11 @@ void Board::update()
 	std::erase_if(m_balls, [](const auto& ball) { return ball.needToDelete(); });
 }
 
-void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos)
+void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos, int index)
 {
 	auto posLeft = sf::Vector2f(pos.x - radius, pos.y);
 	auto posRight = sf::Vector2f(pos.x + radius, pos.y);
 
-	m_balls.emplace_back(Ball{ this, b2Vec2(-20, -30), radius, color, posLeft });
-	m_balls.emplace_back(Ball{ this, b2Vec2(20, -30), radius, color, posRight });
+	m_balls.emplace_back(Ball{ this, b2Vec2(-20, -30), radius, color, posLeft, index });
+	m_balls.emplace_back(Ball{ this, b2Vec2(20, -30), radius, color, posRight, index });
 }

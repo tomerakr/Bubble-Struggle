@@ -21,17 +21,10 @@ enum class Objects
 	GiftTime
 };
 
-constexpr int numOfBackgrounds = 2;
+constexpr int numOfBackgrounds = 1;
 enum class Backgrounds
 {
 	Menu,
-	Button
-};
-
-constexpr int numOfBalls = 9;
-enum class Balls
-{
-
 };
 
 //---------------------------------------------------------

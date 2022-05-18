@@ -1,9 +1,11 @@
 #include "Button.h"
+#include "Resources.h"
 
 Button::Button(const sf::Vector2f pos, const sf::Vector2f size, const std::string text)
 	:GameObject(pos, size, Objects::Button)
 {
 	auto iconSize = m_icon.getSize();
+	//m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Button));
 	m_icon.setOrigin(iconSize.x / 2, iconSize.y / 2);
 	setText(text);
 }
