@@ -11,4 +11,5 @@
                                               "Tile.cpp"
                                               "Controller.cpp" 
                                               "Rope.cpp"
+                                              "Resources.cpp"
                                               )

@@ -3,23 +3,29 @@
 constexpr int windowHieght = 800;
 constexpr int windowWitdh = 1200;
 constexpr int barHeight = 100;
-constexpr float RATIO = 30.f;
-constexpr float UNRATIO = 1 / RATIO;
-constexpr float pToMeter = 1.89f;
+constexpr float RATIO = 30.f;			//??
+constexpr float UNRATIO = 1 / RATIO;	//??
+constexpr int numOfBalls = 9;
 
+//---------------------------------------------------------
+constexpr int numOfObjects = 3;
 enum class Objects
 {
 	Ball,
 	Bear,
 	Button,
 	Rope,
-	Tile,
+	Floor,
+	Wall,
 	GiftFreeze,
 	GiftDoubleShot,
-	GiftTime,
+	GiftTime
 };
 
-enum class Balls
+constexpr int numOfBackgrounds = 1;
+enum class Backgrounds
 {
-
+	Menu,
 };
+
+//---------------------------------------------------------

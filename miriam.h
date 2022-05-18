@@ -1,7 +1,6 @@
 void pushBallUP();
 void Ball::pushBallUP()
 {
-
     m_body->ApplyLinearImpulseToCenter(b2Vec2(0, m_body->GetMass() * -40), true);
 }
 

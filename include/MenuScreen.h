@@ -18,9 +18,11 @@ private:
 	void handleHover(const sf::Vector2f mousePos);
 	void draw();
 
-	int m_lastHovered = 0;
 	Window* m_window;
+	int m_lastHovered = 0;
 	int m_wantedMenu = 0;
+	sf::RectangleShape m_background;
+
 	std::vector<std::vector<Button>> m_buttons;
 	std::vector< std::vector<std::string>> m_buttonNames = 
 	{ { "Normal", "Survival", "Create Level", "Help", "Exit" }, { "Solo", "Duo" }, { "Online", "Same PC" } };

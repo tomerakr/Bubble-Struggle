@@ -11,8 +11,7 @@ class Board;
 class Ball
 {
 public:
-	Ball(Board* board, const b2Vec2 initialForce, const float radius = defRadius,
-				sf::Color = sf::Color::Red, const sf::Vector2f pos = sf::Vector2f(300, 100));
+	Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, const int index = 0);
 	//~Ball();
 	void pop()							{ m_popped = true; }
 	const bool needToDelete() const		{ return (m_popped || m_ball.getRadius() < 10); }
@@ -26,6 +25,7 @@ private:
 	void setBall2D(const b2Vec2 initialForce);
 	sf::CircleShape m_ball;
 	bool m_popped = false;
+	int m_index;
 	Board* m_board;
 
 	b2CircleShape m_ball2D;

@@ -11,31 +11,31 @@ Controller::Controller()
 void Controller::play()
 {
 	sf::Clock clock;
-	//m_menu.menu();
-	while (m_window.isOpen())
-	{
-		draw();
-		const auto deltaTime = clock.restart();
-		m_board.update();
-		m_rope.update();
+	m_menu.menu();
+	//while (m_window.isOpen())
+	//{
+	//	draw();
+	//	const auto deltaTime = clock.restart();
+	//	m_board.update();
+	//	m_rope.update();
 
-		if (sf::Event event; m_window.getWindow().pollEvent(event))
-		{
-			switch (event.type)
-			{
-			case sf::Event::Closed:
-				m_window.close();
-				break;
+	//	if (sf::Event event; m_window.getWindow().pollEvent(event))
+	//	{
+	//		switch (event.type)
+	//		{
+	//		case sf::Event::Closed:
+	//			m_window.close();
+	//			break;
 
-			case sf::Event::KeyPressed:
-				handleKeyboard(deltaTime.asSeconds());
-				break;
+	//		case sf::Event::KeyPressed:
+	//			handleKeyboard(deltaTime.asSeconds());
+	//			break;
 
-			default:
-				break;
-			}
-		}
-	}
+	//		default:
+	//			break;
+	//		}
+	//	}
+	//}
 }
 
 void Controller::handleKeyboard(float deltaTime)
