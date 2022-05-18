@@ -14,7 +14,7 @@ void Board::setWorld()
 
 void Board::createBoard()
 {
-	m_balls.emplace_back(Ball{ this, b2Vec2(20, 20)/*, pos = sf::Vector2f(200, 100)*/});
+	m_balls.emplace_back(Ball{ this, sf::Vector2f(200, 100), b2Vec2(20, 20), 4 });
 	
 	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight), -2});	//floor
 	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(-180, windowHieght), -3});					//left wall
@@ -60,11 +60,11 @@ void Board::update()
 	std::erase_if(m_balls, [](const auto& ball) { return ball.needToDelete(); });
 }
 
-void Board::addBalls(float radius, sf::Color color, sf::Vector2f pos, int index)
+void Board::addBalls(const sf::Vector2f pos, const int index)
 {
-	auto posLeft = sf::Vector2f(pos.x - radius, pos.y);
-	auto posRight = sf::Vector2f(pos.x + radius, pos.y);
+	//auto posLeft = sf::Vector2f(pos.x - radius, pos.y);
+	//auto posRight = sf::Vector2f(pos.x + radius, pos.y);
 
-	m_balls.emplace_back(Ball{ this, b2Vec2(-20, -30), radius, color, posLeft, index });
-	m_balls.emplace_back(Ball{ this, b2Vec2(20, -30), radius, color, posRight, index });
+	m_balls.emplace_back(Ball{ this, pos, b2Vec2(-20, -30), index });
+	m_balls.emplace_back(Ball{ this, pos, b2Vec2( 20, -30), index });
 }

@@ -5,15 +5,13 @@
 #include "box2d/box2d.h"
 
 constexpr float defRadius = 90.f;
-constexpr int numOfBalls = 9;
 
 class Board;
 
 class Ball
 {
 public:
-	Ball(Board* board, const b2Vec2 initialForce, const float radius = defRadius,
-				sf::Color = sf::Color::Red, const sf::Vector2f pos = sf::Vector2f(300, 100), const int index = 0);
+	Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, const int index = 0);
 	//~Ball();
 	void pop()							{ m_popped = true; }
 	const bool needToDelete() const		{ return (m_popped || m_ball.getRadius() < 10); }

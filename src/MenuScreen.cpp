@@ -70,7 +70,8 @@ void MenuScreen::menu()
 
 void MenuScreen::handlePress(sf::Vector2f mousePos)
 {
-	if (m_buttons[0][int(buttonNames::Normal)].isPressed(mousePos))
+	if (m_buttons[0][int(buttonNames::Normal)].isPressed(mousePos) ||
+		m_buttons[0][int(buttonNames::Survival)].isPressed(mousePos))
 	{
 		m_wantedMenu = 1;
 	}

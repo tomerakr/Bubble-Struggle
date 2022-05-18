@@ -11,7 +11,7 @@ class Board
 public:
 	Board();
 	void draw(sf::RenderWindow& window);
-	void addBalls(const float radius, const sf::Color color, const sf::Vector2f pos, int index);
+	void addBalls(const sf::Vector2f pos, const int index);
 	void update();
 	void reset();
 	void createBoard();

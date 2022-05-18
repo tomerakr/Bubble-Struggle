@@ -5,12 +5,13 @@
 
 float pixelToMeter(const int pixels) { return pixels * UNRATIO; }
 
-Ball::Ball(Board* board, const b2Vec2 initialForce, const float radius, sf::Color color, const sf::Vector2f pos, const int index)
+Ball::Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, const int index)
 	:m_index(index), m_board(board)
 {
-	m_ball.setPosition(sf::Vector2f(pos));
-	m_ball.setRadius(radius);
-	m_ball.setFillColor(color);
+	m_ball.setRadius(defRadius - 10 * m_index);
+    auto indentation = (initialForce.x > 0 ? m_ball.getRadius() : -m_ball.getRadius());
+	m_ball.setPosition(sf::Vector2f(pos.x + indentation, pos.y));
+	m_ball.setFillColor(Resources::instance().getColor(index));
 
     setBall2D(initialForce);
 }
@@ -40,12 +41,10 @@ void Ball::setBall2D(const b2Vec2 initialForce)
 
 void Ball::split()
 {
-    static sf::Color colors[numOfBalls] = {sf::Color::Cyan, sf::Color::Yellow, sf::Color::Red, sf::Color::Green,
-    sf::Color::Magenta, sf::Color::Blue, sf::Color::Black, sf::Color(255, 100, 128), sf::Color(255, 140, 0) };
     m_board->getWorld()->DestroyBody(m_body); //why here
     if (m_index < numOfBalls)
     {
-        m_board->addBalls(defRadius - 10 * m_index, colors[m_index], m_ball.getPosition(), m_index + 1);
+        m_board->addBalls(m_ball.getPosition(), m_index + 1);
     }
 }
 

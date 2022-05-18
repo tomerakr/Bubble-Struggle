@@ -17,15 +17,15 @@ Resources::Resources()
 		}
 	}
 
-	//m_objectTextures.reserve(numOfObjects);
-	//for (int i = 0; i < numOfObjects; ++i)
-	//{
-	//	m_objectTextures.emplace_back();
-	//	if (!m_objectTextures.back().loadFromFile(m_objectTextureNames[i]))
-	//	{ 
-	//		exit(EXIT_FAILURE);
-	//	}
-	//}
+	m_objectTextures.reserve(numOfObjects);
+	for (int i = 0; i < numOfObjects; ++i)
+	{
+		m_objectTextures.emplace_back();
+		if (!m_objectTextures.back().loadFromFile(m_objectTextureNames[i]))
+		{ 
+			exit(EXIT_FAILURE);
+		}
+	}
 }
 
 Resources& Resources::instance()

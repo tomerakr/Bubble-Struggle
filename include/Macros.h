@@ -5,9 +5,10 @@ constexpr int windowWitdh = 1200;
 constexpr int barHeight = 100;
 constexpr float RATIO = 30.f;			//??
 constexpr float UNRATIO = 1 / RATIO;	//??
+constexpr int numOfBalls = 9;
 
 //---------------------------------------------------------
-constexpr int numOfObjects = 9;
+constexpr int numOfObjects = 3;
 enum class Objects
 {
 	Ball,
