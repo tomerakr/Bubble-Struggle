@@ -7,6 +7,8 @@ MenuScreen::MenuScreen(Window* window)
 	:m_window(window)
 {
 	createButton();
+	m_background.setSize(sf::Vector2f(windowWitdh, windowHieght));
+	m_background.setTexture(Resources::instance().getBackgroundTexture(Backgrounds::Menu));
 }
 
 void MenuScreen::createButton()
@@ -100,7 +102,8 @@ void MenuScreen::handleHover(sf::Vector2f mousePos)
 
 void MenuScreen::draw()
 {
-	m_window->clear();
+	m_window->getWindow().draw(m_background);
+
 	for (auto& button : m_buttons[m_wantedMenu])
 	{
 		button.draw(m_window->getWindow());
