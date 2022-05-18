@@ -17,7 +17,7 @@ void Board::setWorld()
 void Board::createBoard()
 {
 	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight), -2});	//floor
-	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, 0.f), -2});	//ceiling
+	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, 0.f), -2});							//ceiling
 	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(-180, windowHieght), -3});					//left wall
 	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh, windowHieght), -3});			//right wall
 }
@@ -39,7 +39,7 @@ void Board::setLevel(int level)
 	for (int i = 0; i < ballsNum; ++i)
 	{
 		file >> xPosB >> yPosB >> index >> direction;
-		m_balls.emplace_back(Ball{ this, sf::Vector2f(xPosB, yPosB), b2Vec2(20, direction * 20), index });
+		m_balls.emplace_back(Ball{ this, sf::Vector2f(xPosB, yPosB), b2Vec2(direction * 20,  20), index });
 	}
 
 	// ---- TILES ----
@@ -52,7 +52,6 @@ void Board::setLevel(int level)
 	{
 		file >> xSize >> ySize >> xPosT >> yPosT >> group;
 		m_tiles.emplace_back(Tile{ this, sf::Vector2f(xSize, ySize), sf::Vector2f(xPosT, yPosT), group});
-		//Tile::Tile(Board * board, const sf::Vector2f size, const sf::Vector2f pos, int group)
 	}
 }
 
