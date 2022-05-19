@@ -3,8 +3,7 @@
 #include "Macros.h"
 #include <SFML/Graphics.hpp>
 
-constexpr int maxFPS = 300; //no good we need that at 60
-
+constexpr int maxFPS = 300;
 class Window
 {
 public:
