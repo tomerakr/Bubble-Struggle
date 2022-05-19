@@ -7,32 +7,34 @@ GameScreen::GameScreen(Window* window, Bear* bear, Board* board)
 	: m_window(window), m_bear(bear), m_board(board)
 {}
 
-void GameScreen::game()
+Screen GameScreen::gamePlay()
 {
+	auto screen = Screen::game;
 	sf::Clock clock;
-	while (m_window->isOpen())
+
+	draw();
+	const auto deltaTime = clock.restart();
+
+	if (sf::Event event; m_window->getWindow().pollEvent(event))
 	{
-		draw();
-		const auto deltaTime = clock.restart();
-
-		if (sf::Event event; m_window->getWindow().pollEvent(event))
+		switch (event.type)
 		{
-			switch (event.type)
-			{
-			case sf::Event::Closed:
-				m_window->close();
-				break;
+		case sf::Event::Closed:
+			m_window->close();
+			break;
 
-			case sf::Event::KeyPressed:
-				handleKeyboard(deltaTime.asSeconds());
-				break;
+		case sf::Event::KeyPressed:
+			screen = handleKeyboard(deltaTime.asSeconds());
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
-		update(deltaTime.asSeconds());
 	}
+	m_bear->setDirection();
+	update(deltaTime.asSeconds());
+
+	return screen;
 }
 
 void GameScreen::update(float deltaTime)
@@ -41,14 +43,17 @@ void GameScreen::update(float deltaTime)
 	m_bear->move(deltaTime);
 }
 
-void GameScreen::handleKeyboard(float deltaTime)
+Screen GameScreen::handleKeyboard(float deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		m_bear->shoot(m_board);
 	}
-
-	m_bear->setDirection();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		return Screen::menu;
+	}
+	return Screen::game;
 }
 
 void GameScreen::draw()

@@ -13,5 +13,5 @@ private:
 	sf::Vector2f m_prevPos;
 	sf::Vector2f m_direction;
 
-	float m_speedPerSecond = 4000.f;
+	float m_speedPerSecond = 200.f;
 };

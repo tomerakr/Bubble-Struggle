@@ -11,10 +11,8 @@ class Controller
 public:
 	Controller();
 	void play();
-	void restartLevel();
 
 private:
-
 	int currentLevel = 1;
 
 	Rope m_rope;

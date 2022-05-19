@@ -18,14 +18,14 @@ void Controller::play()
 		{
 			using enum Screen;
 		case menu:
-			/*screen = */m_menu.menu();
-
+			screen = m_menu.menu();
+			break;
 		case game:
-			/*screen = */m_game.game();
-
+			screen = m_game.gamePlay();
+			break;
 		case levelCreator:
 
-
+			break;
 		default:
 			break;
 		}

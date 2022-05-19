@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Macros.h"
+
 class Window;
 class Bear;
 class Board;
@@ -8,11 +10,11 @@ class GameScreen
 {
 public:
 	GameScreen(Window* window, Bear* bear, Board* board);
-	void game();
+	Screen gamePlay();
 
 private:
 	void update(float deltaTime);
-	void handleKeyboard(const float deltaTime);
+	Screen handleKeyboard(const float deltaTime);
 	void draw();
 
 	Window* m_window;
