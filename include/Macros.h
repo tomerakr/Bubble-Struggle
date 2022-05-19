@@ -28,4 +28,11 @@ enum class Backgrounds
 	Menu,
 };
 
+constexpr int numOfScreens = 3;
+enum class Screen
+{
+	menu,
+	game,
+	levelCreator
+};
 //---------------------------------------------------------
