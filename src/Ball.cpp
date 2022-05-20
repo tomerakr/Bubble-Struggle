@@ -3,15 +3,16 @@
 #include <time.h>
 #include <math.h>
 
-float pixelToMeter(const int pixels) { return pixels * UNRATIO; }
+float pixelToMeter(const int pixels) { return pixels; }
 
 Ball::Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, const int index)
 	:m_index(index), m_board(board)
 {
     m_ball.setTexture(Resources::instance().getObjectTexture(Objects::Ball));
-	m_ball.setRadius(defRadius - 10 * m_index);
+	m_ball.setRadius((defRadius - 10 * m_index));
+    m_ball.setOrigin(sf::Vector2f(m_ball.getRadius(), m_ball.getRadius()));
     auto indentation = (initialForce.x > 0 ? m_ball.getRadius() : -m_ball.getRadius());
-	m_ball.setPosition(sf::Vector2f(pos.x + indentation, pos.y));
+	m_ball.setPosition(sf::Vector2f(pos.x + indentation , pos.y));
 	m_ball.setFillColor(Resources::instance().getColor(index));
 
     setBall2D(initialForce);
@@ -28,13 +29,13 @@ void Ball::setBall2D(const b2Vec2 initialForce)
     
     //add circle fixture
     m_ball2D.m_p.Set(1.f, 1.f);
-    m_ball2D.m_radius = pixelToMeter(m_ball.getRadius()); //needs convert
+    m_ball2D.m_radius = m_ball.getRadius(); //needs convert
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &m_ball2D;
     fixtureDef.density = 1;
-    fixtureDef.friction = 0;
-    fixtureDef.restitution = 1.f;
+    //fixtureDef.friction = 0;
+    //fixtureDef.restitution = 1.f;
     fixtureDef.filter.groupIndex = -1;
 
     m_body->CreateFixture(&fixtureDef);

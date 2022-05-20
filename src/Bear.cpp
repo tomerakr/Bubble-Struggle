@@ -4,13 +4,10 @@
 constexpr int bearWitdh = 80;
 constexpr int bearHieght = 120;
 
-
-
 Bear::Bear(Rope* rope)
 	:MovingObject(sf::Vector2f(windowWitdh / 2, windowHieght - barHeight - bearHieght / 2),
 		sf::Vector2f(bearWitdh, bearHieght), Objects::Bear), m_rope(rope)
 {
-	m_icon.setOrigin(sf::Vector2f(bearWitdh / 2, bearHieght / 2));
 }
 
 void Bear::shoot(Board* board)

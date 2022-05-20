@@ -16,10 +16,11 @@ void Board::setWorld()
 
 void Board::createBoard()
 {
-	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, windowHieght - 20 - barHeight), -2});	//floor
-	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 5), sf::Vector2f(0.f, 0.f), -2});							//ceiling
-	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(-180, windowHieght), -3});					//left wall
-	m_tiles.push_back(Tile{this, sf::Vector2f(5, windowHieght), sf::Vector2f(windowWitdh, windowHieght), -3});			//right wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh , 10), sf::Vector2f(0.f, windowHieght - 20 - barHeight), -2});	//floor
+	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, 10), sf::Vector2f(0.f, 0.f), -2});								//ceiling
+	m_tiles.push_back(Tile{this, sf::Vector2f(10, windowHieght), sf::Vector2f(0.f, 0.f), -3});						//left wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(10, windowHieght ), sf::Vector2f(windowWitdh - 10,0.f), -3});	  	//right wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(10, windowHieght ), sf::Vector2f(windowWitdh /4, 0.f), -3});	  	/**/
 }
 
 void Board::setLevel(int level)
