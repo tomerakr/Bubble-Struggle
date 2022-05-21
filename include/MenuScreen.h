@@ -10,12 +10,16 @@ class MenuScreen
 {
 public:
 	MenuScreen(Window* window);
-	void menu();
+	Screen menu();
 
 private:
 	void createButton();
-	void handlePress(sf::Vector2f mousePos);
+	Screen handlePress(sf::Vector2f mousePos);
+	void mainMenuPress(sf::Vector2f mousePos);
+	Screen numOfPlayersPress(sf::Vector2f mousePos);
+	Screen connectionPress(sf::Vector2f mousePos);
 	void handleHover(const sf::Vector2f mousePos);
+	void handleKeyboard();
 	void draw();
 
 	Window* m_window;
@@ -38,5 +42,12 @@ private:
 		Duo,
 		Online = 0,
 		SamePC
+	};
+
+	enum class menuNames
+	{
+		mainMenu,
+		numOfPlayers,
+		connection
 	};
 };

@@ -4,25 +4,22 @@
 #include "Board.h"
 #include "Window.h"
 #include "MenuScreen.h"
+#include "GameScreen.h"
 
 class Controller
 {
 public:
 	Controller();
 	void play();
-	void restartLevel();
 
 private:
-	void handleKeyboard(const float deltaTime);
-	void draw();
-
 	int currentLevel = 1;
 
-	Rope m_rope;
-	MenuScreen m_menu;
 	Bear m_bear;
 	Board m_board;
 	Window m_window;
+	MenuScreen m_menu;
+	GameScreen m_game;
 
 
 };

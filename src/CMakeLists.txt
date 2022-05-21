@@ -8,8 +8,10 @@
                                               "Button.cpp"
                                               "Window.cpp"
                                               "MenuScreen.cpp"
+                                              "GameScreen.cpp"
                                               "Tile.cpp"
                                               "Controller.cpp" 
                                               "Rope.cpp"
                                               "Resources.cpp"
+                                              "Gun.cpp"
                                               )
