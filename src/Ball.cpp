@@ -34,8 +34,8 @@ void Ball::setBall2D(const b2Vec2 initialForce)
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &m_ball2D;
     fixtureDef.density = 1;
-    //fixtureDef.friction = 0;
-    //fixtureDef.restitution = 1.f;
+    fixtureDef.friction = 0;
+    fixtureDef.restitution = 1.f;
     fixtureDef.filter.groupIndex = -1;
 
     m_body->CreateFixture(&fixtureDef);
