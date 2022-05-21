@@ -5,8 +5,8 @@ constexpr int windowWitdh = 1200;
 constexpr int barHeight = 100;
 constexpr int numOfBalls = 9;
 
-constexpr float PIXLE_PER_METER = 30.f;			//??
-constexpr float METERS_PER_PIXLE = 1 / PIXLE_PER_METER;	//??
+constexpr float RATIO = 30.f;			//??
+constexpr float METERS_PER_PIXLE = 1 / RATIO;	//??
 
 //---------------------------------------------------------
 constexpr int numOfObjects = 3;

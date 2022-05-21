@@ -5,7 +5,7 @@ constexpr int FLOOR = -2;
 constexpr int WALL = -3;
 
 Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int group)
-	:StaticObject(sf::Vector2f(pos.x + size.x / 2, pos.y - size.y / 2), size, (group == FLOOR ? Objects::Floor : Objects::Wall))
+	:StaticObject(pos, size, (group == FLOOR ? Objects::Floor : Objects::Wall))
 {
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(pos.x, pos.y);
@@ -20,5 +20,7 @@ Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int gr
 
 	m_groundBody->CreateFixture(&fixtureDef);
 
-	m_icon.setPosition(bodyDef.position.x - 7, bodyDef.position.y);
+	//m_icon.setPosition(m_groundBody->GetPosition().x * RATIO, m_groundBody->GetPosition().y * RATIO);
+	//m_icon.setOrigin(size.x / RATIO, size.y / RATIO);
+	m_icon.setPosition(bodyDef.position.x , bodyDef.position.y);
 };
