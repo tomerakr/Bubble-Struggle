@@ -40,6 +40,7 @@ Screen GameScreen::gamePlay()
 void GameScreen::update(float deltaTime)
 {
 	m_board->update();
+	m_bear->update();
 	m_bear->move(deltaTime);
 }
 
@@ -61,6 +62,7 @@ void GameScreen::draw()
 	m_window->clear();
 
 	m_bear->draw(m_window->getWindow());
+	m_bear->drawRopes(m_window->getWindow());
 	m_board->draw(m_window->getWindow());
 
 	m_window->display();

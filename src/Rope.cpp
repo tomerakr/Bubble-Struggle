@@ -5,7 +5,7 @@ constexpr float maxRopeHeight = -650;
 
 void Rope::followBear(const sf::Vector2f bearPos)
 {
-	if (!m_isShot)					//	if is not shot, shoot
+	if (!m_isShot)					//	follow bear if not shot already
 	{
 		m_icon.setPosition(bearPos);
 

@@ -13,4 +13,5 @@
                                               "Controller.cpp" 
                                               "Rope.cpp"
                                               "Resources.cpp"
+                                              "Gun.cpp"
                                               )

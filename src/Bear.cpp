@@ -6,16 +6,26 @@ constexpr int bearHieght = 120;
 
 
 
-Bear::Bear(Rope* rope)
+Bear::Bear()
 	:MovingObject(sf::Vector2f(windowWitdh / 2, windowHieght - barHeight - bearHieght / 2),
-		sf::Vector2f(bearWitdh, bearHieght), Objects::Bear), m_rope(rope)
+		sf::Vector2f(bearWitdh, bearHieght), Objects::Bear)
 {
 	m_icon.setOrigin(sf::Vector2f(bearWitdh / 2, bearHieght / 2));
 }
 
+void Bear::update()
+{
+	m_gun.update();
+}
+
+void Bear::drawRopes(sf::RenderWindow& window)
+{
+	m_gun.drawRopes(window);
+}
+
 void Bear::shoot(Board* board)
 {
-	m_rope->followBear(m_icon.getPosition());
+	m_gun.shoot(m_icon.getPosition());
 
 	auto balls = board->getBalls();
 

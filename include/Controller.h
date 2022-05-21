@@ -15,7 +15,6 @@ public:
 private:
 	int currentLevel = 1;
 
-	Rope m_rope;
 	Bear m_bear;
 	Board m_board;
 	Window m_window;
