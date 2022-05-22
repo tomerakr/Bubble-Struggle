@@ -8,7 +8,7 @@ class GameObject
 {
 public:
 	GameObject(const sf::Vector2f pos, const sf::Vector2f size, const Objects texture, 
-					const sf::Color = sf::Color::Blue); // optional color added
+					const sf::Color = sf::Color(128, 128, 128)); // optional color added
 	void draw(sf::RenderWindow& window);
 
 protected:

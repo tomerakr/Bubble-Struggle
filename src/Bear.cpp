@@ -24,22 +24,6 @@ void Bear::drawRopes(sf::RenderWindow& window)
 	m_gun.drawRopes(window);
 }
 
-void Bear::shoot(Board* board)
-{
-	//m_gun.shoot(m_icon.getPosition());
-
-	//auto balls = board->getBalls();
-
-	//for (int i = 0; i < balls->size(); ++i)
-	//{
-	//	if (m_icon.getGlobalBounds().contains(sf::Vector2f((*balls)[i].getPos().x, m_icon.getPosition().y)))
-	//	{
-	//		(*balls)[i].pop();
-	//	}
-	//}
-	/*add ball iterator in board so can pop it  !!!!!! */
-}
-
 void Bear::jump()
 {
 }

@@ -12,7 +12,6 @@ class Bear : public MovingObject
 {
 public:
 	Bear(sf::Vector2f pos);
-	void shoot(Board* board);
 	void jump();
 	const sf::Vector2f getPos() const;
 	void update(float deltaTime, const sf::Vector2f direction, bool shoot);

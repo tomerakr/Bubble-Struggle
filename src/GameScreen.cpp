@@ -98,7 +98,7 @@ void GameScreen::update(float deltaTime)
 	m_board->update();
 	for (auto& bear : m_bears)
 	{
-		const auto& [direction, shoot] = *m_input;
+		const auto& [direction, shoot] = (*m_input)();
 		bear.update(deltaTime, direction, shoot);
 	}
 }
@@ -116,9 +116,12 @@ void GameScreen::draw()
 {
 	m_window->clear();
 
-	//m_bear->drawRopes(m_window->getWindow());
+	for (auto& bear : m_bears)
+	{
+		bear.drawRopes(m_window->getWindow());
+		bear.draw(m_window->getWindow());
+	}
 	m_board->draw(m_window->getWindow());
-	//m_bear->draw(m_window->getWindow());
 
 	m_window->display();
 }
