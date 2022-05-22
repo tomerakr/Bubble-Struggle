@@ -4,6 +4,10 @@ constexpr int windowHieght = 800;
 constexpr int windowWitdh = 1200;
 constexpr int barHeight = 100;
 constexpr int numOfBalls = 9;
+constexpr int thickness = 10;
+
+constexpr int FLOOR = -2;
+constexpr int WALL = -3;
 
 constexpr float RATIO = 30.f;			//??
 constexpr float METERS_PER_PIXLE = 1 / RATIO;	//??

@@ -8,7 +8,7 @@ class Board;
 class Tile : public StaticObject
 {
 public:
-	Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, const int group);
+	Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, const int group = 0);
 	void collision(Board* board);
 
 private:

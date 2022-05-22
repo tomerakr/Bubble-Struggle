@@ -4,12 +4,13 @@
 constexpr int bearWitdh = 80;
 constexpr int bearHieght = 120;
 
-
-
 Bear::Bear()
-	:MovingObject(sf::Vector2f(windowWitdh / 2, windowHieght - barHeight - bearHieght / 2),
+	:MovingObject(sf::Vector2f(windowWitdh / 2, windowHieght - barHeight - bearHieght - 10),
 		sf::Vector2f(bearWitdh, bearHieght), Objects::Bear)
 {
+	m_icon.setFillColor(sf::Color::White);
+	m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Bear));
+
 }
 
 void Bear::update()
@@ -35,7 +36,7 @@ void Bear::shoot(Board* board)
 			(*balls)[i].pop();
 		}
 	}
-	/*add ball iterator in board so can pop it*/
+	/*add ball iterator in board so can pop it  !!!!!! */
 }
 
 void Bear::jump()

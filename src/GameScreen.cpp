@@ -61,9 +61,9 @@ void GameScreen::draw()
 {
 	m_window->clear();
 
-	m_bear->draw(m_window->getWindow());
 	m_bear->drawRopes(m_window->getWindow());
 	m_board->draw(m_window->getWindow());
+	m_bear->draw(m_window->getWindow());
 
 	m_window->display();
 }
