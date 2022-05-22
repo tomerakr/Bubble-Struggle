@@ -40,4 +40,25 @@ enum class Screen
 	game,
 	levelCreator
 };
+
+enum class gameMode
+{
+	Normal,
+	Survival
+};
+
+enum class receiveInfo
+{
+	Solo,
+	Online,
+	SamePc
+};
 //---------------------------------------------------------
+
+struct gameInfo
+{
+	Screen _screen;
+	gameMode _mode;
+	unsigned int _numOfPlayers;
+	receiveInfo _receive;
+};

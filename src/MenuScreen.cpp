@@ -36,9 +36,10 @@ void MenuScreen::createButton()
 // Help
 // Exit
 
-Screen MenuScreen::menu()
+gameInfo MenuScreen::menu()
 {
-	auto screen = Screen::menu;
+	auto info = gameInfo{};
+	info._screen = Screen::menu;
 
 	draw();
 	if (sf::Event event; m_window->getWindow().pollEvent(event))
@@ -50,7 +51,7 @@ Screen MenuScreen::menu()
 			break;
 
 		case sf::Event::MouseButtonReleased:
-			screen = handlePress(m_window->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
+			info = handlePress(m_window->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
 			break;
 
 		case sf::Event::MouseMoved:
@@ -65,76 +66,87 @@ Screen MenuScreen::menu()
 			break;
 		}
 	}
-	return screen;
+	return info;
 }
 
-Screen MenuScreen::handlePress(sf::Vector2f mousePos)
+gameInfo MenuScreen::handlePress(sf::Vector2f mousePos)
 {
-	if (m_buttons[0][int(buttonNames::Exit)].isPressed(mousePos) && m_wantedMenu == 0)
-	{
-		m_window->close();
-	}
+	auto info = gameInfo{};
 
-	auto screen = Screen::menu;
+	info._screen = Screen::menu;
 	switch (m_wantedMenu)
 	{
 		using enum menuNames;
 	case static_cast<int>(mainMenu):
-		mainMenuPress(mousePos);
+		mainMenuPress(mousePos, info);
 		break;
 
 	case static_cast<int>(numOfPlayers):
-		screen = numOfPlayersPress(mousePos);
+		numOfPlayersPress(mousePos, info);
 		break;
 
 	case static_cast<int>(connection):
-		screen = connectionPress(mousePos);
+		connectionPress(mousePos, info);
 		break;
 	default:
 		break;
 	}
 	
-	return screen;
+	return info;
 }
 
-void MenuScreen::mainMenuPress(sf::Vector2f mousePos)
+void MenuScreen::mainMenuPress(sf::Vector2f mousePos, gameInfo& info)
 {
-	if (m_buttons[m_wantedMenu][int(buttonNames::Normal)].isPressed(mousePos) ||
-		m_buttons[m_wantedMenu][int(buttonNames::Survival)].isPressed(mousePos))
+	auto mainMenu = static_cast<int>(menuNames::mainMenu);
+	if (m_buttons[mainMenu][int(buttonNames::Exit)].isPressed(mousePos) && m_wantedMenu == mainMenu)
 	{
+		m_window->close();
+	}
+
+	if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Normal)].isPressed(mousePos))
+	{
+		info._mode = gameMode::Normal;
+		m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
+	}
+	else if(m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Survival)].isPressed(mousePos))
+	{
+		info._mode = gameMode::Survival;
 		m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
 	}
 }
 
-Screen MenuScreen::numOfPlayersPress(sf::Vector2f mousePos)
+void MenuScreen::numOfPlayersPress(sf::Vector2f mousePos, gameInfo& info)
 {
-	if (m_buttons[m_wantedMenu][int(buttonNames::Solo)].isPressed(mousePos))
+	if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Solo)].isPressed(mousePos))
 	{
+		info._numOfPlayers = 1;
+		info._receive = receiveInfo::Solo;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
-		return Screen::game;
 	}
-	else if (m_buttons[m_wantedMenu][int(buttonNames::Duo)].isPressed(mousePos))
+	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Duo)].isPressed(mousePos))
 	{
+		info._numOfPlayers = 2;
 		m_wantedMenu = static_cast<int>(menuNames::connection);
 	}
-	return Screen::menu;
 }
 
-Screen MenuScreen::connectionPress(sf::Vector2f mousePos)
+void MenuScreen::connectionPress(sf::Vector2f mousePos, gameInfo& info)
 {
-	if (m_buttons[m_wantedMenu][int(buttonNames::SamePC)].isPressed(mousePos) ||
-		m_buttons[m_wantedMenu][int(buttonNames::Online)].isPressed(mousePos))
+	if (m_buttons[m_wantedMenu][int(buttonNames::SamePC)].isPressed(mousePos))
 	{
+		info._receive = receiveInfo::SamePc;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
-		return Screen::game;
 	}
-
-	return Screen::menu;
+	else if (m_buttons[m_wantedMenu][int(buttonNames::Online)].isPressed(mousePos))
+	{
+		info._receive = receiveInfo::Online;
+		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
+	}
 }
 
 void MenuScreen::handleHover(sf::Vector2f mousePos)
 {
-	m_buttons[m_wantedMenu][m_lastHovered].resetColor();
+	m_buttons[m_wantedMenu][m_lastHovered].resetTilt(); //reset in last wanted menu and not in current
 	for (int i = 0; i < m_buttons[m_wantedMenu].size(); ++i)
 	{
 		if (m_buttons[m_wantedMenu][i].hover(mousePos))
@@ -149,7 +161,7 @@ void MenuScreen::handleKeyboard()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
-		m_wantedMenu = 0;
+		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 	}
 }
 

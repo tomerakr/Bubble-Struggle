@@ -10,14 +10,14 @@ class MenuScreen
 {
 public:
 	MenuScreen(Window* window);
-	Screen menu();
+	gameInfo menu();
 
 private:
 	void createButton();
-	Screen handlePress(sf::Vector2f mousePos);
-	void mainMenuPress(sf::Vector2f mousePos);
-	Screen numOfPlayersPress(sf::Vector2f mousePos);
-	Screen connectionPress(sf::Vector2f mousePos);
+	gameInfo handlePress(sf::Vector2f mousePos);
+	void mainMenuPress(sf::Vector2f mousePos, gameInfo& info);
+	void numOfPlayersPress(sf::Vector2f mousePos, gameInfo& info);
+	void connectionPress(sf::Vector2f mousePos, gameInfo& info);
 	void handleHover(const sf::Vector2f mousePos);
 	void handleKeyboard();
 	void draw();

@@ -7,17 +7,18 @@ Controller::Controller()
 
 void Controller::play()
 {
-	auto screen = Screen::menu;
+	auto info = gameInfo{};
+	info._screen = Screen::menu;
 	while (m_window.isOpen())
 	{
-		switch (screen)
+		switch (info._screen)
 		{
 			using enum Screen;
 		case menu:
-			screen = m_menu.menu();
+			info = m_menu.menu();
 			break;
 		case game:
-			screen = m_game.gamePlay();
+			info._screen= m_game.gamePlay();
 			break;
 		case levelCreator:
 

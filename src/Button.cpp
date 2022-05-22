@@ -31,7 +31,8 @@ const bool Button::hover(const sf::Vector2f mousePos)
 {
 	if (m_icon.getGlobalBounds().contains(mousePos))
 	{
-		m_icon.setFillColor(sf::Color::Yellow);
+		m_icon.setRotation(5);
+		m_text.setRotation(5);
 		return true;
 	}
 	return false;
