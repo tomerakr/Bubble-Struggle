@@ -5,6 +5,12 @@ constexpr int windowWitdh = 1200;
 constexpr int barHeight = 100;
 constexpr int numOfBalls = 9;
 constexpr int thickness = 10;
+constexpr int ropeWitdh = 20;
+constexpr int ropeHeight = 0;
+constexpr int bearWitdh = 80;
+constexpr int bearHieght = 120;
+//constexpr sf::Vector2f left = sf::Vector2f(-1, 0);
+//constexpr sf::Vector2f right = sf::Vector2f(1, 0);
 
 constexpr int FLOOR = -2;
 constexpr int WALL = -3;
@@ -61,4 +67,5 @@ struct gameInfo
 	gameMode _mode;
 	unsigned int _numOfPlayers;
 	receiveInfo _receive;
+	bool _newGame;
 };

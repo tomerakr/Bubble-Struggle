@@ -7,36 +7,35 @@
 class Window;
 class Bear;
 class Board;
-typedef std::pair<sf::Vector2f, bool>(*getInput)();
-//using getInfo = std::pair<sf::Vector2f, bool>(*getInput)();
 
 class GameScreen
 {
+	using getInput = std::pair<sf::Vector2f, bool>(*)();
+
 public:
-	GameScreen(Window* window, Bear* bear, Board* board);
+	GameScreen(Window* window, Board* board);
+	static sf::Vector2f readDirection();
+	static bool readShoot();
 	void game(gameInfo& info);
-	Screen gamePlay();
+	Screen gamePlay(gameInfo& info);
 
 private:
+	static std::pair<sf::Vector2f, bool> soloInput();
+	static std::pair<sf::Vector2f, bool> samePcInput();
+	static std::pair<sf::Vector2f, bool> onlineInput();
+
+
 	void playNormal(gameInfo& info);
 	void playSurvival(gameInfo& info);
-
-	std::pair<sf::Vector2f, bool> soloInput();
-	sf::Vector2f readDirection();
-	bool readShoot();
-
-	std::pair<sf::Vector2f, bool> samePcInput();
-	std::pair<sf::Vector2f, bool> onlineInput();
-
-	//using getInfo = std::pair<sf::Vector2f, bool>(*foo)();	
-	//using getInfo = int(*foo())(int);
 
 	void update(float deltaTime);
 	Screen handleKeyboard(const float deltaTime);
 	void draw();
 
+	getInput m_input;
+
 	Window* m_window;
-	Bear* m_bear;
+	std::vector<Bear> m_bears;
 	Board* m_board;
 };
 

@@ -1,7 +1,7 @@
 #include "Controller.h"
 
 Controller::Controller()
-	: m_window(), m_bear(), m_menu(&m_window), m_game(&m_window, &m_bear, &m_board)
+	: m_window(), m_menu(&m_window), m_game(&m_window, &m_board)
 {
 }
 
@@ -18,7 +18,7 @@ void Controller::play()
 			info = m_menu.menu();
 			break;
 		case game:
-			info._screen= m_game.gamePlay();
+			info._screen = m_game.gamePlay(info);
 			break;
 		case levelCreator:
 

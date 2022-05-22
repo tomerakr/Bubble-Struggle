@@ -15,11 +15,8 @@ public:
 private:
 	int currentLevel = 1;
 
-	Bear m_bear;
 	Board m_board;
 	Window m_window;
 	MenuScreen m_menu;
 	GameScreen m_game;
-
-
 };

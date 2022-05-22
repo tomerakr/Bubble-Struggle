@@ -1,7 +1,5 @@
 #include "Gun.h"
 
-constexpr int ropeWitdh = 20;
-constexpr int ropeHeight = 0;
 
 // start game with one default rope
 Gun::Gun()
@@ -12,7 +10,7 @@ Gun::Gun()
 
 void Gun::shoot(const sf::Vector2f bearPos)
 {
-	m_ropes[m_ropes.size() - 1].followBear(bearPos);
+	m_ropes[m_ropes.size() - 1].followBear(sf::Vector2f(bearPos.x + bearWitdh / 2 - ropeWitdh / 2, bearPos.y + bearHieght));
 }
 
 void Gun::update()

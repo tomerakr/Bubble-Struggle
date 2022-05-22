@@ -18,5 +18,4 @@ Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int gr
 	fixtureDef.filter.groupIndex = group;
 
 	m_groundBody->CreateFixture(&fixtureDef);
-
 };

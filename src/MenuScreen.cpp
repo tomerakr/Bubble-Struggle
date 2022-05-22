@@ -121,6 +121,8 @@ void MenuScreen::numOfPlayersPress(sf::Vector2f mousePos, gameInfo& info)
 	{
 		info._numOfPlayers = 1;
 		info._receive = receiveInfo::Solo;
+		info._screen = Screen::game;
+		info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Duo)].isPressed(mousePos))
@@ -135,11 +137,15 @@ void MenuScreen::connectionPress(sf::Vector2f mousePos, gameInfo& info)
 	if (m_buttons[m_wantedMenu][int(buttonNames::SamePC)].isPressed(mousePos))
 	{
 		info._receive = receiveInfo::SamePc;
+		info._screen = Screen::game;
+		info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 	}
 	else if (m_buttons[m_wantedMenu][int(buttonNames::Online)].isPressed(mousePos))
 	{
 		info._receive = receiveInfo::Online;
+		info._screen = Screen::game;
+		info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 	}
 }

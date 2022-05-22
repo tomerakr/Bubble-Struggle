@@ -11,11 +11,11 @@ class Board;
 class Bear : public MovingObject
 {
 public:
-	Bear();
+	Bear(sf::Vector2f pos);
 	void shoot(Board* board);
 	void jump();
 	const sf::Vector2f getPos() const;
-	void update();
+	void update(float deltaTime, const sf::Vector2f direction, bool shoot);
 	void drawRopes(sf::RenderWindow& window);
 
 private:

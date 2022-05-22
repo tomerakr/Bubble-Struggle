@@ -3,26 +3,33 @@
 #include "Bear.h"
 #include "board.h"
 
-GameScreen::GameScreen(Window* window, Bear* bear, Board* board)
-	: m_window(window), m_bear(bear), m_board(board)
+GameScreen::GameScreen(Window* window, Board* board)
+	: m_window(window), m_board(board)
 {}
 
 void GameScreen::game(gameInfo& info)
 {
-	std::pair<sf::Vector2f, bool>(*getInput)() = nullptr;
+	m_bears.clear();
+	auto xPos = windowWitdh / (info._numOfPlayers + 1);
+	auto yPos = windowHieght - barHeight - bearHieght - thickness;
 
+	for (int i = 0; i < info._numOfPlayers; ++i)
+	{
+		m_bears.emplace_back(Bear{sf::Vector2f(xPos * (i + 1), yPos)});
+	}
+	
 	switch (info._receive)
 	{
 	case receiveInfo::Solo:
-		getInput = &soloInput();
+		m_input = soloInput;
 		break;
 
 	case receiveInfo::SamePc:
-		getInput = samePcInput;
+		m_input = samePcInput;
 		break;
 
 	case receiveInfo::Online:
-		getInput = onlineInput;
+		m_input = onlineInput;
 		break;
 
 	default:
@@ -34,15 +41,12 @@ void GameScreen::game(gameInfo& info)
 	//case gameMode::Normal:
 	//	playNormal(info);
 	//	break;
-
 	//case gameMode::Survival:
 	//	playSurvival(info);
 	//	break;
-
 	//default:
 	//	break;
 	//}
-	//gample(test,etste)
 }
 
 void GameScreen::playNormal(gameInfo& info)
@@ -55,8 +59,13 @@ void GameScreen::playSurvival(gameInfo& info)
 
 }
 
-Screen GameScreen::gamePlay()
+Screen GameScreen::gamePlay(gameInfo& info)
 {
+	if (info._newGame)
+	{
+		game(info);
+		info._newGame = false;
+	}
 	auto screen = Screen::game;
 	sf::Clock clock;
 
@@ -87,16 +96,15 @@ Screen GameScreen::gamePlay()
 void GameScreen::update(float deltaTime)
 {
 	m_board->update();
-	m_bear->update();
-	//m_bear->move(deltaTime);
+	for (auto& bear : m_bears)
+	{
+		const auto& [direction, shoot] = *m_input;
+		bear.update(deltaTime, direction, shoot);
+	}
 }
 
 Screen GameScreen::handleKeyboard(float deltaTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		m_bear->shoot(m_board);
-	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		return Screen::menu;
@@ -108,9 +116,9 @@ void GameScreen::draw()
 {
 	m_window->clear();
 
-	m_bear->drawRopes(m_window->getWindow());
+	//m_bear->drawRopes(m_window->getWindow());
 	m_board->draw(m_window->getWindow());
-	m_bear->draw(m_window->getWindow());
+	//m_bear->draw(m_window->getWindow());
 
 	m_window->display();
 }
