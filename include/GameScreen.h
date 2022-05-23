@@ -26,6 +26,7 @@ private:
 	static std::pair<sf::Vector2f, bool> onlineInput(Bear* bear);
 
 	std::vector<std::vector<sf::Keyboard::Key>> m_keys;
+	std::vector<Objects> m_objects;
 
 	void playNormal(gameInfo& info);
 	void playSurvival(gameInfo& info);

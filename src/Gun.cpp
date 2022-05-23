@@ -1,9 +1,9 @@
 #include "Gun.h"
 
 // start game with one default rope
-Gun::Gun()
+Gun::Gun(Objects ropeTexture)
 {
-	m_ropes.emplace_back(Rope(sf::Vector2f(0, 0), sf::Vector2f(ropeWitdh, ropeHeight)));
+	m_ropes.emplace_back(Rope(sf::Vector2f(0, 0), sf::Vector2f(ropeWitdh, ropeHeight), ropeTexture));
 }
 
 void Gun::shoot(const sf::Vector2f bearPos)

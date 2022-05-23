@@ -15,9 +15,9 @@ public:
 private:
 	void createButton();
 	gameInfo handlePress(sf::Vector2f mousePos);
-	void mainMenuPress(sf::Vector2f mousePos, gameInfo& info);
-	void numOfPlayersPress(sf::Vector2f mousePos, gameInfo& info);
-	void connectionPress(sf::Vector2f mousePos, gameInfo& info);
+	void mainMenuPress(sf::Vector2f mousePos);
+	void numOfPlayersPress(sf::Vector2f mousePos);
+	void connectionPress(sf::Vector2f mousePos);
 	void handleHover(const sf::Vector2f mousePos);
 	void handleKeyboard();
 	void draw();
@@ -26,6 +26,7 @@ private:
 	int m_lastHovered = 0;
 	int m_wantedMenu = 0;
 	sf::RectangleShape m_background;
+	gameInfo m_info;
 
 	std::vector<std::vector<Button>> m_buttons;
 	std::vector< std::vector<std::string>> m_buttonNames = 

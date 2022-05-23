@@ -17,6 +17,9 @@ GameScreen::GameScreen(Window* window, Board* board)
 	keys.push_back(sf::Keyboard::Right);
 	keys.push_back(sf::Keyboard::Space);
 	m_keys.push_back(keys);
+
+	m_objects.push_back(Objects::Bear);
+	m_objects.push_back(Objects::Panda);
 }
 
 void GameScreen::game(gameInfo& info)
@@ -27,8 +30,8 @@ void GameScreen::game(gameInfo& info)
 
 	for (int i = 0; i < info._numOfPlayers; ++i)
 	{
-		m_bears.emplace_back(Bear{sf::Vector2f(xPos * (i + 1), yPos)});
-		m_bears.back().setKeys(&m_keys[i % m_keys.size()]);
+		m_bears.emplace_back(Bear{sf::Vector2f(xPos * (i + 1), yPos), m_objects[i % info._numOfPlayers]});
+		m_bears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
 	}
 	
 	switch (info._receive)
@@ -148,7 +151,7 @@ std::pair<sf::Vector2f, bool> GameScreen::soloInput(Bear* bear)
 
 std::pair<sf::Vector2f, bool> GameScreen::samePcInput(Bear* bear)
 {
-	return std::make_pair(sf::Vector2f(0.f, 0.f), true);
+	return soloInput(bear);
 }
 
 std::pair<sf::Vector2f, bool> GameScreen::onlineInput(Bear* bear)

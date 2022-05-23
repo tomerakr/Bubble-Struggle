@@ -12,7 +12,7 @@ class Board;
 class Bear : public MovingObject
 {
 public:
-	Bear(sf::Vector2f pos);
+	Bear(sf::Vector2f pos, Objects texture = Objects::Bear);
 	void jump();
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
 	sf::Keyboard::Key getKeys(Keys key) { return m_keys[static_cast<int>(key)]; }
@@ -21,6 +21,7 @@ public:
 	void drawRopes(sf::RenderWindow& window);
 
 private:
+	Objects m_ropeTexture; //must be before gun
 	Gun m_gun;
 	std::vector<sf::Keyboard::Key> m_keys;
 };

@@ -2,11 +2,12 @@
 #include "Board.h"
 
 
-Bear::Bear(sf::Vector2f pos)
-	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), Objects::Bear)
+Bear::Bear(sf::Vector2f pos, Objects texture)
+	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), texture), m_ropeTexture((texture == Objects::Bear ? Objects::HoneyRope : Objects::BambooRope)),
+	m_gun(m_ropeTexture)
 {
 	m_icon.setFillColor(sf::Color::White);
-	m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Panda));
+	m_icon.setTexture(Resources::instance().getObjectTexture(texture));
 }
 
 void Bear::update(float deltaTime, const sf::Vector2f direction, bool shoot)
