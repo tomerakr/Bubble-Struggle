@@ -1,12 +1,13 @@
 #pragma once
 
 #include "MovingObject.h"
+#include "SFML/Graphics.hpp"
 
 class Rope : public MovingObject
 {
 public:
-
-	using MovingObject::MovingObject;
+	Rope(sf::Vector2f pos, sf::Vector2f size);
+	//using MovingObject::MovingObject;
 	void checkHit();
 	void setFreeze();
 

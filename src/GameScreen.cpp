@@ -5,7 +5,19 @@
 
 GameScreen::GameScreen(Window* window, Board* board)
 	: m_window(window), m_board(board)
-{}
+{
+	auto keys = std::vector<sf::Keyboard::Key>();
+	keys.push_back(sf::Keyboard::A);
+	keys.push_back(sf::Keyboard::D);
+	keys.push_back(sf::Keyboard::LControl);
+	m_keys.push_back(keys);
+
+	keys.clear();
+	keys.push_back(sf::Keyboard::Left);
+	keys.push_back(sf::Keyboard::Right);
+	keys.push_back(sf::Keyboard::Space);
+	m_keys.push_back(keys);
+}
 
 void GameScreen::game(gameInfo& info)
 {
@@ -16,6 +28,7 @@ void GameScreen::game(gameInfo& info)
 	for (int i = 0; i < info._numOfPlayers; ++i)
 	{
 		m_bears.emplace_back(Bear{sf::Vector2f(xPos * (i + 1), yPos)});
+		m_bears.back().setKeys(&m_keys[i % m_keys.size()]);
 	}
 	
 	switch (info._receive)
@@ -98,7 +111,7 @@ void GameScreen::update(float deltaTime)
 	m_board->update();
 	for (auto& bear : m_bears)
 	{
-		const auto& [direction, shoot] = (*m_input)();
+		const auto& [direction, shoot] = (*m_input)(&bear);
 		bear.update(deltaTime, direction, shoot);
 	}
 }
@@ -126,34 +139,32 @@ void GameScreen::draw()
 	m_window->display();
 }
 
-std::pair<sf::Vector2f, bool> GameScreen::soloInput()
+std::pair<sf::Vector2f, bool> GameScreen::soloInput(Bear* bear)
 {
-	auto direction = readDirection();
-	auto shoot = readShoot();
+	auto direction = readDirection(bear);
+	auto shoot = readShoot(bear);
 	return std::make_pair(direction, shoot);
 }
 
-std::pair<sf::Vector2f, bool> GameScreen::samePcInput()
+std::pair<sf::Vector2f, bool> GameScreen::samePcInput(Bear* bear)
 {
 	return std::make_pair(sf::Vector2f(0.f, 0.f), true);
 }
 
-std::pair<sf::Vector2f, bool> GameScreen::onlineInput()
+std::pair<sf::Vector2f, bool> GameScreen::onlineInput(Bear* bear)
 {
 	return std::make_pair(sf::Vector2f(0.f, 0.f), true);
 }
 
-sf::Vector2f GameScreen::readDirection()
+sf::Vector2f GameScreen::readDirection(Bear* bear)
 {
 	auto direction = sf::Vector2f();
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	if (sf::Keyboard::isKeyPressed(bear->getKeys(Keys::Left)))
 	{
 		direction = sf::Vector2f(-1, 0);
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-			 sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	else if (sf::Keyboard::isKeyPressed(bear->getKeys(Keys::Right)))
 	{
 		direction = sf::Vector2f(1, 0);
 	}
@@ -165,12 +176,11 @@ sf::Vector2f GameScreen::readDirection()
 	return direction;
 }
 
-bool GameScreen::readShoot()
+bool GameScreen::readShoot(Bear* bear)
 {
 	auto shoot = false;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) ||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+	if (sf::Keyboard::isKeyPressed(bear->getKeys(Keys::Shoot)))
 	{
 		shoot = true;
 	}

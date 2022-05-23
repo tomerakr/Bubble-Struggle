@@ -1,9 +1,6 @@
 #include "Ball.h"
 #include "Board.h"
 #include <time.h>
-#include <math.h>
-
-float pixelToMeter(const int pixels) { return pixels; }
 
 Ball::Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, const int index)
 	:m_index(index), m_board(board)
@@ -29,7 +26,7 @@ void Ball::setBall2D(const b2Vec2 initialForce)
     
     //add circle fixture
     m_ball2D.m_p.Set(1.f, 1.f);
-    m_ball2D.m_radius = m_ball.getRadius(); //needs convert
+    m_ball2D.m_radius = m_ball.getRadius();
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &m_ball2D;

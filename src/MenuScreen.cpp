@@ -119,7 +119,7 @@ void MenuScreen::numOfPlayersPress(sf::Vector2f mousePos, gameInfo& info)
 {
 	if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Solo)].isPressed(mousePos))
 	{
-		info._numOfPlayers = 1;
+		info._numOfPlayers = 2;
 		info._receive = receiveInfo::Solo;
 		info._screen = Screen::game;
 		info._newGame = true;

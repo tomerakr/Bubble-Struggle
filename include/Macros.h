@@ -19,13 +19,15 @@ constexpr float RATIO = 30.f;			//??
 constexpr float METERS_PER_PIXLE = 1 / RATIO;	//??
 
 //---------------------------------------------------------
-constexpr int numOfObjects = 3;
+constexpr int numOfObjects = 6;
 enum class Objects
 {
 	Ball,
 	Bear,
+	Panda,
 	Button,
-	Rope,
+	HoneyRope, 
+	BambooRope, 
 	Floor,
 	Wall,
 	GiftFreeze,
@@ -58,6 +60,13 @@ enum class receiveInfo
 	Solo,
 	Online,
 	SamePc
+};
+
+enum class Keys
+{
+	Left,
+	Right,
+	Shoot
 };
 //---------------------------------------------------------
 

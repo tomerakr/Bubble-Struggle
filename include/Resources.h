@@ -30,7 +30,7 @@ private:
 	std::vector<sf::Texture> m_backgroundTextures;
 	std::vector<std::string> m_backgroundTextureNames = { "menuBackground.png" };
 	std::vector<sf::Texture> m_objectTextures;
-	std::vector<std::string> m_objectTextureNames = { "ball.png", "bear.png", "button.png" };
+	std::vector<std::string> m_objectTextureNames = { "ball.png", "bear.png", "panda.png", "button.png", "honeyRope.png", "bambooRope.png"};
 
 	sf::Font m_font;
 	std::vector<std::unique_ptr<sf::SoundBuffer>> m_soundBuffer;

@@ -3,6 +3,7 @@
 #include "Macros.h"
 #include "SFML/Graphics.hpp"
 #include <utility>
+#include <vector>
 
 class Window;
 class Bear;
@@ -10,20 +11,21 @@ class Board;
 
 class GameScreen
 {
-	using getInput = std::pair<sf::Vector2f, bool>(*)();
+	using getInput = std::pair<sf::Vector2f, bool>(*)(Bear* bear);
 
 public:
 	GameScreen(Window* window, Board* board);
-	static sf::Vector2f readDirection();
-	static bool readShoot();
+	static sf::Vector2f readDirection(Bear* bear);
+	static bool readShoot(Bear* bear);
 	void game(gameInfo& info);
 	Screen gamePlay(gameInfo& info);
 
 private:
-	static std::pair<sf::Vector2f, bool> soloInput();
-	static std::pair<sf::Vector2f, bool> samePcInput();
-	static std::pair<sf::Vector2f, bool> onlineInput();
+	static std::pair<sf::Vector2f, bool> soloInput(Bear* bear);
+	static std::pair<sf::Vector2f, bool> samePcInput(Bear* bear);
+	static std::pair<sf::Vector2f, bool> onlineInput(Bear* bear);
 
+	std::vector<std::vector<sf::Keyboard::Key>> m_keys;
 
 	void playNormal(gameInfo& info);
 	void playSurvival(gameInfo& info);

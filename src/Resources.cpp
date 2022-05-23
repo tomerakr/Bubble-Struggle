@@ -1,4 +1,3 @@
-#include "..\include\Resources.h"
 #include "Resources.h"
 #include <fstream>
 

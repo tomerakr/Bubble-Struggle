@@ -6,7 +6,7 @@ Bear::Bear(sf::Vector2f pos)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), Objects::Bear)
 {
 	m_icon.setFillColor(sf::Color::White);
-	m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Bear));
+	m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Panda));
 }
 
 void Bear::update(float deltaTime, const sf::Vector2f direction, bool shoot)
