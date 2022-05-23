@@ -3,10 +3,10 @@
 constexpr float ropeHeightChange = 1.5;
 constexpr float maxRopeHeight = -650;
 
-Rope::Rope(sf::Vector2f pos, sf::Vector2f size)
-	:MovingObject(pos, size, Objects::HoneyRope, sf::Color::White)
+Rope::Rope(sf::Vector2f pos, sf::Vector2f size, Objects ropeTexture)
+	:MovingObject(pos, size, ropeTexture, sf::Color::White)
 {
-	m_icon.setTexture(Resources::instance().getObjectTexture(Objects::HoneyRope));
+	m_icon.setTexture(Resources::instance().getObjectTexture(ropeTexture));
 }
 
 void Rope::followBear(const sf::Vector2f bearPos)

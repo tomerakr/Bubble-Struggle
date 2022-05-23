@@ -38,8 +38,7 @@ void MenuScreen::createButton()
 
 gameInfo MenuScreen::menu()
 {
-	auto info = gameInfo{};
-	info._screen = Screen::menu;
+	m_info._screen = Screen::menu;
 
 	draw();
 	if (sf::Event event; m_window->getWindow().pollEvent(event))
@@ -51,7 +50,7 @@ gameInfo MenuScreen::menu()
 			break;
 
 		case sf::Event::MouseButtonReleased:
-			info = handlePress(m_window->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
+			handlePress(m_window->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
 			break;
 
 		case sf::Event::MouseMoved:
@@ -66,36 +65,34 @@ gameInfo MenuScreen::menu()
 			break;
 		}
 	}
-	return info;
+	return m_info;
 }
 
 gameInfo MenuScreen::handlePress(sf::Vector2f mousePos)
 {
-	auto info = gameInfo{};
-
-	info._screen = Screen::menu;
+	m_info._screen = Screen::menu;
 	switch (m_wantedMenu)
 	{
 		using enum menuNames;
 	case static_cast<int>(mainMenu):
-		mainMenuPress(mousePos, info);
+		mainMenuPress(mousePos);
 		break;
 
 	case static_cast<int>(numOfPlayers):
-		numOfPlayersPress(mousePos, info);
+		numOfPlayersPress(mousePos);
 		break;
 
 	case static_cast<int>(connection):
-		connectionPress(mousePos, info);
+		connectionPress(mousePos);
 		break;
 	default:
 		break;
 	}
 	
-	return info;
+	return m_info;
 }
 
-void MenuScreen::mainMenuPress(sf::Vector2f mousePos, gameInfo& info)
+void MenuScreen::mainMenuPress(sf::Vector2f mousePos)
 {
 	auto mainMenu = static_cast<int>(menuNames::mainMenu);
 	if (m_buttons[mainMenu][int(buttonNames::Exit)].isPressed(mousePos) && m_wantedMenu == mainMenu)
@@ -105,47 +102,47 @@ void MenuScreen::mainMenuPress(sf::Vector2f mousePos, gameInfo& info)
 
 	if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Normal)].isPressed(mousePos))
 	{
-		info._mode = gameMode::Normal;
+		m_info._mode = gameMode::Normal;
 		m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
 	}
 	else if(m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Survival)].isPressed(mousePos))
 	{
-		info._mode = gameMode::Survival;
+		m_info._mode = gameMode::Survival;
 		m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
 	}
 }
 
-void MenuScreen::numOfPlayersPress(sf::Vector2f mousePos, gameInfo& info)
+void MenuScreen::numOfPlayersPress(sf::Vector2f mousePos)
 {
 	if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Solo)].isPressed(mousePos))
 	{
-		info._numOfPlayers = 1;
-		info._receive = receiveInfo::Solo;
-		info._screen = Screen::game;
-		info._newGame = true;
+		m_info._numOfPlayers = 1;
+		m_info._receive = receiveInfo::Solo;
+		m_info._screen = Screen::game;
+		m_info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Duo)].isPressed(mousePos))
 	{
-		info._numOfPlayers = 2;
+		m_info._numOfPlayers = 2;
 		m_wantedMenu = static_cast<int>(menuNames::connection);
 	}
 }
 
-void MenuScreen::connectionPress(sf::Vector2f mousePos, gameInfo& info)
+void MenuScreen::connectionPress(sf::Vector2f mousePos)
 {
 	if (m_buttons[m_wantedMenu][int(buttonNames::SamePC)].isPressed(mousePos))
 	{
-		info._receive = receiveInfo::SamePc;
-		info._screen = Screen::game;
-		info._newGame = true;
+		m_info._receive = receiveInfo::SamePc;
+		m_info._screen = Screen::game;
+		m_info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 	}
 	else if (m_buttons[m_wantedMenu][int(buttonNames::Online)].isPressed(mousePos))
 	{
-		info._receive = receiveInfo::Online;
-		info._screen = Screen::game;
-		info._newGame = true;
+		m_info._receive = receiveInfo::Online;
+		m_info._screen = Screen::game;
+		m_info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 	}
 }
