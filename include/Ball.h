@@ -18,7 +18,7 @@ public:
 	void split();
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	const sf::Vector2f getPos() const	{ return m_ball.getPosition(); }
-	void updatePos();
+	void update();
 	void colorBall();			//debug
 
 private:
