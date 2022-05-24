@@ -17,10 +17,10 @@ void Board::setWorld()
 void Board::createBoard()
 {	
 	auto height = windowHieght - thickness - barHeight;
-	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height) });			//floor
-	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f)});				//ceiling
-	m_tiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f)});						//left wall
-	m_tiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f)});	//right wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height), FLOOR});			//floor
+	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f),FLOOR});				//ceiling
+	m_tiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f), WALL});						//left wall
+	m_tiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f), WALL});	//right wall
 }
 
 void Board::setLevel(int level)

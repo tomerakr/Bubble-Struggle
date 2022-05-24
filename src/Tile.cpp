@@ -18,4 +18,11 @@ Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int gr
 	fixtureDef.filter.groupIndex = group;
 
 	m_groundBody->CreateFixture(&fixtureDef);
+
+	if(group == WALL)
+		m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Wall));
+
+	if(group == FLOOR)
+		m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Floor));
+
 };

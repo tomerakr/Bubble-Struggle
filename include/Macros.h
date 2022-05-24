@@ -19,7 +19,7 @@ constexpr float RATIO = 30.f;			//??
 constexpr float METERS_PER_PIXLE = 1 / RATIO;	//??
 
 //---------------------------------------------------------
-constexpr int numOfObjects = 6;
+constexpr int numOfObjects = 8;
 enum class Objects
 {
 	Ball,
