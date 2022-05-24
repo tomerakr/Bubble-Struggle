@@ -12,7 +12,7 @@ class Board;
 class Bear : public MovingObject
 {
 public:
-	Bear(sf::Vector2f pos, Objects texture = Objects::Bear);
+	Bear(sf::Vector2f pos, Board* board, Objects texture = Objects::Bear);
 	void jump();
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
 	sf::Keyboard::Key getKeys(Keys key) { return m_keys[static_cast<int>(key)]; }
