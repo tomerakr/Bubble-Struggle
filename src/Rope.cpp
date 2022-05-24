@@ -1,7 +1,7 @@
 #include "Rope.h"
 
 constexpr float ropeHeightChange = 1.5;
-constexpr float maxRopeHeight = -650;
+constexpr float maxRopeHeight = -(windowHieght - barHeight - thickness);
 
 Rope::Rope(sf::Vector2f pos, sf::Vector2f size, Objects ropeTexture, Board* board)
 	:MovingObject(pos, size, ropeTexture, sf::Color::White), m_board(board)
@@ -19,7 +19,7 @@ Rope::Rope(sf::Vector2f pos, sf::Vector2f size, Objects ropeTexture, Board* boar
 
 	m_box2DRope->CreateFixture(&fixtureDef);
 
-	m_box2DRope->SetTransform(b2Vec2(m_box2DRope->GetPosition().x, 1200), 0);	// position is center of rectangle
+	m_box2DRope->SetTransform(b2Vec2(m_box2DRope->GetPosition().x - size.x /2, 1200), 0);	// position is center of rectangle
 }
 
 void Rope::followBear(const sf::Vector2f bearPos)
@@ -28,7 +28,7 @@ void Rope::followBear(const sf::Vector2f bearPos)
 	{
 		m_icon.setPosition(bearPos);
 
-		m_box2DRope->SetTransform(b2Vec2(bearPos.x, m_icon.getPosition().y + 400), 0);
+		m_box2DRope->SetTransform(b2Vec2(bearPos.x + m_icon.getSize().x / 2, m_icon.getPosition().y + 400), 0);
 
 		resetSize();
 
@@ -38,8 +38,6 @@ void Rope::followBear(const sf::Vector2f bearPos)
 
 void Rope::update()
 {
-
-
 	if (m_isShot)
 	{
 		m_icon.setSize(sf::Vector2f(m_icon.getSize().x, m_icon.getSize().y - ropeHeightChange)); // make rope longer
