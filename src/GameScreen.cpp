@@ -30,7 +30,7 @@ void GameScreen::game(gameInfo& info)
 
 	for (int i = 0; i < info._numOfPlayers; ++i)
 	{
-		m_bears.emplace_back(Bear{sf::Vector2f(xPos * (i + 1), yPos), m_objects[i % info._numOfPlayers]});
+		m_bears.emplace_back(Bear{sf::Vector2f(xPos * (i + 1), yPos), m_board ,m_objects[i % info._numOfPlayers]});
 		m_bears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
 	}
 	
