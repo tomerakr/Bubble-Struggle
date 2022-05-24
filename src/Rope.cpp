@@ -16,6 +16,7 @@ Rope::Rope(sf::Vector2f pos, sf::Vector2f size, Objects ropeTexture, Board* boar
 	
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &ropeRectangle;
+	fixtureDef.filter.groupIndex = ROPE_FILTER;
 
 	m_box2DRope->CreateFixture(&fixtureDef);
 
@@ -47,6 +48,12 @@ void Rope::update()
 	}
 
 	if (m_icon.getSize().y < maxRopeHeight)					// if rope height is too long stop increasing height
+	{
+		m_isShot = false;
+		resetSize();
+	}
+
+	for (b2ContactEdge* edge = m_box2DRope->GetContactList(); edge; edge = edge->next)
 	{
 		m_isShot = false;
 		resetSize();
