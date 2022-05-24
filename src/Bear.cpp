@@ -2,9 +2,9 @@
 #include "Board.h"
 
 
-Bear::Bear(sf::Vector2f pos, Objects texture)
+Bear::Bear(sf::Vector2f pos, Board* board, Objects texture)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), texture), m_ropeTexture((texture == Objects::Bear ? Objects::HoneyRope : Objects::BambooRope)),
-	m_gun(m_ropeTexture)
+	m_gun(m_ropeTexture, m_icon.getPosition(), board)
 {
 	m_icon.setFillColor(sf::Color::White);
 	m_icon.setTexture(Resources::instance().getObjectTexture(texture));
