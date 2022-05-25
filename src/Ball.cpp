@@ -33,7 +33,7 @@ void Ball::setBall2D(const b2Vec2 initialForce)
     fixtureDef.density = 1;
     fixtureDef.friction = 0;
     fixtureDef.restitution = 1.f;
-    fixtureDef.filter.groupIndex = -1;
+    fixtureDef.filter.groupIndex = BALL_FILTER;
 
     m_body->CreateFixture(&fixtureDef);
 }
@@ -51,18 +51,6 @@ void Ball::update()
 {
     auto pos = m_body->GetPosition();
     m_ball.setPosition(pos.x, pos.y);
-
-    //--
-    for (b2ContactEdge* edge = m_body->GetContactList(); edge; edge = edge->next)
-    {
-        if (edge->contact->GetFixtureA()->GetFilterData().groupIndex == ROPE_FILTER)
-        {
-            m_popped = true;
-            auto ropeData = edge->contact->GetFixtureA()->GetUserData();
-            break;
-        }
-    }
-    //--
 }
 
 //Ball::~Ball() //does not work for some reason?

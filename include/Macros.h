@@ -12,9 +12,11 @@ constexpr int bearHieght = 120;
 //constexpr sf::Vector2f left = sf::Vector2f(-1, 0);
 //constexpr sf::Vector2f right = sf::Vector2f(1, 0);
 
+constexpr int BALL_FILTER = -1;
 constexpr int FLOOR = -2;
 constexpr int WALL = -3;
 constexpr int ROPE_FILTER = -4;
+const int POPPED_BALL_FILTER = -5;
 
 constexpr float RATIO = 30.f;			//??
 constexpr float METERS_PER_PIXLE = 1 / RATIO;	//??
