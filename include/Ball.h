@@ -19,7 +19,6 @@ public:
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	const sf::Vector2f getPos() const	{ return m_ball.getPosition(); }
 	void update();
-	void colorBall();			//debug
 
 private:
 	void setBall2D(const b2Vec2 initialForce);

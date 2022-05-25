@@ -52,22 +52,17 @@ void Ball::update()
     auto pos = m_body->GetPosition();
     m_ball.setPosition(pos.x, pos.y);
 
+    //--
     for (b2ContactEdge* edge = m_body->GetContactList(); edge; edge = edge->next)
     {
         if (edge->contact->GetFixtureA()->GetFilterData().groupIndex == ROPE_FILTER)
         {
             m_popped = true;
             auto ropeData = edge->contact->GetFixtureA()->GetUserData();
-
+            break;
         }
     }
-}
-
-void Ball::colorBall() //for DEBUG
-{
-    srand(time(NULL));
-
-    m_ball.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
+    //--
 }
 
 //Ball::~Ball() //does not work for some reason?

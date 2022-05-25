@@ -12,7 +12,7 @@ Rope::Rope(sf::Vector2f pos, sf::Vector2f size, Objects ropeTexture, Board* boar
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
 
 	b2PolygonShape ropeRectangle;
-	ropeRectangle.SetAsBox(m_icon.getSize().x / 2, 400);		
+	ropeRectangle.SetAsBox(m_icon.getSize().x / 2, 400);
 	
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &ropeRectangle;
@@ -25,16 +25,15 @@ Rope::Rope(sf::Vector2f pos, sf::Vector2f size, Objects ropeTexture, Board* boar
 
 void Rope::followBear(const sf::Vector2f bearPos)
 {
-	if (!m_isShot)					//	follow bear if not shot already
+	if (m_isShot)
 	{
-		m_icon.setPosition(bearPos);
-
-		m_box2DRope->SetTransform(b2Vec2(bearPos.x + m_icon.getSize().x / 2, m_icon.getPosition().y + 400), 0);
-
-		resetSize();
-
-		m_isShot = true;
+		return;
 	}
+
+	m_icon.setPosition(bearPos);
+	m_box2DRope->SetTransform(b2Vec2(bearPos.x + m_icon.getSize().x / 2, m_icon.getPosition().y + 400), 0);
+	resetSize();
+	m_isShot = true;
 }
 
 void Rope::update()
@@ -63,6 +62,5 @@ void Rope::update()
 void Rope::resetSize()
 {
 	m_icon.setSize(sf::Vector2f(m_icon.getSize().x, 0));
-
 	m_box2DRope->SetTransform(b2Vec2(m_box2DRope->GetPosition().x, 1200), 0);
 }

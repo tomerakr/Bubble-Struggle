@@ -24,3 +24,23 @@ void Ball::collision(Board* b)
         }
     }
 }
+
+//================== B A L L ==================
+void colorBall();			//debug
+void Ball::colorBall() //for DEBUG
+{
+    srand(time(NULL));
+
+    m_ball.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
+}
+
+
+//================== B O A R D ==================
+void colorBalll();
+void Board::colorBalll()
+{
+    for (int i = 0; i < m_balls.size(); ++i)
+    {
+        m_balls[i].colorBall();
+    }
+}
