@@ -8,7 +8,6 @@
 #include "Ball.h"
 #include "Tile.h"
 
-
 class Controller;
 
 class Board
