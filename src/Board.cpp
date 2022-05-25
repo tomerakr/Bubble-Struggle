@@ -56,16 +56,7 @@ void Board::setLevel(int level)
 	}
 }
 
-//--------------- FOR DEBUG -----------------
-void Board::colorBalll() 
-{
-	for (int i = 0; i < m_balls.size(); ++i)
-	{
-		m_balls[i].colorBall();
-	}
-}
 //-------------------------------------------
-
 void Board::draw(sf::RenderWindow& window)
 {
 	for (auto& ball : m_balls)
