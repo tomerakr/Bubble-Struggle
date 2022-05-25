@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <vector>
+class Board;
 
 class Gun
 {
@@ -13,6 +14,7 @@ public:
 
 private:
 	std::vector<Rope> m_ropes;
-	int m_maxNumRopes = 1;
-
+	int m_maxRopes = 1;
+	Board* m_board;
+	Objects m_ropeTexture;
 };

@@ -1,4 +1,4 @@
-﻿target_include_directories (${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+﻿//target_include_directories (${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 
 target_sources (${CMAKE_PROJECT_NAME} PRIVATE "Animation.h"
 											  "Ball.h"
@@ -7,8 +7,11 @@ target_sources (${CMAKE_PROJECT_NAME} PRIVATE "Animation.h"
 											  "Button.h"
 											  "Controller.h"
 											  "GameObject.h"
+											  "GameScreen.h"
+											  "Gun.h"
 											  "LevelCreator.h"
 											  "Macros.h"
+											  "MenuScreen.h"
 											  "MovingObject.h"
 											  "Resources.h"
 											  "Rope.h"
