@@ -10,6 +10,7 @@ class OnlineInput : public Input
 {
 public:
 	OnlineInput();
+	//~OnlineInput() = default;
 	std::pair<sf::Vector2f, bool> getInput(std::vector<sf::Keyboard::Key> keys);
 
 private:

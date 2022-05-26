@@ -14,7 +14,7 @@ class Board;
 class Bear : public MovingObject
 {
 public:
-	Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, Objects texture = Objects::Bear);
+	Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureIndex);
 	void jump();
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
 	const sf::Vector2f getPos() const;
@@ -24,7 +24,7 @@ public:
 private:
 	std::unique_ptr<Input> m_getInput = nullptr;
 	bool m_online;
-	Objects m_ropeTexture; //must be before gun
+	int m_ropeTexture; //must be before gun
 	Gun m_gun;
 	std::vector<sf::Keyboard::Key> m_keys;
 };

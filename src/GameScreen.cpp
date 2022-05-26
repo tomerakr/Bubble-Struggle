@@ -7,15 +7,15 @@ GameScreen::GameScreen(Window* window, Board* board)
 	: m_window(window), m_board(board)
 {
 	auto keys = std::vector<sf::Keyboard::Key>();
-	keys.push_back(sf::Keyboard::A);
-	keys.push_back(sf::Keyboard::D);
-	keys.push_back(sf::Keyboard::LControl);
-	m_keys.push_back(keys);
-
-	keys.clear();
 	keys.push_back(sf::Keyboard::Left);
 	keys.push_back(sf::Keyboard::Right);
 	keys.push_back(sf::Keyboard::Space);
+	m_keys.push_back(keys);
+
+	keys.clear();
+	keys.push_back(sf::Keyboard::A);
+	keys.push_back(sf::Keyboard::D);
+	keys.push_back(sf::Keyboard::LControl);
 	m_keys.push_back(keys);
 
 	m_objects.push_back(Objects::Bear);
@@ -27,11 +27,13 @@ void GameScreen::game(gameInfo& info)
 	m_bears.clear();
 	auto xPos = windowWitdh / (info._numOfPlayers + 1);
 	auto yPos = windowHieght - barHeight - bearHieght - thickness;
-
-	for (int i = 0; i < info._numOfPlayers; ++i)
+	auto textureIndex = info._skinIndex;
+	for (int i = info._numOfPlayers; i > 0; --i)
 	{
-		m_bears.emplace_back(Bear{sf::Vector2f(xPos * (i + 1), yPos), m_board, info._receive, m_objects[i % info._numOfPlayers]});
+		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), m_board, info._receive, textureIndex });
 		m_bears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
+		textureIndex = --textureIndex % numOfSkins;
+		textureIndex = (textureIndex == -1 ? numOfSkins - 1 : textureIndex);
 	}
 }
 

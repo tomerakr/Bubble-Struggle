@@ -10,7 +10,7 @@
 class Rope : public MovingObject
 {
 public:
-	Rope(sf::Vector2f bearPos, Objects ropeTexture, Board* board);
+	Rope(sf::Vector2f bearPos, int ropeTexture, Board* board);
 	void setFreeze();
 	void update();
 	bool isDone() { return m_done; }

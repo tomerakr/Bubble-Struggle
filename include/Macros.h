@@ -22,15 +22,17 @@ constexpr float RATIO = 30.f;			//??
 constexpr float METERS_PER_PIXLE = 1 / RATIO;	//??
 
 //---------------------------------------------------------
-constexpr int numOfObjects = 6;
+constexpr int numOfObjects = 8;
 enum class Objects
 {
 	Ball,
 	Bear,
 	Panda,
+	Polar,
 	Button,
 	HoneyRope, 
-	BambooRope, 
+	BambooRope,
+	PolarRope,
 	Floor,
 	Wall,
 	GiftFreeze,
@@ -38,10 +40,12 @@ enum class Objects
 	GiftTime
 };
 
-constexpr int numOfBackgrounds = 1;
+constexpr int numOfBackgrounds = 3;
 enum class Backgrounds
 {
-	Menu,
+	BearMenu,
+	PandaMenu,
+	PolarMenu,
 };
 
 constexpr int numOfScreens = 3;
@@ -73,6 +77,14 @@ enum class Keys
 };
 //---------------------------------------------------------
 
+struct Skin
+{
+	Objects _bear;
+	Objects _rope;
+	Backgrounds _background;
+};
+constexpr int numOfSkins = 3;
+
 struct gameInfo
 {
 	Screen _screen;
@@ -80,4 +92,6 @@ struct gameInfo
 	unsigned int _numOfPlayers;
 	receiveInfo _receive;
 	bool _newGame;
+	Skin _skin;
+	int _skinIndex;
 };

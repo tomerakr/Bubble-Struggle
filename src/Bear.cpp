@@ -3,28 +3,24 @@
 #include "PcInput.h"
 #include "OnlineInput.h"
 
-Bear::Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, Objects texture)
-	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), texture), m_gun(m_ropeTexture, board),
-	m_ropeTexture((texture == Objects::Bear ? Objects::HoneyRope : Objects::BambooRope))
+Bear::Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureIndex)
+	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), Resources::instance().getSkin(textureIndex)._bear), m_gun(textureIndex, board)
 {
 	m_icon.setFillColor(sf::Color::White);
-	m_icon.setTexture(Resources::instance().getObjectTexture(texture));
+	m_icon.setTexture(Resources::instance().getObjectTexture(Resources::instance().getSkin(textureIndex)._bear));
 
 	switch (readInput)
 	{
 	case receiveInfo::Solo:
 	case receiveInfo::SamePc:
-	{
 		m_getInput = std::make_unique<PcInput>();
 		break;
-	}
+
 	case receiveInfo::Online:
-	{
 		m_getInput = std::make_unique<OnlineInput>();
 		break;
-	}
+
 	default:
-		m_getInput = std::make_unique<PcInput>();
 		break;
 	}
 }

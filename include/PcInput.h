@@ -9,6 +9,7 @@ class PcInput : public Input
 {
 public:
 	PcInput() = default;
+	//~PcInput() = default;
 	std::pair<sf::Vector2f, bool> getInput(std::vector<sf::Keyboard::Key> keys) override;
 
 private:

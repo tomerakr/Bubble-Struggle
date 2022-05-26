@@ -1,7 +1,7 @@
 #include "Gun.h"
 
 // start game with one default rope
-Gun::Gun(Objects ropeTexture, Board* board)
+Gun::Gun(int ropeTexture, Board* board)
 	: m_board(board), m_ropeTexture(ropeTexture)
 {}
 

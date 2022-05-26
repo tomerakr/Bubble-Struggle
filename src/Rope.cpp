@@ -3,10 +3,10 @@
 constexpr float ropeHeightChange = 1.5;
 constexpr float maxRopeHeight = -(windowHieght - barHeight - thickness);
 
-Rope::Rope(sf::Vector2f bearPos, Objects ropeTexture, Board* board)
-	:MovingObject(bearPos, sf::Vector2f(ropeWitdh, ropeHeight), ropeTexture, sf::Color::White), m_board(board)
+Rope::Rope(sf::Vector2f bearPos, int ropeTexture, Board* board)
+	:MovingObject(bearPos, sf::Vector2f(ropeWitdh, ropeHeight), Resources::instance().getSkin(ropeTexture)._rope, sf::Color::White), m_board(board)
 {
-	m_icon.setTexture(Resources::instance().getObjectTexture(ropeTexture));
+	m_icon.setTexture(Resources::instance().getObjectTexture(Resources::instance().getSkin(ropeTexture)._rope));
 
 	b2BodyDef bodyDef;	
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
