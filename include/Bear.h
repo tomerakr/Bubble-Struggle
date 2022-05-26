@@ -6,21 +6,24 @@
 #include "Gun.h"
 #include "Rope.h"
 #include <vector>
+#include "Input.h"
 
 class Board;
+//class Input;
 
 class Bear : public MovingObject
 {
 public:
-	Bear(sf::Vector2f pos, Board* board, Objects texture = Objects::Bear);
+	Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, Objects texture = Objects::Bear);
 	void jump();
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
-	sf::Keyboard::Key getKeys(Keys key) { return m_keys[static_cast<int>(key)]; }
 	const sf::Vector2f getPos() const;
-	void update(float deltaTime, const sf::Vector2f direction, bool shoot);
+	void update(float deltaTime);
 	void drawRopes(sf::RenderWindow& window);
 
 private:
+	std::unique_ptr<Input> m_getInput = nullptr;
+	bool m_online;
 	Objects m_ropeTexture; //must be before gun
 	Gun m_gun;
 	std::vector<sf::Keyboard::Key> m_keys;

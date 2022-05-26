@@ -9,10 +9,13 @@
                                               "Window.cpp"
                                               "MenuScreen.cpp"
                                               "GameScreen.cpp"
+                                              "LevelCreator.cpp"
                                               "Tile.cpp"
                                               "Controller.cpp" 
                                               "Rope.cpp"
                                               "Resources.cpp"
                                               "Gun.cpp"
+                                              "PcInput.cpp"
+                                              "OnlineInput.cpp"
                                               "ContactListener.cpp"
                                               )
