@@ -5,11 +5,18 @@
 class Timer
 {
 public:
-	Timer();
+	Timer(float time);
+	void update();
+	std::pair<int, int> timeToInt();
 	const int getTimeLeft(); //in seconds
 
+
+
 private:
-	sf::Time m_time;
 	sf::Clock m_clock;
+	sf::Time m_time;
+
+	sf::Text m_timeText;
+	float m_levelTime;
 };
 

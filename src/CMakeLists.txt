@@ -10,6 +10,7 @@
                                               "MenuScreen.cpp"
                                               "GameScreen.cpp"
                                               "Tile.cpp"
+                                              "Timer.cpp"
                                               "Controller.cpp" 
                                               "Rope.cpp"
                                               "Resources.cpp"

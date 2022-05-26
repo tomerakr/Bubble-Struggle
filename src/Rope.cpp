@@ -31,7 +31,6 @@ void Rope::update()
 	m_icon.setSize(sf::Vector2f(m_icon.getSize().x, m_icon.getSize().y - ropeHeightChange)); // make rope longer
 	m_box2DRope->DestroyFixture(m_box2DRope->GetFixtureList());
 	setFixture(b2Vec2(m_icon.getSize().x / 2, -m_icon.getSize().y));
-	
 	for (b2ContactEdge* edge = m_box2DRope->GetContactList(); edge; edge = edge->next)
 	{
 		if (edge->contact->GetFixtureB()->GetFilterData().groupIndex == BALL_FILTER)
@@ -41,6 +40,7 @@ void Rope::update()
 			edge->contact->GetFixtureB()->SetFilterData(filter);
 			m_done = true;
 			m_board->getWorld()->DestroyBody(m_box2DRope); //why we cant in destructor
+			
 			break;
 		}
 		else if (edge->contact->GetFixtureB()->GetFilterData().groupIndex == FLOOR)
