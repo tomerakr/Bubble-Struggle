@@ -7,6 +7,7 @@
 #include <string>
 #include "Ball.h"
 #include "Tile.h"
+#include "ContactListener.h"
 
 class Controller;
 

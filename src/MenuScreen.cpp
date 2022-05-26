@@ -1,5 +1,4 @@
 #include "MenuScreen.h"
-#include "Window.h"
 
 constexpr int maxButtonInMenu = 5; //change to function
 
@@ -8,7 +7,8 @@ MenuScreen::MenuScreen(Window* window)
 {
 	createButton();
 	m_background.setSize(sf::Vector2f(windowWitdh, windowHieght));
-	m_background.setTexture(Resources::instance().getBackgroundTexture(Backgrounds::Menu));
+	m_background.setTexture(Resources::instance().getBackgroundTexture(Backgrounds::BearMenu));
+	m_info._skinIndex = 0;
 }
 
 void MenuScreen::createButton()
@@ -165,6 +165,13 @@ void MenuScreen::handleKeyboard()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
+	}
+	else if (auto right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		m_info._skinIndex = (m_info._skinIndex + (right ? 1 : -1)) % numOfSkins;
+		m_info._skinIndex = (m_info._skinIndex == -1 ? numOfSkins - 1 : m_info._skinIndex);
+		m_info._skin = Resources::instance().getSkin(m_info._skinIndex);
+		m_background.setTexture(Resources::instance().getBackgroundTexture(m_info._skin._background));
 	}
 }
 

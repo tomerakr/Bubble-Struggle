@@ -7,7 +7,7 @@ class Board;
 class Gun
 {
 public:
-	Gun(Objects ropeTexture, Board* board);
+	Gun(int ropeTexture, Board* board);
 	void shoot(const sf::Vector2f bearPos);
 	void update();
 	void drawRopes(sf::RenderWindow& window);
@@ -16,5 +16,5 @@ private:
 	std::vector<Rope> m_ropes;
 	int m_maxRopes = 1;
 	Board* m_board;
-	Objects m_ropeTexture;
+	int m_ropeTexture;
 };

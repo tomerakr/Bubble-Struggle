@@ -2,6 +2,9 @@
 
 #include <vector>
 #include "Button.h"
+#include "Window.h"
+#include "Macros.h"
+#include "Resources.h"
 #include "SFML/Graphics.hpp"
 
 class Window;
