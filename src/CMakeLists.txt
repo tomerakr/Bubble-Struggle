@@ -17,4 +17,5 @@
                                               "Gun.cpp"
                                               "PcInput.cpp"
                                               "OnlineInput.cpp"
+                                              "ContactListener.cpp"
                                               )

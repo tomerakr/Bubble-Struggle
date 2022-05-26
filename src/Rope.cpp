@@ -32,26 +32,29 @@ void Rope::update()
 	m_box2DRope->DestroyFixture(m_box2DRope->GetFixtureList());
 	setFixture(b2Vec2(m_icon.getSize().x / 2, -m_icon.getSize().y));
 	
-	for (b2ContactEdge* edge = m_box2DRope->GetContactList(); edge; edge = edge->next)
-	{
-		if (edge->contact->GetFixtureB()->GetFilterData().groupIndex == BALL_FILTER)
-		{
-			b2Filter filter;
-			filter.groupIndex = POPPED_BALL_FILTER;
-			edge->contact->GetFixtureB()->SetFilterData(filter);
-			m_done = true;
-			m_board->getWorld()->DestroyBody(m_box2DRope); //why we cant in destructor
-			break;
-		}
-		else if (edge->contact->GetFixtureB()->GetFilterData().groupIndex == FLOOR)
-		{
-			m_done = true;
-			m_board->getWorld()->DestroyBody(m_box2DRope);
-			break;
-		}
-	}
+	//for (b2ContactEdge* edge = m_box2DRope->GetContactList(); edge; edge = edge->next)
+	//{
+	//	if (edge->contact->GetFixtureB()->GetFilterData().groupIndex == BALL_FILTER)
+	//	{
+	//		b2Filter filter;
+	//		filter.groupIndex = POPPED_BALL_FILTER;
+	//		edge->contact->GetFixtureB()->SetFilterData(filter);
+	//		m_done = true;
+	//		m_board->getWorld()->DestroyBody(m_box2DRope); //why we cant in destructor
+	//		break;
+	//	}
+	//	else if (edge->contact->GetFixtureB()->GetFilterData().groupIndex == FLOOR)
+	//	{
+	//		m_done = true;
+	//		m_board->getWorld()->DestroyBody(m_box2DRope);
+	//		break;
+	//	}
+	//}
 
-	if (m_icon.getSize().y < maxRopeHeight)					// if rope height is too long stop increasing height
+	b2Filter destroyObjects;
+	destroyObjects.groupIndex = POPPED_BALL_FILTER;
+
+	if (m_icon.getSize().y < maxRopeHeight || m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == destroyObjects.groupIndex)					// if rope height is too long stop increasing height
 	{
 		m_done = true;
 		m_board->getWorld()->DestroyBody(m_box2DRope);
