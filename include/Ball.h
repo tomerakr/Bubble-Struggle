@@ -13,10 +13,11 @@ class Ball
 public:
 	Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, const int index = 0);
 	//~Ball();
-	//void pop()							{ m_popped = true; }
+	void pop()							{ m_popped = true; }
+	bool popped() { return m_popped; }
 	const bool needToDelete() const		
 	{
-		return (m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER) || m_ball.getRadius() < 10;
+		return ((m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER) || m_ball.getRadius() < 10);
 	}
 	void split();
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
@@ -26,7 +27,7 @@ public:
 private:
 	void setBall2D(const b2Vec2 initialForce);
 	sf::CircleShape m_ball;
-	//bool m_popped = false;
+	bool m_popped = false;
 	int m_index;
 	Board* m_board;
 

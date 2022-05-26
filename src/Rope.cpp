@@ -28,9 +28,19 @@ void Rope::setFixture(b2Vec2 size)
 
 void Rope::update()
 {
-	m_icon.setSize(sf::Vector2f(m_icon.getSize().x, m_icon.getSize().y - ropeHeightChange)); // make rope longer
-	m_box2DRope->DestroyFixture(m_box2DRope->GetFixtureList());
-	setFixture(b2Vec2(m_icon.getSize().x / 2, -m_icon.getSize().y));
+
+	if (m_icon.getSize().y < maxRopeHeight || m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)		// if rope height is too long stop increasing height
+	{
+		m_done = true;
+		m_board->getWorld()->DestroyBody(m_box2DRope);
+	}
+	else
+	{
+		m_icon.setSize(sf::Vector2f(m_icon.getSize().x, m_icon.getSize().y - ropeHeightChange)); // make rope longer
+		m_box2DRope->DestroyFixture(m_box2DRope->GetFixtureList());
+		setFixture(b2Vec2(m_icon.getSize().x / 2, -m_icon.getSize().y));
+	}
+
 	
 	//for (b2ContactEdge* edge = m_box2DRope->GetContactList(); edge; edge = edge->next)
 	//{
@@ -51,12 +61,5 @@ void Rope::update()
 	//	}
 	//}
 
-	b2Filter destroyObjects;
-	destroyObjects.groupIndex = POPPED_BALL_FILTER;
 
-	if (m_icon.getSize().y < maxRopeHeight || m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == destroyObjects.groupIndex)					// if rope height is too long stop increasing height
-	{
-		m_done = true;
-		m_board->getWorld()->DestroyBody(m_box2DRope);
-	}
 }

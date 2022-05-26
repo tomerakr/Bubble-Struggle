@@ -80,11 +80,12 @@ void Board::update()
 
 		if (ball.needToDelete())
 		{
+			ball.pop();
 			ball.split();
 			break;
 		}
 	}
-	std::erase_if(m_balls, [](const auto& ball) { return ball.needToDelete(); });
+	std::erase_if(m_balls, [](auto& ball) { return ball.popped(); });
 }
 
 void Board::addBalls(const sf::Vector2f pos, const int index)
