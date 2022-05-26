@@ -12,6 +12,7 @@ void Board::setWorld()
 {
 	b2Vec2 gravity(0.0f, 10.0f);
 	m_world = std::make_unique<b2World>(gravity);
+	m_world->SetContactListener(new ContactListener());
 }
 
 void Board::createBoard()

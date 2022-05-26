@@ -14,4 +14,5 @@
                                               "Rope.cpp"
                                               "Resources.cpp"
                                               "Gun.cpp"
+                                              "ContactListener.cpp"
                                               )
