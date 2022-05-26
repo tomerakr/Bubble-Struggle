@@ -16,7 +16,7 @@ void MenuScreen::createButton()
 	auto ySize = (windowHieght * (2.f / 3)) / (maxButtonInMenu + 1);
 	auto xSize = 300;
 	auto xPos = windowWitdh / 2.f;
-	auto yPos = windowHieght * (2.f / 5);
+	auto yPos = windowHieght * (4.f / 13);
 
 	for (int i = 0; i < m_buttonNames.size(); ++i)
 	{
