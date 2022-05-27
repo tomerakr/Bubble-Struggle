@@ -50,6 +50,17 @@ void Bear::update(float deltaTime)
 	m_box2DBear->SetTransform(b2Vec2(m_icon.getPosition().x + 30, m_icon.getPosition().y), 0);
 
 	m_gun.update();
+
+	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
+	{
+//			start level again
+		m_board->setLevel(1);
+
+//			reset filter fixture
+		b2Filter bearFilter;
+		bearFilter.groupIndex = BEAR_FILTER;
+		m_box2DBear->GetFixtureList()->SetFilterData(bearFilter);
+	}
 }
 
 void Bear::drawRopes(sf::RenderWindow& window)

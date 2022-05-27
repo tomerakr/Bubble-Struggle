@@ -30,12 +30,16 @@ void ContactListener::BeginContact(b2Contact* contact)
     }
 
 //      if ball collided with bear
-    if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
+    else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
         fixtureB->GetFilterData().groupIndex == BALL_FILTER ||
         fixtureA->GetFilterData().groupIndex == BALL_FILTER &&
         fixtureB->GetFilterData().groupIndex == BEAR_FILTER)
     {
         //  end game
         std::cout << "ball collided with bear" << std::endl;
+
+        b2Filter destroyObjects;
+        destroyObjects.groupIndex = POPPED_BALL_FILTER;
+        fixtureA->SetFilterData(destroyObjects);
     }
 }
