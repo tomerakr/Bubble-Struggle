@@ -27,5 +27,8 @@ private:
 	int m_ropeTexture; //must be before gun
 	Gun m_gun;
 	std::vector<sf::Keyboard::Key> m_keys;
+
+	b2Body* m_box2DBear = nullptr;
+	Board* m_board = nullptr;
 };
 
