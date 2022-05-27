@@ -23,7 +23,7 @@ void MenuScreen::createButton()
 		auto line = std::vector<Button>();
 		for (int j = 0; j < m_buttonNames[i].size(); ++j)
 		{
-			line.emplace_back(Button{ sf::Vector2f(xPos, yPos + (ySize + 10) * j), sf::Vector2f(xSize, ySize), m_buttonNames[i][j]});
+			line.emplace_back(Button{ sf::Vector2f(xPos, yPos + (ySize + 10) * j), sf::Vector2f(xSize, ySize), Objects::Button, m_buttonNames[i][j] });
 		}
 		m_buttons.push_back(line);
 	}
@@ -109,6 +109,10 @@ void MenuScreen::mainMenuPress(sf::Vector2f mousePos)
 	{
 		m_info._mode = gameMode::Survival;
 		m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
+	}
+	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::CreateLevel)].isPressed(mousePos))
+	{
+		m_info._screen = Screen::levelCreator;
 	}
 }
 

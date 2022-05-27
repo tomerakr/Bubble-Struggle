@@ -22,19 +22,23 @@ constexpr float RATIO = 30.f;			//??
 constexpr float METERS_PER_PIXLE = 1 / RATIO;	//??
 
 //---------------------------------------------------------
-constexpr int numOfObjects = 10;
+constexpr int numOfObjects = 14;
 enum class Objects
 {
 	Ball,
 	Bear,
 	Panda,
 	Polar,
-	Button,
 	HoneyRope, 
 	BambooRope,
 	PolarRope,
 	Floor,
 	Wall,
+	Button,
+	UndoButton,
+	EraseButton,
+	ClearButton,
+	SaveButton,
 	GiftFreeze,
 	GiftDoubleShot,
 	GiftTime

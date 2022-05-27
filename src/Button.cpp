@@ -1,14 +1,15 @@
 #include "Button.h"
 #include "Resources.h"
 
-Button::Button(const sf::Vector2f pos, const sf::Vector2f size, const std::string text)
-	:GameObject(pos, size, Objects::Button)
+Button::Button(const sf::Vector2f pos, const sf::Vector2f size, Objects texture, const std::string text)
+	:GameObject(pos, size, texture)
 {
 	auto iconSize = m_icon.getSize();
-	m_icon.setFillColor(sf::Color::White);
-	m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Button));
 	m_icon.setOrigin(iconSize.x / 2, iconSize.y / 2);
-	setText(text);
+	if (text.size() > 0)
+	{
+		setText(text);
+	}
 }
 
 void Button::setText(const std::string text)

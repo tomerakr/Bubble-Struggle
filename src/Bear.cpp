@@ -6,9 +6,6 @@
 Bear::Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureIndex)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), Resources::instance().getSkin(textureIndex)._bear), m_gun(textureIndex, board)
 {
-	m_icon.setFillColor(sf::Color::White);
-	m_icon.setTexture(Resources::instance().getObjectTexture(Resources::instance().getSkin(textureIndex)._bear));
-
 	switch (readInput)
 	{
 	case receiveInfo::Solo:

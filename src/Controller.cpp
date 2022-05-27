@@ -21,7 +21,7 @@ void Controller::play()
 			info._screen = m_game.gamePlay(info);
 			break;
 		case levelCreator:
-
+			info._screen = m_levelCreator.createLevel(&m_window);
 			break;
 		default:
 			break;
