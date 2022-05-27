@@ -17,6 +17,7 @@ constexpr int FLOOR = -2;
 constexpr int WALL = -3;
 constexpr int ROPE_FILTER = -4;
 const int POPPED_BALL_FILTER = -5;
+const int BEAR_FILTER = -6;
 
 constexpr float RATIO = 30.f;			//??
 constexpr float METERS_PER_PIXLE = 1 / RATIO;	//??

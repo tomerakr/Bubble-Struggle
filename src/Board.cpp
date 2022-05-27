@@ -15,6 +15,8 @@ void Board::setWorld()
 	m_world->SetContactListener(new ContactListener());
 }
 
+
+
 void Board::createBoard()
 {	
 	auto height = windowHieght - thickness - barHeight;

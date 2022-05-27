@@ -1,5 +1,6 @@
 #include "ContactListener.h"
 
+#include <iostream>
 
 void ContactListener::BeginContact(b2Contact* contact)
 {   
@@ -16,6 +17,7 @@ void ContactListener::BeginContact(b2Contact* contact)
         return;
     }
 
+//      if rope collided with ball
     if (fixtureA->GetFilterData().groupIndex == BALL_FILTER &&
         fixtureB->GetFilterData().groupIndex == ROPE_FILTER ||
         fixtureA->GetFilterData().groupIndex == ROPE_FILTER &&
@@ -25,5 +27,15 @@ void ContactListener::BeginContact(b2Contact* contact)
         destroyObjects.groupIndex = POPPED_BALL_FILTER;
         fixtureA->SetFilterData(destroyObjects);
         fixtureB->SetFilterData(destroyObjects);
+    }
+
+//      if ball collided with bear
+    if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
+        fixtureB->GetFilterData().groupIndex == BALL_FILTER ||
+        fixtureA->GetFilterData().groupIndex == BALL_FILTER &&
+        fixtureB->GetFilterData().groupIndex == BEAR_FILTER)
+    {
+        //  end game
+        std::cout << "ball collided with bear" << std::endl;
     }
 }
