@@ -1,8 +1,6 @@
 #include "Tile.h"
 #include "Board.h"
 
-
-
 Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int group)
 	:StaticObject(pos, size, (group == FLOOR ? Objects::Floor : Objects::Wall))
 {
@@ -18,11 +16,8 @@ Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int gr
 	fixtureDef.filter.groupIndex = group;
 
 	m_groundBody->CreateFixture(&fixtureDef);
-
-	if(group == WALL)
-		m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Wall));
-
-	if(group == FLOOR)
-		m_icon.setTexture(Resources::instance().getObjectTexture(Objects::Floor));
-
 };
+
+Tile::Tile(const sf::Vector2f& size, const sf::Vector2f& pos)
+	:StaticObject(pos, size, (size.x > size.y ? Objects::Floor : Objects::Wall))
+{}

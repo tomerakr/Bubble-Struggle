@@ -23,6 +23,7 @@ public:
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	const sf::Vector2f getPos() const	{ return m_ball.getPosition(); }
 	void update();
+	bool contains(const sf::Vector2f& mousePos) { return m_ball.getLocalBounds().contains(mousePos); }
 
 private:
 	void setBall2D(const b2Vec2 initialForce);

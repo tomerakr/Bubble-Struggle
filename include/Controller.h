@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "MenuScreen.h"
 #include "GameScreen.h"
+#include "LevelCreator.h"
 
 class Controller
 {
@@ -19,4 +20,5 @@ private:
 	Window m_window;
 	MenuScreen m_menu;
 	GameScreen m_game;
+	LevelCreator m_levelCreator;
 };
