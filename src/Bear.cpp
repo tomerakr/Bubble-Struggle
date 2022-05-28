@@ -54,7 +54,7 @@ std::pair<sf::Vector2f, bool> Bear::update(float deltaTime, std::pair<sf::Vector
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
 	{
 //			start level again
-		m_board->setLevel(1);
+		m_board->reset();
 
 //			reset filter fixture
 		b2Filter bearFilter;

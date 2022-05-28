@@ -33,6 +33,7 @@ private:
 	void setWorld();
 	std::vector<Ball> m_balls;
 	std::vector<Tile> m_tiles;
+	std::vector<Tile> m_baseTiles;
 	
 	//word definition
 	std::unique_ptr<b2World> m_world;
@@ -40,6 +41,6 @@ private:
 	float m_timeStep = 1.f / 60.f;
 	int32 m_velocityIteration = 6;
 	int32 m_positionIteration = 2;
-
+	int m_currLevel;
 	std::ifstream m_file;
 };

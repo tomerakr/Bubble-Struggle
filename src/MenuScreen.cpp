@@ -166,14 +166,19 @@ void MenuScreen::handleHover(sf::Vector2f mousePos)
 
 void MenuScreen::handleKeyboard()
 {
+	auto right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 	}
-	else if (auto right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	else if (right || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		m_info._skinIndex = (m_info._skinIndex + (right ? 1 : -1)) % numOfSkins;
-		m_info._skinIndex = (m_info._skinIndex == -1 ? numOfSkins - 1 : m_info._skinIndex);
+		if (m_info._skinIndex == -1)
+		{
+			m_info._skinIndex = numOfSkins - 1;
+		}
+
 		m_info._skin = Resources::instance().getSkin(m_info._skinIndex);
 		m_background.setTexture(Resources::instance().getBackgroundTexture(m_info._skin._background));
 	}

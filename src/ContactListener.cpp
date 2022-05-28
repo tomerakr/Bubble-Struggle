@@ -35,9 +35,6 @@ void ContactListener::BeginContact(b2Contact* contact)
         fixtureA->GetFilterData().groupIndex == BALL_FILTER &&
         fixtureB->GetFilterData().groupIndex == BEAR_FILTER)
     {
-        //  end game
-        std::cout << "ball collided with bear" << std::endl;
-
         b2Filter destroyObjects;
         destroyObjects.groupIndex = POPPED_BALL_FILTER;
         fixtureA->SetFilterData(destroyObjects);

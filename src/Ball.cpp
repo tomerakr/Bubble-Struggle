@@ -15,6 +15,20 @@ Ball::Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, cons
     setBall2D(initialForce);
 }
 
+Ball::Ball(const sf::Vector2f pos, const int index/*, int indentaion*/)
+{
+    m_ball.setTexture(Resources::instance().getObjectTexture(Objects::Ball));
+    m_ball.setRadius((defRadius - 10 * index));
+    m_ball.setOrigin(sf::Vector2f(m_ball.getRadius(), m_ball.getRadius()));
+    m_ball.setPosition(sf::Vector2f(pos.x, pos.y));
+    m_ball.setFillColor(Resources::instance().getColor(index));
+}
+
+void Ball::reset()
+{
+    m_board->getWorld()->DestroyBody(m_body);
+}
+
 void Ball::setBall2D(const b2Vec2 initialForce)
 {
     b2BodyDef bodyDef;
@@ -32,7 +46,7 @@ void Ball::setBall2D(const b2Vec2 initialForce)
     fixtureDef.shape = &m_ball2D;
     fixtureDef.density = 1;
     fixtureDef.friction = 0.f;
-    //fixtureDef.restitution = 1;
+    fixtureDef.restitution = 1;
     fixtureDef.filter.groupIndex = BALL_FILTER;
 
     m_body->CreateFixture(&fixtureDef);

@@ -2,7 +2,7 @@
 #include "Board.h"
 
 Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int group)
-	:StaticObject(pos, size, (group == FLOOR ? Objects::Floor : Objects::Wall))
+	:StaticObject(pos, size, (group == FLOOR ? Objects::Floor : Objects::Wall)), m_board(board)
 {
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(pos.x + size.x / 2, pos.y + size.y / 2);
@@ -21,3 +21,8 @@ Tile::Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, int gr
 Tile::Tile(const sf::Vector2f& size, const sf::Vector2f& pos)
 	:StaticObject(pos, size, (size.x > size.y ? Objects::Floor : Objects::Wall))
 {}
+
+void Tile::reset()
+{
+	m_board->getWorld()->DestroyBody(m_groundBody);
+}

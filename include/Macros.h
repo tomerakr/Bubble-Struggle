@@ -19,20 +19,19 @@ constexpr int ROPE_FILTER = -4;
 const int POPPED_BALL_FILTER = -5;
 const int BEAR_FILTER = -6;
 
-constexpr float RATIO = 30.f;			//??
-constexpr float METERS_PER_PIXLE = 1 / RATIO;	//??
-
 //---------------------------------------------------------
-constexpr int numOfObjects = 14;
+constexpr int numOfObjects = 16;
 enum class Objects
 {
 	Ball,
 	Bear,
 	Panda,
 	Polar,
-	HoneyRope, 
+	Pooh,
+	Rope,
 	BambooRope,
 	PolarRope,
+	HoneyRope, 
 	Floor,
 	Wall,
 	Button,
@@ -45,12 +44,14 @@ enum class Objects
 	GiftTime
 };
 
-constexpr int numOfBackgrounds = 3;
+constexpr int numOfBackgrounds = 5;
 enum class Backgrounds
 {
 	BearMenu,
 	PandaMenu,
 	PolarMenu,
+	PoohMenu,
+	GameBackground,
 };
 
 constexpr int numOfScreens = 3;
