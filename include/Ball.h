@@ -12,9 +12,11 @@ class Ball
 {
 public:
 	Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, const int index = 0);
+	Ball(const sf::Vector2f pos, const int index = 0);
 	//~Ball();
-	void pop()							{ m_popped = true; }
-	bool popped() { return m_popped; }
+	void reset();
+	void pop()		{ m_popped = true; }
+	bool popped()	{ return m_popped; }
 	const bool needToDelete() const		
 	{
 		return ((m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER) || m_ball.getRadius() < 10);
@@ -23,7 +25,7 @@ public:
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	const sf::Vector2f getPos() const	{ return m_ball.getPosition(); }
 	void update();
-	bool contains(const sf::Vector2f& mousePos) { return m_ball.getLocalBounds().contains(mousePos); }
+	bool contains(const sf::Vector2f& mousePos) { return m_ball.getGlobalBounds().contains(mousePos); }
 
 private:
 	void setBall2D(const b2Vec2 initialForce);

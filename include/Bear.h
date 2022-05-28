@@ -18,7 +18,7 @@ public:
 	void jump();
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
 	const sf::Vector2f getPos() const;
-	void update(float deltaTime);
+	std::pair<sf::Vector2f, bool> update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear);
 	void drawRopes(sf::RenderWindow& window);
 
 private:

@@ -29,9 +29,9 @@ private:
 
 
 	std::vector<sf::Texture> m_backgroundTextures;
-	std::vector<std::string> m_backgroundTextureNames = { "bearBackground.png", "pandaBackground.png", "polarBackground.png" };
+	std::vector<std::string> m_backgroundTextureNames = { "bearBackground.png", "pandaBackground.png", "polarBackground.png", "poohBackground.png"};
 	std::vector<sf::Texture> m_objectTextures;
-	std::vector<std::string> m_objectTextureNames = { "ball.png", "bear.png", "panda.png", "polarBear.png", "honeyRope.png", "bambooRope.png", "polarRope.png",
+	std::vector<std::string> m_objectTextureNames = { "ball.png", "bear.png", "panda.png", "polarBear.png", "pooh.png", "rope.png", "bambooRope.png", "polarRope.png", "honeyRope.png",
 		"floor.png", "wall.png", "button.png", "undo.png", "erase.png", "clear.png", "save.png" };
 
 	sf::Font m_font;

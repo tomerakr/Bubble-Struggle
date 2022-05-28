@@ -10,10 +10,12 @@ class Tile : public StaticObject
 public:
 	Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, const int group = 0);
 	Tile(const sf::Vector2f& size, const sf::Vector2f& pos);
+	void reset();
 	//void collision(Board* board);
-	bool contains(const sf::Vector2f& mousePos) { return m_icon.getLocalBounds().contains(mousePos); }
+	bool contains(const sf::Vector2f& mousePos) { return m_icon.getGlobalBounds().contains(mousePos); }
 
 private:
+	Board* m_board;
 	b2BodyDef m_groundBodyDef; //change name to tile
 	b2Body* m_groundBody;
 };

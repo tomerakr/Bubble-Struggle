@@ -7,6 +7,10 @@
 
 LevelCreator::LevelCreator()
 {
+	m_floorSize = sf::Vector2f(200, thickness);
+	m_wallSize = sf::Vector2f(thickness, 200);
+	m_ballIndex = 8;
+
 	createBaseTiles();
 	createBar();
 }
@@ -25,10 +29,16 @@ void LevelCreator::createBar()
 	m_bar.setFillColor(sf::Color(217, 239, 255));
 	m_bar.setSize(sf::Vector2f(windowWitdh, barHeight));
 	m_bar.setPosition(sf::Vector2f(0.f, windowHieght - barHeight));
-	m_buttons.emplace_back(Button{sf::Vector2f(800, windowHieght - barHeight / 2), sf::Vector2f(60, 60), Objects::UndoButton });
-	m_buttons.emplace_back(Button{sf::Vector2f(900, windowHieght - barHeight / 2), sf::Vector2f(60, 60), Objects::EraseButton });
-	m_buttons.emplace_back(Button{sf::Vector2f(1000, windowHieght - barHeight / 2), sf::Vector2f(60, 60), Objects::ClearButton });
-	m_buttons.emplace_back(Button{sf::Vector2f(1100, windowHieght - barHeight / 2), sf::Vector2f(60, 60), Objects::SaveButton });
+
+	auto height = windowHieght - barHeight / 2;
+
+	m_buttons.emplace_back(Button{sf::Vector2f(800, height), sf::Vector2f(60, 60), Objects::UndoButton });
+	m_buttons.emplace_back(Button{sf::Vector2f(900, height), sf::Vector2f(60, 60), Objects::EraseButton });
+	m_buttons.emplace_back(Button{sf::Vector2f(1000, height), sf::Vector2f(60, 60), Objects::ClearButton });
+	m_buttons.emplace_back(Button{sf::Vector2f(1100, height), sf::Vector2f(60, 60), Objects::SaveButton });
+	m_buttons.emplace_back(Button{sf::Vector2f(440, height), sf::Vector2f(60, 60), Objects::Ball});
+	m_buttons.emplace_back(Button{sf::Vector2f(50, height), sf::Vector2f(20, 70), Objects::Wall });
+	m_buttons.emplace_back(Button{sf::Vector2f(240, height), sf::Vector2f(100, 20), Objects::Floor });
 }
 
 Screen LevelCreator::createLevel(Window* window)
@@ -43,7 +53,7 @@ Screen LevelCreator::createLevel(Window* window)
 			break;
 
 		case sf::Event::MouseButtonReleased:
-			handleMouse();
+			handleMouse(window->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
 			break;
 
 		case sf::Event::KeyPressed:
@@ -74,7 +84,6 @@ void LevelCreator::erase(const sf::Vector2f& mousePos)
 		if (ball.first.contains(mousePos))
 		{
 			ball.second = true;
-			return;
 		}
 	}
 	for (auto& tile : m_tiles)
@@ -82,7 +91,6 @@ void LevelCreator::erase(const sf::Vector2f& mousePos)
 		if (tile.first.contains(mousePos))
 		{
 			tile.second = true;
-			return;
 		}
 	}
 	std::erase_if(m_balls, [](auto& ball) { return ball.second; });
@@ -91,12 +99,17 @@ void LevelCreator::erase(const sf::Vector2f& mousePos)
 
 void LevelCreator::undo()
 {
-	switch (m_lastAction)
+	if (m_lastAction.empty())
+	{
+		return;
+	}
+	switch (m_lastAction.front())
 	{
 	case lastAction::BALL:
 		if (m_balls.size() > 0)
 		{
 			m_balls.erase(--m_balls.end(), m_balls.end());
+			m_lastAction.pop();
 		}
 		break;
 
@@ -104,8 +117,8 @@ void LevelCreator::undo()
 		if (m_tiles.size() > 0)
 		{
 			m_tiles.erase(--m_tiles.end(), m_tiles.end());
+			m_lastAction.pop();
 		}
-
 		break;
 
 	default:
@@ -117,14 +130,68 @@ void LevelCreator::save()
 {
 }
 
-void LevelCreator::handleMouse()
+void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
 {
+	if (m_buttons[static_cast<int>(buttonNames::UNDO)].isPressed(mousePos))
+	{
+		undo();
+	}
+	else if (m_buttons[static_cast<int>(buttonNames::ERASE)].isPressed(mousePos))
+	{
+		m_action = buttonNames::ERASE;
+	}
+	else if (m_buttons[static_cast<int>(buttonNames::CLEAR)].isPressed(mousePos))
+	{
+		clear();
+	}
+	else if (m_buttons[static_cast<int>(buttonNames::SAVE)].isPressed(mousePos))
+	{
+		save();
+	}
+	else if (m_buttons[static_cast<int>(buttonNames::BALL)].isPressed(mousePos))
+	{
+		m_action = buttonNames::BALL;
+	}
+	else if (m_buttons[static_cast<int>(buttonNames::TILE)].isPressed(mousePos))
+	{
+		m_action = buttonNames::TILE;
+	}
+
+	if (inBoard(mousePos))
+	{
+		switch (m_action)
+		{
+		case buttonNames::BALL:
+			m_balls.push_back(std::make_pair(Ball{ sf::Vector2f(mousePos.x, mousePos.y), m_ballIndex }, false));
+			m_lastAction.push(lastAction::BALL);
+			break;
+
+		case buttonNames::TILE:
+			m_tiles.push_back(std::make_pair(Tile{ m_floorSize, sf::Vector2f(mousePos.x, mousePos.y) }, false));
+			m_lastAction.push(lastAction::TILE);
+			break;
+
+		case buttonNames::ERASE:
+			erase(mousePos);
+			break;
+
+		default:
+			break;
+		}
+	}
+}
+
+bool LevelCreator::inBoard(const sf::Vector2f& mousePos)
+{
+	return ((mousePos.x > thickness) && (mousePos.x < windowWitdh - thickness) &&
+		(mousePos.y > thickness) && (mousePos.y < windowHieght - barHeight - thickness));
 }
 
 void LevelCreator::draw(Window* window)
 {
 	window->clear();
 	window->getWindow().draw(m_bar);
+
 	for (auto& tile : m_baseTiles)
 	{
 		tile.draw(window->getWindow());

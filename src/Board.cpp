@@ -2,10 +2,11 @@
 #include "Controller.h"
 
 Board::Board()
+	:m_currLevel(1)
 {
 	setWorld();
 	createBoard();
-	setLevel(1);
+	setLevel(m_currLevel);
 }
 
 void Board::setWorld()
@@ -15,15 +16,13 @@ void Board::setWorld()
 	m_world->SetContactListener(new ContactListener());
 }
 
-
-
 void Board::createBoard()
 {	
 	auto height = windowHieght - thickness - barHeight;
-	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height), FLOOR});			//floor
-	m_tiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f),FLOOR});				//ceiling
-	m_tiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f), WALL});						//left wall
-	m_tiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f), WALL});	//right wall
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height), FLOOR});			//floor
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f), FLOOR});				//ceiling
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f), WALL});						//left wall
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f), WALL});	//right wall
 }
 
 void Board::setLevel(int level)
@@ -66,6 +65,10 @@ void Board::draw(sf::RenderWindow& window)
 	{
 		ball.draw(window);
 	}
+	for (auto& tile : m_baseTiles)
+	{
+		tile.draw(window);
+	}
 	for (auto& tile : m_tiles)
 	{
 		tile.draw(window);
@@ -88,6 +91,22 @@ void Board::update()
 		}
 	}
 	std::erase_if(m_balls, [](auto& ball) { return ball.popped(); });
+}
+
+void Board::reset()
+{
+	for (auto& ball : m_balls)
+	{
+		ball.reset();
+	}
+	for (auto& tile : m_tiles)
+	{
+		tile.reset();
+	}
+	m_balls.clear();
+	m_tiles.clear();
+
+	setLevel(m_currLevel);
 }
 
 void Board::addBalls(const sf::Vector2f pos, const int index)

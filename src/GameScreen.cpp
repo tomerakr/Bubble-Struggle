@@ -85,9 +85,10 @@ Screen GameScreen::gamePlay(gameInfo& info)
 void GameScreen::update(float deltaTime)
 {
 	m_board->update();
+	auto otherBear = std::make_pair(sf::Vector2f(), false);
 	for (auto& bear : m_bears)
 	{
-		bear.update(deltaTime);
+		otherBear = bear.update(deltaTime, otherBear);
 	}
 }
 

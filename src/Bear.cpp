@@ -23,9 +23,11 @@ Bear::Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureInd
 	}
 
 	b2BodyDef bodyDef;
+	bodyDef.position.Set(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2);
 	m_box2DBear = m_board->getWorld()->CreateBody(&bodyDef);
+
 	b2PolygonShape bearRectangle;
-	bearRectangle.SetAsBox(m_icon.getSize().x + 10, m_icon.getSize().y - 130);
+	bearRectangle.SetAsBox(m_icon.getSize().x / 2, m_icon.getSize().y / 2);
 	
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &bearRectangle;
@@ -34,9 +36,9 @@ Bear::Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureInd
 	m_box2DBear->CreateFixture(&fixtureDef);
 }
 
-void Bear::update(float deltaTime)
+std::pair<sf::Vector2f, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
 {
-	const auto& [direction, shoot] = m_getInput->getInput(m_keys);
+	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear });
 	move(deltaTime, direction);
 
 	if (shoot)
@@ -44,20 +46,22 @@ void Bear::update(float deltaTime)
 		m_gun.shoot(m_icon.getPosition());
 	}
 
-	m_box2DBear->SetTransform(b2Vec2(m_icon.getPosition().x + 30, m_icon.getPosition().y), 0);
+	auto pos = m_icon.getPosition();
+	m_box2DBear->SetTransform(b2Vec2(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2), 0);
 
 	m_gun.update();
 
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
 	{
 //			start level again
-		m_board->setLevel(1);
+		m_board->reset();
 
 //			reset filter fixture
 		b2Filter bearFilter;
 		bearFilter.groupIndex = BEAR_FILTER;
 		m_box2DBear->GetFixtureList()->SetFilterData(bearFilter);
 	}
+	return std::make_pair(direction, shoot);
 }
 
 void Bear::drawRopes(sf::RenderWindow& window)
