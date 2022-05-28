@@ -50,6 +50,17 @@ std::pair<sf::Vector2f, bool> Bear::update(float deltaTime, std::pair<sf::Vector
 	m_box2DBear->SetTransform(b2Vec2(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2), 0);
 
 	m_gun.update();
+
+	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
+	{
+//			start level again
+		m_board->setLevel(1);
+
+//			reset filter fixture
+		b2Filter bearFilter;
+		bearFilter.groupIndex = BEAR_FILTER;
+		m_box2DBear->GetFixtureList()->SetFilterData(bearFilter);
+	}
 	return std::make_pair(direction, shoot);
 }
 
