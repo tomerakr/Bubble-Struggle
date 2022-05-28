@@ -42,8 +42,8 @@ private:
 	sf::Color(70, 158, 28) };
 
 	Skin m_skins[numOfSkins] = { Skin{Objects::Bear, Objects::HoneyRope, Backgrounds::BearMenu},
-			   Skin{Objects::Panda, Objects::BambooRope, Backgrounds::PandaMenu},
-				Skin{Objects::Polar, Objects::PolarRope, Backgrounds::PolarMenu} };
+								 Skin{Objects::Panda, Objects::BambooRope, Backgrounds::PandaMenu},
+								 Skin{Objects::Polar, Objects::PolarRope, Backgrounds::PolarMenu} };
 
 	std::vector <std::string> m_levels;
 };

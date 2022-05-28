@@ -2,6 +2,7 @@
                                               "GameObject.cpp"
                                               "MovingObject.cpp"
                                               "Controller.cpp"
+                                              "Bar.cpp"
                                               "Bear.cpp"
                                               "Board.cpp"
                                               "Ball.cpp"

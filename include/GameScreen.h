@@ -3,6 +3,7 @@
 constexpr int myPort = 6969;
 
 #include "Macros.h"
+#include "Bar.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/Network.hpp"
 #include <utility>
@@ -35,4 +36,5 @@ private:
 	Window* m_window;
 	std::vector<Bear> m_bears;
 	Board* m_board;
+	
 };

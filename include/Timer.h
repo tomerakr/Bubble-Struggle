@@ -7,8 +7,9 @@ class Timer
 public:
 	Timer(float time);
 	void update();
-	std::pair<int, int> timeToInt();
-	const int getTimeLeft(); //in seconds
+	const int getTimeLeft();
+	void draw(sf::RenderWindow& window) { window.draw(m_timeBar); }
+	bool timeEnd();
 
 
 
@@ -18,5 +19,8 @@ private:
 
 	sf::Text m_timeText;
 	float m_levelTime;
+	float m_timeLeft ;
+
+	sf::RectangleShape m_timeBar;
 };
 

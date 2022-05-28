@@ -35,6 +35,7 @@ void GameScreen::game(gameInfo& info)
 		textureIndex = --textureIndex % numOfSkins;
 		textureIndex = (textureIndex == -1 ? numOfSkins - 1 : textureIndex);
 	}
+	
 }
 
 void GameScreen::playNormal(gameInfo& info)

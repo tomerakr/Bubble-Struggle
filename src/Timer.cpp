@@ -4,30 +4,27 @@
 #include <SFML/Graphics.hpp>
 
 Timer::Timer(float time)
-	:m_levelTime(time)
+	:m_levelTime(time), m_timeLeft(time)
 {
-	m_timeText.setFont(*Resources::instance().getFont());
-	m_timeText.setCharacterSize(30);
-	m_timeText.setPosition(100, 140);
+	m_timeBar.setSize(sf::Vector2f(windowWitdh, 10));
+	m_timeBar.setFillColor(sf::Color::Red);
+	m_timeBar.setPosition(sf::Vector2f(0,windowHieght - barHeight + 10));
 }
 
 void Timer::update()
 {
-	m_levelTime -= m_clock.getElapsedTime().asSeconds();
-}
-
-std::pair<int, int> Timer::timeToInt()
-{
-	int leftMinutes = ((int)m_levelTime) / 60;
-	int leftSeconds = ((int)m_levelTime) % 60;
-
-
-
-	return std::make_pair(leftMinutes, leftSeconds);
+	m_timeLeft -= m_clock.getElapsedTime().asSeconds();
+	m_timeBar.setSize(sf::Vector2f(windowWitdh * (m_timeLeft / m_levelTime), 10));
+	m_clock.restart();
 }
 
 const int Timer::getTimeLeft()
 {
 	return m_levelTime;
+}
+
+bool Timer::timeEnd()
+{
+	return m_timeLeft <= 0;
 }
 
