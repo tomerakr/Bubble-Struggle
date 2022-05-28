@@ -1,8 +1,8 @@
 #include "PcInput.h"
 
-std::pair<sf::Vector2f, bool> PcInput::getInput(std::vector<sf::Keyboard::Key> keys)
+std::pair<sf::Vector2f, bool> PcInput::getInput(gameInput input)
 {
-	return std::make_pair(readDirection(keys), readShoot(keys));
+	return std::make_pair(readDirection(input._keys), readShoot(input._keys));
 }
 
 sf::Vector2f PcInput::readDirection(std::vector<sf::Keyboard::Key> keys)

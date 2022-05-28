@@ -100,3 +100,13 @@ struct gameInfo
 	Skin _skin;
 	int _skinIndex;
 };
+
+#include <vector>
+#include <utility>
+#include "SFML/Graphics.hpp"
+
+struct gameInput
+{
+	std::vector<sf::Keyboard::Key> _keys;
+	std::pair<sf::Vector2f, bool> _otherBear; //direction, shoot
+};

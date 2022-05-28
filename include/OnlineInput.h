@@ -11,11 +11,8 @@ class OnlineInput : public Input
 public:
 	OnlineInput();
 	//~OnlineInput() = default;
-	std::pair<sf::Vector2f, bool> getInput(std::vector<sf::Keyboard::Key> keys);
+	std::pair<sf::Vector2f, bool> getInput(gameInput input);
 
 private:
-	//sf::IpAddress m_myAddress = sf::IpAddress::getLocalAddress();
-	//sf::IpAddress m_remoteAddress;
 	//sf::UdpSocket m_socket;
-	//sf::SocketSelector m_socketSelector;
 };

@@ -16,12 +16,12 @@ public:
 	Screen createLevel(Window* window);
 
 private:
-	void clear();
-	void erase(const sf::Vector2f& mousePos);
 	void undo();
+	void erase(const sf::Vector2f& mousePos);
+	void clear();
 	void save();
 
-	void handleMouse();
+	void handleMouse(const sf::Vector2f& mousePos);
 	void createBaseTiles();
 	void createBar();
 	void draw(Window* window);
@@ -30,6 +30,14 @@ private:
 	{
 		BALL,
 		TILE
+	};
+
+	enum class buttonNames
+	{
+		UNDO,
+		ERASE,
+		CLEAR,
+		SAVE
 	};
 
 	lastAction m_lastAction;

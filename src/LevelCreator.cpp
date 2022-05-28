@@ -25,10 +25,13 @@ void LevelCreator::createBar()
 	m_bar.setFillColor(sf::Color(217, 239, 255));
 	m_bar.setSize(sf::Vector2f(windowWitdh, barHeight));
 	m_bar.setPosition(sf::Vector2f(0.f, windowHieght - barHeight));
+
 	m_buttons.emplace_back(Button{sf::Vector2f(800, windowHieght - barHeight / 2), sf::Vector2f(60, 60), Objects::UndoButton });
 	m_buttons.emplace_back(Button{sf::Vector2f(900, windowHieght - barHeight / 2), sf::Vector2f(60, 60), Objects::EraseButton });
 	m_buttons.emplace_back(Button{sf::Vector2f(1000, windowHieght - barHeight / 2), sf::Vector2f(60, 60), Objects::ClearButton });
 	m_buttons.emplace_back(Button{sf::Vector2f(1100, windowHieght - barHeight / 2), sf::Vector2f(60, 60), Objects::SaveButton });
+
+
 }
 
 Screen LevelCreator::createLevel(Window* window)
@@ -43,7 +46,7 @@ Screen LevelCreator::createLevel(Window* window)
 			break;
 
 		case sf::Event::MouseButtonReleased:
-			handleMouse();
+			handleMouse(window->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
 			break;
 
 		case sf::Event::KeyPressed:
@@ -117,14 +120,32 @@ void LevelCreator::save()
 {
 }
 
-void LevelCreator::handleMouse()
+void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
 {
+	
+	if (m_buttons[static_cast<int>(buttonNames::UNDO)].isPressed(mousePos))
+	{
+		undo();
+	}
+	//else if (m_buttons[static_cast<int>(buttonNames::ERASE)].isPressed(mousePos))
+	//{
+	//	
+	//}
+	else if (m_buttons[static_cast<int>(buttonNames::CLEAR)].isPressed(mousePos))
+	{
+		clear();
+	}
+	else if (m_buttons[static_cast<int>(buttonNames::SAVE)].isPressed(mousePos))
+	{
+		save();
+	}
 }
 
 void LevelCreator::draw(Window* window)
 {
 	window->clear();
 	window->getWindow().draw(m_bar);
+
 	for (auto& tile : m_baseTiles)
 	{
 		tile.draw(window->getWindow());

@@ -10,7 +10,7 @@ class PcInput : public Input
 public:
 	PcInput() = default;
 	//~PcInput() = default;
-	std::pair<sf::Vector2f, bool> getInput(std::vector<sf::Keyboard::Key> keys) override;
+	std::pair<sf::Vector2f, bool> getInput(gameInput input) override;
 
 private:
 	sf::Vector2f readDirection(std::vector<sf::Keyboard::Key> keys);
