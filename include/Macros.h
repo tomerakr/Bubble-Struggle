@@ -44,14 +44,14 @@ enum class Objects
 	GiftTime
 };
 
-constexpr int numOfBackgrounds = 5;
+constexpr int numOfBackgrounds = 4;
 enum class Backgrounds
 {
 	BearMenu,
 	PandaMenu,
 	PolarMenu,
 	PoohMenu,
-	GameBackground,
+	//GameBackground,
 };
 
 constexpr int numOfScreens = 3;
@@ -89,7 +89,7 @@ struct Skin
 	Objects _rope;
 	Backgrounds _background;
 };
-constexpr int numOfSkins = 3;
+constexpr int numOfSkins = 4;
 
 struct gameInfo
 {

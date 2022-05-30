@@ -41,9 +41,10 @@ private:
 	sf::Color m_colors[numOfBalls] = {sf::Color(82, 194, 236), sf::Color(1, 111, 255),sf::Color(198, 111, 239), sf::Color(248, 135, 230), sf::Color(233, 74, 90),sf::Color(252, 139, 18), sf::Color(254, 194, 34), sf::Color(151, 216, 0),
 	sf::Color(70, 158, 28) };
 
-	Skin m_skins[numOfSkins] = { Skin{Objects::Bear, Objects::HoneyRope, Backgrounds::BearMenu},
+	Skin m_skins[numOfSkins] = { Skin{Objects::Bear, Objects::Rope, Backgrounds::BearMenu},
 								 Skin{Objects::Panda, Objects::BambooRope, Backgrounds::PandaMenu},
-								 Skin{Objects::Polar, Objects::PolarRope, Backgrounds::PolarMenu} };
+								 Skin{Objects::Polar, Objects::PolarRope, Backgrounds::PolarMenu},
+								 Skin{Objects::Pooh, Objects::HoneyRope, Backgrounds::PoohMenu} };
 
 	std::vector <std::string> m_levels;
 };
