@@ -5,10 +5,11 @@
 class Timer
 {
 public:
+	Timer() = default;
 	Timer(float time);
 	void update();
 	const int getTimeLeft();
-	void draw(sf::RenderWindow& window) { window.draw(m_timeBar); }
+	void draw(sf::RenderWindow& window) { window.draw(m_timeline); }
 	bool timeEnd();
 
 
@@ -21,6 +22,6 @@ private:
 	float m_levelTime;
 	float m_timeLeft ;
 
-	sf::RectangleShape m_timeBar;
+	sf::RectangleShape m_timeline;
 };
 

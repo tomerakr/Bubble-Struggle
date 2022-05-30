@@ -29,12 +29,13 @@ private:
 	void playNormal(gameInfo& info);
 	void playSurvival(gameInfo& info);
 
-	void update(float deltaTime);
+	void update(float deltaTime, gameInfo& info);
 	Screen handleKeyboard(const float deltaTime);
 	void draw();
 
 	Window* m_window;
 	std::vector<Bear> m_bears;
 	Board* m_board;
+	Bar m_bar;
 	
 };

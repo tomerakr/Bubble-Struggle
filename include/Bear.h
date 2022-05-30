@@ -20,6 +20,8 @@ public:
 	const sf::Vector2f getPos() const;
 	std::pair<sf::Vector2f, bool> update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear);
 	void drawRopes(sf::RenderWindow& window);
+	int getNumOfLives() { return m_lives; }
+	int getScore() { return m_score; }
 
 private:
 	std::unique_ptr<Input> m_getInput = nullptr;
@@ -30,5 +32,8 @@ private:
 
 	b2Body* m_box2DBear = nullptr;
 	Board* m_board = nullptr;
+
+	int m_score;
+	int m_lives;
 };
 

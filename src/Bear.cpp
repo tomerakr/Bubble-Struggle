@@ -5,7 +5,7 @@
 
 Bear::Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureIndex)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), Resources::instance().getSkin(textureIndex)._bear), 
-		m_gun(textureIndex, board), m_board(board)
+		m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0)
 {
 	switch (readInput)
 	{
