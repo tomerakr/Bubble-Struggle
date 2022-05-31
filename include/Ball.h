@@ -24,6 +24,7 @@ public:
 	void split();
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	const sf::Vector2f getPos() const	{ return m_ball.getPosition(); }
+	int getIndex() const { return m_index; }
 	void update();
 	bool contains(const sf::Vector2f& mousePos) { return m_ball.getGlobalBounds().contains(mousePos); }
 

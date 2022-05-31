@@ -35,7 +35,7 @@ enum class Objects
 	Floor,
 	Wall,
 	Button,
-	UndoButton,
+	Arrow,
 	EraseButton,
 	ClearButton,
 	SaveButton,

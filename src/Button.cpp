@@ -1,7 +1,7 @@
 #include "Button.h"
 #include "Resources.h"
 
-Button::Button(const sf::Vector2f pos, const sf::Vector2f size, Objects texture, const std::string text)
+Button::Button(const sf::Vector2f& pos, const sf::Vector2f size, Objects texture, const std::string text)
 	:GameObject(pos, size, texture)
 {
 	auto iconSize = m_icon.getSize();
