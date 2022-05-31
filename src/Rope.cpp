@@ -1,6 +1,6 @@
 #include "Rope.h"
 
-constexpr float ropeHeightChange = 1.5;
+constexpr float ropeHeightChange = 2;
 constexpr float maxRopeHeight = -(windowHieght - barHeight - thickness);
 
 Rope::Rope(sf::Vector2f bearPos, int ropeTexture, Board* board)

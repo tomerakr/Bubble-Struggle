@@ -16,6 +16,7 @@ Ball::Ball(Board* board, const sf::Vector2f pos, const b2Vec2 initialForce, cons
 }
 
 Ball::Ball(const sf::Vector2f pos, const int index/*, int indentaion*/)
+    : m_index(index)
 {
     m_ball.setTexture(Resources::instance().getObjectTexture(Objects::Ball));
     m_ball.setRadius((defRadius - 10 * index));
