@@ -3,7 +3,7 @@
 #include "Macros.h"
 #include "bear.h"
 
-constexpr int textBarSize = 3522;
+constexpr int textBarSize = 40;
 
 class Bar
 {

@@ -15,7 +15,7 @@ Button::Button(const sf::Vector2f pos, const sf::Vector2f size, Objects texture,
 void Button::setText(const std::string text)
 {
 	auto pos = m_icon.getPosition();
-	m_text.setPosition(pos.x, pos.y - 8);
+	m_text.setPosition(pos.x, pos.y - 12);
 	m_text.setColor(sf::Color::White);
 	m_text.setFont(*Resources::instance().getFont());
 	m_text.setCharacterSize(textSize);
