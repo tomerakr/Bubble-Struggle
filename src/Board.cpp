@@ -1,5 +1,8 @@
 #include "Board.h"
 #include "Controller.h"
+//
+//#include <iostream>
+//#include <filesystem>
 
 Board::Board()
 	:m_currLevel(1)
@@ -28,7 +31,11 @@ void Board::createBoard()
 void Board::setLevel(int level)
 {
 	auto file = std::ifstream(Resources::instance().getLevelName(level) + ".txt");
+	//namespace fs = std::filesystem;
+	//std::filesystem::path p = "LevelsNames.txt";
 
+	//std::cout << "Absolute path for " << p << " is "
+	//	<< std::filesystem::absolute(p) << '\n';
 	if (!file.is_open())
 	{
 		exit(EXIT_FAILURE);

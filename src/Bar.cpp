@@ -9,13 +9,13 @@ Bar::Bar()
 	m_levelText.setFont(*Resources::instance().getFont());
 	m_levelText.setFillColor(sf::Color::Black);
 	m_levelText.setPosition(sf::Vector2f(windowWitdh / 2.f, windowHieght - barHeight / 2.f));
-	m_levelText.setOrigin(m_levelText.getLocalBounds().width / 2.f, m_levelText.getLocalBounds().height / 2.f);
+	m_levelText.setOrigin(textBarSize / 2.f, textBarSize / 2.f);
 
 	m_scoreText.setCharacterSize(textBarSize);
 	m_scoreText.setFont(*Resources::instance().getFont());
 	m_scoreText.setFillColor(sf::Color::Black);
 	m_scoreText.setPosition(sf::Vector2f(250, windowHieght - barHeight / 2.f));
-	m_scoreText.setOrigin(m_scoreText.getLocalBounds().width / 2.f, m_scoreText.getLocalBounds().height/ 2.f);
+	m_scoreText.setOrigin(textBarSize / 2.f, textBarSize / 2.f);
 
 	m_lifeIcon.setSize(sf::Vector2f(50.f, 50.f));
 }
