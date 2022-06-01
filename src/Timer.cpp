@@ -6,15 +6,15 @@
 Timer::Timer(float time)
 	:m_levelTime(time), m_timeLeft(time)
 {
-	m_timeBar.setSize(sf::Vector2f(windowWitdh, 10));
-	m_timeBar.setFillColor(sf::Color::Red);
-	m_timeBar.setPosition(sf::Vector2f(0,windowHieght - barHeight + 10));
+	m_timeline.setSize(sf::Vector2f(windowWitdh, 10));
+	m_timeline.setFillColor(sf::Color::Red);
+	m_timeline.setPosition(sf::Vector2f(0,windowHieght - barHeight + 10));
 }
 
 void Timer::update()
 {
 	m_timeLeft -= m_clock.getElapsedTime().asSeconds();
-	m_timeBar.setSize(sf::Vector2f(windowWitdh * (m_timeLeft / m_levelTime), 10));
+	m_timeline.setSize(sf::Vector2f(windowWitdh * (m_timeLeft / m_levelTime), 10));
 	m_clock.restart();
 }
 

@@ -36,6 +36,22 @@ void GameScreen::game(gameInfo& info)
 
 Screen GameScreen::playNormal()
 {
+
+}
+
+void GameScreen::playSurvival(gameInfo& info)
+{
+
+}
+
+Screen GameScreen::gamePlay(gameInfo& info)
+{
+	if (info._newGame)
+	{
+		game(info);
+		m_bar.setBar(15, info);  // need to change later 
+		info._newGame = false;
+	}
 	auto screen = Screen::game;
 	sf::Clock clock;
 
@@ -90,7 +106,7 @@ Screen GameScreen::gamePlay(gameInfo& info)
 	return screen;
 }
 
-void GameScreen::update(float deltaTime)
+void GameScreen::update(float deltaTime, gameInfo& info)
 {
 	m_board->update();
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
@@ -98,6 +114,7 @@ void GameScreen::update(float deltaTime)
 	{
 		otherBear = bear.update(deltaTime, otherBear);
 	}
+	m_bar.update(m_bears[0]); // change to iterator
 }
 
 Screen GameScreen::handleKeyboard(float deltaTime)
@@ -119,6 +136,7 @@ void GameScreen::draw()
 		bear.draw(m_window->getWindow());
 	}
 	m_board->draw(m_window->getWindow());
+	m_bar.draw(m_window->getWindow(), m_bears[0]);  // change to iterator
 
 	m_window->display();
 }

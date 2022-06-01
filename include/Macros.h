@@ -19,6 +19,7 @@ constexpr int ROPE_FILTER = -4;
 const int POPPED_BALL_FILTER = -5;
 const int BEAR_FILTER = -6;
 
+
 //---------------------------------------------------------
 constexpr int numOfObjects = 16;
 enum class Objects
