@@ -9,7 +9,7 @@ constexpr int myPort = 6969;
 #include <utility>
 #include <vector>
 
-class Window;
+class Controller;
 class Bear;
 class Board;
 
@@ -18,7 +18,7 @@ class GameScreen
 	using getInput = std::pair<sf::Vector2f, bool>(*)(Bear* bear);
 
 public:
-	GameScreen(Window* window, Board* board);
+	GameScreen(Controller* ctrl);
 	void game(gameInfo& info);
 	Screen gamePlay(gameInfo& info);
 
@@ -28,13 +28,14 @@ private:
 	Screen playNormal();
 	Screen playSurvival();
 
-	void update(float deltaTime, gameInfo& info);
+	void update(float deltaTime/*, gameInfo& info*/);
 	Screen handleKeyboard(const float deltaTime);
 	void draw();
+	void drawSurvival() { ; }
 
-	Window* m_window;
+	Controller* m_controller;
 	std::vector<Bear> m_bears;
-	Board* m_board;
+	Board m_board;
 	Bar m_bar;
 	
 };

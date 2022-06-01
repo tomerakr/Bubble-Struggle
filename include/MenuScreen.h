@@ -2,17 +2,16 @@
 
 #include <vector>
 #include "Button.h"
-#include "Window.h"
 #include "Macros.h"
 #include "Resources.h"
 #include "SFML/Graphics.hpp"
 
-class Window;
+class Controller;
 
 class MenuScreen
 {
 public:
-	MenuScreen(Window* window);
+	MenuScreen(Controller* ctrl);
 	gameInfo menu();
 
 private:
@@ -25,7 +24,7 @@ private:
 	void handleKeyboard();
 	void draw();
 
-	Window* m_window;
+	Controller* m_controller;
 	int m_lastHovered = 0;
 	int m_wantedMenu = 0;
 	sf::RectangleShape m_background;

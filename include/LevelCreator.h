@@ -10,13 +10,13 @@ class Resources;
 class Tile;
 class Ball;
 class Button;
-class Window;
+class Controller;
 
 class LevelCreator
 {
 public:
 	LevelCreator();
-	Screen createLevel(Window* window);
+	Screen createLevel(Controller* window);
 
 private:
 	void undo();
@@ -35,7 +35,7 @@ private:
 	void unfollow();
 
 	void placeInBoard	(const sf::Vector2f& mousePos);
-	void draw			(Window* window);
+	void draw			(Controller* window);
 	int getLastLevel	() const;
 	float setPos		(int xVal, int straight) const;
 	bool inBoard		(const sf::Vector2f& mousePos) const;

@@ -1,9 +1,10 @@
 #include "MenuScreen.h"
+#include "Controller.h"
 
 constexpr int maxButtonInMenu = 5; //change to function
 
-MenuScreen::MenuScreen(Window* window)
-	:m_window(window)
+MenuScreen::MenuScreen(Controller* ctrl)
+	:m_controller(ctrl)
 {
 	createButton();
 	m_background.setSize(sf::Vector2f(windowWitdh, windowHieght));
@@ -41,20 +42,20 @@ gameInfo MenuScreen::menu()
 	m_info._screen = Screen::menu;
 
 	draw();
-	if (sf::Event event; m_window->getWindow().pollEvent(event))
+	if (sf::Event event; m_controller->getWindow().pollEvent(event))
 	{
 		switch (event.type)
 		{
 		case sf::Event::Closed:
-			m_window->close();
+			m_controller->close();
 			break;
 
 		case sf::Event::MouseButtonReleased:
-			handlePress(m_window->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
+			handlePress(m_controller->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
 			break;
 
 		case sf::Event::MouseMoved:
-			handleHover(m_window->getWindow().mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
+			handleHover(m_controller->getWindow().mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
 			break;
 
 		case sf::Event::KeyPressed:
@@ -97,7 +98,7 @@ void MenuScreen::mainMenuPress(sf::Vector2f mousePos)
 	auto mainMenu = static_cast<int>(menuNames::mainMenu);
 	if (m_buttons[mainMenu][int(buttonNames::Exit)].isPressed(mousePos) && m_wantedMenu == mainMenu)
 	{
-		m_window->close();
+		m_controller->close();
 	}
 
 	if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Normal)].isPressed(mousePos))
@@ -186,11 +187,11 @@ void MenuScreen::handleKeyboard()
 
 void MenuScreen::draw()
 {
-	m_window->getWindow().draw(m_background);
+	m_controller->getWindow().draw(m_background);
 
 	for (auto& button : m_buttons[m_wantedMenu])
 	{
-		button.draw(m_window->getWindow());
+		button.draw(m_controller->getWindow());
 	}
-	m_window->display();
+	m_controller->display();
 }

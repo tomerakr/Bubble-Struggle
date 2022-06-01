@@ -1,9 +1,9 @@
 #include "LevelCreator.h"
-#include "Window.h"
 #include "Resources.h"
 #include "Tile.h"
 #include "Ball.h"
 #include "Button.h"
+#include "Controller.h"
 
 constexpr int STRAIGHTy = 10;
 constexpr int STRAIGHTx = 5;
@@ -62,23 +62,23 @@ void LevelCreator::setText(const sf::Vector2f& pos, int size, std::string text, 
 	mText.setOutlineThickness(2);
 }
 
-Screen LevelCreator::createLevel(Window* window)
+Screen LevelCreator::createLevel(Controller* ctrl)
 {
 	auto screen = Screen::levelCreator;
-	if (sf::Event event; window->getWindow().pollEvent(event))
+	if (sf::Event event; ctrl->getWindow().pollEvent(event))
 	{
 		switch (event.type)
 		{
 		case sf::Event::Closed:
-			window->close();
+			ctrl->close();
 			break;
 
 		case sf::Event::MouseButtonReleased:
-			handleMouse(window->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
+			handleMouse(ctrl->getWindow().mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
 			break;
 
 		case sf::Event::MouseMoved:
-			update(window->getWindow().mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
+			update(ctrl->getWindow().mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
 
 		case sf::Event::KeyPressed:
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -91,7 +91,7 @@ Screen LevelCreator::createLevel(Window* window)
 		}
 	}
 	
-	draw(window);
+	draw(ctrl);
 
 	return screen;
 }
@@ -325,34 +325,35 @@ bool LevelCreator::inBoard(const sf::Vector2f& mousePos) const
 		(mousePos.y > thickness) && (mousePos.y < windowHieght - barHeight - thickness));
 }
 
-void LevelCreator::draw(Window* window)
+void LevelCreator::draw(Controller* ctrl)
 {
-	window->clear();
-	window->getWindow().draw(m_background);
-	window->getWindow().draw(m_followShape);
-	window->getWindow().draw(m_bar);
-	window->getWindow().draw(m_ballIndexText);
-	window->getWindow().draw(m_title);
+	ctrl->clear();
+	auto& window = ctrl->getWindow();
+	window.draw(m_background);
+	window.draw(m_followShape);
+	window.draw(m_bar);
+	window.draw(m_ballIndexText);
+	window.draw(m_title);
 
 	for (auto& tile : m_baseTiles)
 	{
-		tile.draw(window->getWindow());
+		tile.draw(window);
 	}
 
 	for (auto& ball : m_balls)
 	{
-		ball.first.draw(window->getWindow());
+		ball.first.draw(window);
 	}
 
 	for (auto& tile : m_tiles)
 	{
-		tile.first.draw(window->getWindow());
+		tile.first.draw(window);
 	}
 
 	for (auto& button : m_buttons)
 	{
-		button.draw(window->getWindow());
+		button.draw(window);
 	}
 
-	window->display();
+	window.display();
 }
