@@ -12,8 +12,6 @@ public:
 	void draw(sf::RenderWindow& window) { window.draw(m_timeline); }
 	bool timeEnd();
 
-
-
 private:
 	sf::Clock m_clock;
 	sf::Time m_time;

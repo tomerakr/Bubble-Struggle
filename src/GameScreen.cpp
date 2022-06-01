@@ -18,7 +18,7 @@ GameScreen::GameScreen(Controller* ctrl)
 	m_keys.push_back(keys);
 }
 
-void GameScreen::game(gameInfo& info)
+void GameScreen::game(const gameInfo& info)
 {
 	m_bears.clear();
 	auto xPos = windowWitdh / (info._numOfPlayers + 1);
@@ -37,20 +37,21 @@ Screen GameScreen::playNormal()
 {
 	auto screen = Screen::game;
 	sf::Clock clock;
+	auto& window = m_controller->getWindow();
 
 	draw();
 	const auto deltaTime = clock.restart();
 
-	if (sf::Event event; m_controller->getWindow().pollEvent(event))
+	if (sf::Event event; window.pollEvent(event))
 	{
 		switch (event.type)
 		{
 		case sf::Event::Closed:
-			m_controller->close();
+			window.close();
 			break;
 
 		case sf::Event::KeyPressed:
-			screen = handleKeyboard(deltaTime.asSeconds());
+			screen = handleKeyboard();
 			break;
 
 		default:
@@ -64,21 +65,22 @@ Screen GameScreen::playNormal()
 Screen GameScreen::playSurvival()
 {
 	auto screen = Screen::game;
+	auto& window = m_controller->getWindow();
 	sf::Clock clock;
 
 	drawSurvival();
 	const auto deltaTime = clock.restart();
 
-	if (sf::Event event; m_controller->getWindow().pollEvent(event))
+	if (sf::Event event; window.pollEvent(event))
 	{
 		switch (event.type)
 		{
 		case sf::Event::Closed:
-			m_controller->close();
+			window.close();
 			break;
 
 		case sf::Event::KeyPressed:
-			screen = handleKeyboard(deltaTime.asSeconds());
+			screen = handleKeyboard();
 			break;
 
 		default:
@@ -115,7 +117,7 @@ Screen GameScreen::gamePlay(gameInfo& info)
 	return screen;
 }
 
-void GameScreen::update(float deltaTime/*, gameInfo& info*/)
+void GameScreen::update(float deltaTime)
 {
 	m_board.update();
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
@@ -123,10 +125,10 @@ void GameScreen::update(float deltaTime/*, gameInfo& info*/)
 	{
 		otherBear = bear.update(deltaTime, otherBear);
 	}
-	m_bar.update(m_bears.front()); // change to iterator
+	m_bar.update(m_bears.front());
 }
 
-Screen GameScreen::handleKeyboard(float deltaTime)
+Screen GameScreen::handleKeyboard()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{

@@ -19,10 +19,10 @@ void Board::setWorld()
 void Board::createBoard()
 {	
 	auto height = windowHieght - thickness - barHeight;
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height), FLOOR});			//floor
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f), FLOOR});				//ceiling
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f), WALL});						//left wall
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f), WALL});	//right wall
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height) });				//floor
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f) });					//ceiling
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f) });						//left wall
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f) });	//right wall
 }
 
 void Board::setLevel()
@@ -58,11 +58,10 @@ void Board::setLevel()
 	for (int j = 0; j < tilesNum; ++j)
 	{
 		file >> xSize >> ySize >> xPosT >> yPosT >> group;
-		m_tiles.emplace_back(Tile{ this, sf::Vector2f(xSize, ySize), sf::Vector2f(xPosT, yPosT), group});
+		m_tiles.emplace_back(Tile{ this, sf::Vector2f(xSize, ySize), sf::Vector2f(xPosT, yPosT) });
 	}
 }
 
-//-------------------------------------------
 void Board::draw(sf::RenderWindow& window)
 {
 	for (auto& ball : m_balls)

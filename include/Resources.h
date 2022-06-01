@@ -13,7 +13,7 @@ public:
 	sf::Texture* const getBackgroundTexture(const Backgrounds texture);
 	sf::Texture* const getObjectTexture(const Objects texture);
 	
-	sf::Color const getColor(const int index) { return m_colors[index]; }
+	sf::Color& const getColor(const int index) { return m_colors[index]; }
 	sf::Font* const getFont() { return &m_font; }
 
 	Skin getSkin(int skin) { return m_skins[skin]; }

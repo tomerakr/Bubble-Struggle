@@ -8,7 +8,7 @@ class Board;
 class Tile : public StaticObject
 {
 public:
-	Tile(Board* board, const sf::Vector2f size, const sf::Vector2f pos, const int group = 0);
+	Tile(Board* board, const sf::Vector2f& size, const sf::Vector2f& pos);
 	Tile(const sf::Vector2f& size, const sf::Vector2f& pos);
 	void reset();
 	//void collision(Board* board);
@@ -17,7 +17,7 @@ public:
 
 private:
 	Board* m_board;
-	b2BodyDef m_groundBodyDef; //change name to tile
-	b2Body* m_groundBody;
+	b2BodyDef m_tileBodyDef;
+	b2Body* m_tileBody;
 };
 
