@@ -24,10 +24,9 @@ public:
 
 private:
 	std::vector<std::vector<sf::Keyboard::Key>> m_keys;
-	std::vector<Objects> m_objects;
 
-	void playNormal(gameInfo& info);
-	void playSurvival(gameInfo& info);
+	Screen playNormal();
+	Screen playSurvival();
 
 	void update(float deltaTime);
 	Screen handleKeyboard(const float deltaTime);

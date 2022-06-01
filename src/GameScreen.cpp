@@ -17,9 +17,6 @@ GameScreen::GameScreen(Window* window, Board* board)
 	keys.push_back(sf::Keyboard::D);
 	keys.push_back(sf::Keyboard::LControl);
 	m_keys.push_back(keys);
-
-	m_objects.push_back(Objects::Bear);
-	m_objects.push_back(Objects::Panda);
 }
 
 void GameScreen::game(gameInfo& info)
@@ -35,26 +32,10 @@ void GameScreen::game(gameInfo& info)
 		textureIndex = --textureIndex % numOfSkins;
 		textureIndex = (textureIndex == -1 ? numOfSkins - 1 : textureIndex);
 	}
-	
 }
 
-void GameScreen::playNormal(gameInfo& info)
+Screen GameScreen::playNormal()
 {
-
-}
-
-void GameScreen::playSurvival(gameInfo& info)
-{
-
-}
-
-Screen GameScreen::gamePlay(gameInfo& info)
-{
-	if (info._newGame)
-	{
-		game(info);
-		info._newGame = false;
-	}
 	auto screen = Screen::game;
 	sf::Clock clock;
 
@@ -78,6 +59,33 @@ Screen GameScreen::gamePlay(gameInfo& info)
 		}
 	}
 	update(deltaTime.asSeconds());
+}
+
+Screen GameScreen::playSurvival()
+{
+}
+
+Screen GameScreen::gamePlay(gameInfo& info)
+{
+	if (info._newGame)
+	{
+		game(info);
+		info._newGame = false;
+	}
+	auto screen = Screen::game;
+	switch (info._mode)
+	{
+	case gameMode::Normal:
+		screen = playNormal();
+		break;
+
+	case gameMode::Survival:
+		screen = playSurvival();
+		break;
+
+	default:
+		break;
+	}
 
 	return screen;
 }

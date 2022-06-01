@@ -15,7 +15,7 @@ public:
 	void resetTilt() { m_icon.setRotation(0); m_text.setRotation(0); }
 	void draw(sf::RenderWindow& window);
 	void setColor(sf::Color color) { m_icon.setFillColor(color); }
-	void tilt() { m_icon.rotate(90); }
+	void tilt() { m_icon.setRotation(m_icon.getRotation() == 90 ? 0 : 90); flip(); }
 	void flip() { m_icon.scale(-1, 1); }
 
 private:
