@@ -1,7 +1,8 @@
 #pragma once
+
 #include "Timer.h"
 #include "Macros.h"
-#include "bear.h"
+#include "Bear.h"
 
 constexpr int textBarSize = 40;
 
@@ -9,9 +10,9 @@ class Bar
 {
 public:
 	Bar();
-	void setBar(float time, gameInfo info);
+	void setBar(float time, const gameInfo& info);
 	void update( Bear &bear);
-	void draw(sf::RenderWindow &window, Bear& bear);
+	void draw(sf::RenderWindow &window, Bear& bear); //why not pointer to bear
 
 
 private:

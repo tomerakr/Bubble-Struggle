@@ -8,10 +8,10 @@ constexpr int myPort = 6969;
 #include "SFML/Network.hpp"
 #include <utility>
 #include <vector>
+#include "board.h"
 
 class Controller;
 class Bear;
-class Board;
 
 class GameScreen
 {

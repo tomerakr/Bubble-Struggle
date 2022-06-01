@@ -1,3 +1,6 @@
+//#include <iostream>
+//#include <filesystem>
+
 void pushBallUP();
 void Ball::pushBallUP()
 {
@@ -26,6 +29,7 @@ void Ball::collision(Board* b)
 }
 
 //================== B A L L ==================
+#include <time.h>
 void colorBall();			//debug
 void Ball::colorBall() //for DEBUG
 {

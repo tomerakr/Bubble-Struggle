@@ -1,15 +1,12 @@
 #include "Board.h"
 #include "Controller.h"
-//
-//#include <iostream>
-//#include <filesystem>
 
 Board::Board()
 	:m_currLevel(1)
 {
 	setWorld();
 	createBoard();
-	setLevel(m_currLevel);
+	setLevel();
 }
 
 void Board::setWorld()
@@ -28,9 +25,9 @@ void Board::createBoard()
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f), WALL});	//right wall
 }
 
-void Board::setLevel(int level)
+void Board::setLevel()
 {
-	auto file = std::ifstream(Resources::instance().getLevelName(level) + ".txt");
+	auto file = std::ifstream(Resources::instance().getLevelName(m_currLevel) + ".txt");
 	//namespace fs = std::filesystem;
 	//std::filesystem::path p = "LevelsNames.txt";
 
@@ -90,9 +87,8 @@ void Board::update()
 	{
 		ball.update();
 
-		if (ball.needToDelete())
+		if (ball.popped())
 		{
-			ball.pop();
 			ball.split();
 			break;
 		}
@@ -113,10 +109,10 @@ void Board::reset()
 	m_balls.clear();
 	m_tiles.clear();
 
-	setLevel(m_currLevel);
+	setLevel();
 }
 
-void Board::addBalls(const sf::Vector2f pos, const int index)
+void Board::addBalls(const sf::Vector2f& pos, const int index)
 {
 	m_balls.emplace_back(Ball{ this, pos, b2Vec2(-20, -30), index });
 	m_balls.emplace_back(Ball{ this, pos, b2Vec2( 20, -30), index });

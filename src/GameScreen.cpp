@@ -1,6 +1,5 @@
 #include "GameScreen.h"
 #include "Bear.h"
-#include "board.h"
 #include "Controller.h"
 
 GameScreen::GameScreen(Controller* ctrl)

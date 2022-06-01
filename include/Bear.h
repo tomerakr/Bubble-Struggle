@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "MovingObject.h"
+#include "MovingObject.h" //do we need this class? for what reason
 #include "Macros.h"
 #include "Gun.h"
 #include "Rope.h"
@@ -9,31 +9,30 @@
 #include "Input.h"
 
 class Board;
-//class Input;
 
 class Bear : public MovingObject
 {
 public:
-	Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureIndex);
+	Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex);
+
 	void jump();
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
-	const sf::Vector2f getPos() const;
-	std::pair<sf::Vector2f, bool> update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear);
+	const sf::Vector2f& getPos() const;
+	std::pair<const sf::Vector2f&, bool> update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear);
 	void drawRopes(sf::RenderWindow& window);
-	int getNumOfLives() { return m_lives; }
-	int getScore() { return m_score; }
+	unsigned int getNumOfLives(){ return m_lives; }
+	unsigned int getScore()		{ return m_score; }
 
 private:
+	void defineBear2d(const sf::Vector2f&);
+
 	std::unique_ptr<Input> m_getInput = nullptr;
-	bool m_online;
-	int m_ropeTexture; //must be before gun
-	Gun m_gun;
 	std::vector<sf::Keyboard::Key> m_keys;
 
+	Gun m_gun;
 	b2Body* m_box2DBear = nullptr;
 	Board* m_board = nullptr;
 
-	int m_score;
-	int m_lives;
+	unsigned int m_score;
+	unsigned int m_lives;
 };
-

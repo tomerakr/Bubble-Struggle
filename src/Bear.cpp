@@ -3,9 +3,9 @@
 #include "PcInput.h"
 #include "OnlineInput.h"
 
-Bear::Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureIndex)
-	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), Resources::instance().getSkin(textureIndex)._bear), 
-		m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0)
+Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex)
+	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), Resources::instance().getSkin(textureIndex)._bear),
+	m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0)
 {
 	switch (readInput)
 	{
@@ -22,13 +22,18 @@ Bear::Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureInd
 		break;
 	}
 
+	defineBear2d(pos);
+}
+
+void Bear::defineBear2d(const sf::Vector2f& pos)
+{
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2);
 	m_box2DBear = m_board->getWorld()->CreateBody(&bodyDef);
 
 	b2PolygonShape bearRectangle;
 	bearRectangle.SetAsBox(m_icon.getSize().x / 2, m_icon.getSize().y / 2);
-	
+
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &bearRectangle;
 	fixtureDef.filter.groupIndex = BEAR_FILTER;
@@ -36,7 +41,7 @@ Bear::Bear(sf::Vector2f pos, Board* board, receiveInfo readInput, int textureInd
 	m_box2DBear->CreateFixture(&fixtureDef);
 }
 
-std::pair<sf::Vector2f, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
+std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
 {
 	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear });
 	move(deltaTime, direction);
@@ -53,10 +58,10 @@ std::pair<sf::Vector2f, bool> Bear::update(float deltaTime, std::pair<sf::Vector
 
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
 	{
-//			start level again
+		//			start level again
 		m_board->reset();
 
-//			reset filter fixture
+		//			reset filter fixture
 		b2Filter bearFilter;
 		bearFilter.groupIndex = BEAR_FILTER;
 		m_box2DBear->GetFixtureList()->SetFilterData(bearFilter);
@@ -73,7 +78,7 @@ void Bear::jump()
 {
 }
 
-const sf::Vector2f Bear::getPos() const
+const sf::Vector2f& Bear::getPos() const
 {
 	return m_icon.getPosition();
 }

@@ -10,6 +10,5 @@ public:
 
 private:
 	sf::Vector2f m_prevPos;
-
 	float m_speedPerSecond = 200.f;
 };

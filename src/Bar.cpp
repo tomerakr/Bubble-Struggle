@@ -1,7 +1,6 @@
 #include "Bar.h"
 #include "Resources.h"
 
-
 Bar::Bar()
 	:m_level(1)
 {
@@ -20,7 +19,7 @@ Bar::Bar()
 	m_lifeIcon.setSize(sf::Vector2f(50.f, 50.f));
 }
 
-void Bar::setBar(float time, gameInfo info)
+void Bar::setBar(float time, const gameInfo& info)
 {
 	m_timer = Timer{ time };
 	m_levelText.setString("level:" + std::to_string(m_level));
