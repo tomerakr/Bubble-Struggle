@@ -5,7 +5,7 @@ Gun::Gun(int ropeTexture, Board* board)
 	: m_board(board), m_ropeTexture(ropeTexture)
 {}
 
-void Gun::shoot(const sf::Vector2f bearPos)
+void Gun::shoot(const sf::Vector2f& bearPos)
 {
 	if (m_ropes.size() < m_maxRopes)
 	{

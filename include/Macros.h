@@ -13,12 +13,14 @@ constexpr int bearHieght = 120;
 //constexpr sf::Vector2f right = sf::Vector2f(1, 0);
 
 constexpr int BALL_FILTER = -1;
-constexpr int FLOOR = -2;
-constexpr int WALL = -3;
+//constexpr int FLOOR = -2;
+//constexpr int WALL = -3;
 constexpr int ROPE_FILTER = -4;
 const int POPPED_BALL_FILTER = -5;
 const int BEAR_FILTER = -6;
 const int TOUCH_WALL = -7;
+constexpr int TILE = -7;
+
 
 //---------------------------------------------------------
 constexpr int numOfObjects = 16;

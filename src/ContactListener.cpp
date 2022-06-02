@@ -42,25 +42,14 @@ void ContactListener::BeginContact(b2Contact* contact)
         fixtureA->SetFilterData(destroyObjects);
     }
 
-//      if rope collided with ceiling
-    else if (fixtureA->GetFilterData().groupIndex == FLOOR &&
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
         fixtureB->GetFilterData().groupIndex == ROPE_FILTER ||
         fixtureA->GetFilterData().groupIndex == ROPE_FILTER &&
-        fixtureB->GetFilterData().groupIndex == FLOOR)
+        fixtureB->GetFilterData().groupIndex == TILE)
     {
         b2Filter destroyObjects;
-        destroyObjects.groupIndex = TOUCH_WALL;
+        destroyObjects.groupIndex = TILE;
         fixtureA->SetFilterData(destroyObjects);
+        fixtureB->SetFilterData(destroyObjects);
     }
-
-//      if ball collided with ceiling
-    //else if (fixtureA->GetFilterData().groupIndex == FLOOR &&
-    //    fixtureB->GetFilterData().groupIndex == BALL_FILTER ||
-    //    fixtureA->GetFilterData().groupIndex == BALL_FILTER &&
-    //    fixtureB->GetFilterData().groupIndex == FLOOR)
-    //{
-    //    b2Filter destroyObjects;
-    //    destroyObjects.groupIndex = POPPED_BALL_FILTER;
-    //    fixtureB->SetFilterData(destroyObjects);
-    //}
 }

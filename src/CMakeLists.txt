@@ -7,7 +7,6 @@
                                               "Board.cpp"
                                               "Ball.cpp"
                                               "Button.cpp"
-                                              "Window.cpp"
                                               "MenuScreen.cpp"
                                               "GameScreen.cpp"
                                               "LevelCreator.cpp"

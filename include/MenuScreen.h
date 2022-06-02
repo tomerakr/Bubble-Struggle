@@ -2,30 +2,29 @@
 
 #include <vector>
 #include "Button.h"
-#include "Window.h"
 #include "Macros.h"
 #include "Resources.h"
 #include "SFML/Graphics.hpp"
 
-class Window;
+class Controller;
 
 class MenuScreen
 {
 public:
-	MenuScreen(Window* window);
+	MenuScreen(Controller* ctrl);
 	gameInfo menu();
 
 private:
 	void createButton();
-	gameInfo handlePress(sf::Vector2f mousePos);
-	void mainMenuPress(sf::Vector2f mousePos);
-	void numOfPlayersPress(sf::Vector2f mousePos);
-	void connectionPress(sf::Vector2f mousePos);
-	void handleHover(const sf::Vector2f mousePos);
+	gameInfo handlePress	(const sf::Vector2f& mousePos);
+	void mainMenuPress		(const sf::Vector2f& mousePos);
+	void numOfPlayersPress	(const sf::Vector2f& mousePos);
+	void connectionPress	(const sf::Vector2f& mousePos);
+	void handleHover		(const sf::Vector2f& mousePos);
 	void handleKeyboard();
 	void draw();
 
-	Window* m_window;
+	Controller* m_controller;
 	int m_lastHovered = 0;
 	int m_wantedMenu = 0;
 	sf::RectangleShape m_background;

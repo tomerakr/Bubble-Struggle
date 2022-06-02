@@ -65,6 +65,8 @@ void Resources::readLevelsNames()
 	}
 
 	levels.close();
+
+
 }
 
 std::string Resources::getLevelName(int index)

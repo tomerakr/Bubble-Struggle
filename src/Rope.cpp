@@ -3,10 +3,8 @@
 constexpr float ropeHeightChange = 2;
 constexpr float maxRopeHeight = -(windowHieght - barHeight - thickness);
 
-Rope::Rope(sf::Vector2f bearPos, int ropeTexture, Board* board)
-	:MovingObject(bearPos, sf::Vector2f(ropeWitdh, ropeHeight), 
-		Resources::instance().getSkin(ropeTexture)._rope, sf::Color::White), 
-		m_board(board)
+Rope::Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board)
+	:MovingObject(bearPos, sf::Vector2f(ropeWitdh, ropeHeight), Resources::instance().getSkin(ropeTexture)._rope), m_board(board)
 {
 	b2BodyDef bodyDef;
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
@@ -14,7 +12,7 @@ Rope::Rope(sf::Vector2f bearPos, int ropeTexture, Board* board)
 	m_box2DRope->SetTransform(b2Vec2(bearPos.x + m_icon.getSize().x / 2, bearPos.y), 0);
 }
 
-void Rope::setFixture(b2Vec2 size)
+void Rope::setFixture(const b2Vec2& size)
 {
 	b2PolygonShape ropeRectangle;
 	ropeRectangle.SetAsBox(size.x, size.y);
@@ -29,18 +27,11 @@ void Rope::setFixture(b2Vec2 size)
 
 void Rope::update()
 {
-// if rope height is too long or touched ball destroy rope
-	if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)		
+	if (m_icon.getSize().y < maxRopeHeight || m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER ||
+		m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == TILE)		// if rope height is too long stop increasing height
 	{
-		destroy();
-	}
-
-	else if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == TOUCH_WALL)
-	{
-		if (!m_freeze)
-		{
-			destroy();
-		}
+		m_done = true;
+		m_board->getWorld()->DestroyBody(m_box2DRope);
 	}
 
 	else

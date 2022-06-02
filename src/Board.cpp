@@ -6,7 +6,7 @@ Board::Board()
 {
 	setWorld();
 	createBoard();
-	setLevel(m_currLevel);
+	setLevel();
 }
 
 void Board::setWorld()
@@ -19,16 +19,20 @@ void Board::setWorld()
 void Board::createBoard()
 {
 	auto height = windowHieght - thickness - barHeight;
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height), FLOOR});			//floor
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f), FLOOR });	//ceiling
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f), WALL});				//left wall
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f), WALL}); //right wall
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height) });				//floor
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f) });					//ceiling
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f) });						//left wall
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f) });	//right wall
 }
 
-void Board::setLevel(int level)
+void Board::setLevel()
 {
-	auto file = std::ifstream(Resources::instance().getLevelName(level) + ".txt");
+	auto file = std::ifstream(Resources::instance().getLevelName(m_currLevel) + ".txt");
+	//namespace fs = std::filesystem;
+	//std::filesystem::path p = "LevelsNames.txt";
 
+	//std::cout << "Absolute path for " << p << " is "
+	//	<< std::filesystem::absolute(p) << '\n';
 	if (!file.is_open())
 	{
 		exit(EXIT_FAILURE);
@@ -54,11 +58,10 @@ void Board::setLevel(int level)
 	for (int j = 0; j < tilesNum; ++j)
 	{
 		file >> xSize >> ySize >> xPosT >> yPosT >> group;
-		m_tiles.emplace_back(Tile{ this, sf::Vector2f(xSize, ySize), sf::Vector2f(xPosT, yPosT), group});
+		m_tiles.emplace_back(Tile{ this, sf::Vector2f(xSize, ySize), sf::Vector2f(xPosT, yPosT) });
 	}
 }
 
-//-------------------------------------------
 void Board::draw(sf::RenderWindow& window)
 {
 	for (auto& ball : m_balls)
@@ -83,9 +86,8 @@ void Board::update()
 	{
 		ball.update();
 
-		if (ball.needToDelete())
+		if (ball.popped())
 		{
-			ball.pop();
 			ball.split();
 			break;
 		}
@@ -106,10 +108,10 @@ void Board::reset()
 	m_balls.clear();
 	m_tiles.clear();
 
-	setLevel(m_currLevel);
+	setLevel();
 }
 
-void Board::addBalls(const sf::Vector2f pos, const int index)
+void Board::addBalls(const sf::Vector2f& pos, const int index)
 {
 	m_balls.emplace_back(Ball{ this, pos, b2Vec2(-20, -30), index });
 	m_balls.emplace_back(Ball{ this, pos, b2Vec2( 20, -30), index });

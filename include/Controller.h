@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Bear.h"
-#include "Board.h"
-#include "Window.h"
 #include "MenuScreen.h"
 #include "GameScreen.h"
 #include "LevelCreator.h"
+#include "SFML/Graphics.hpp"
+
+constexpr int maxFPS = 300;
 
 class Controller
 {
@@ -13,11 +13,10 @@ public:
 	Controller();
 	void play();
 
-private:
-	int currentLevel = 1;
+	sf::RenderWindow& getWindow() { return m_window; }
 
-	Board m_board;
-	Window m_window;
+private:
+	sf::RenderWindow m_window;
 	MenuScreen m_menu;
 	GameScreen m_game;
 	LevelCreator m_levelCreator;

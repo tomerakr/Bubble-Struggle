@@ -18,5 +18,4 @@ target_sources (${CMAKE_PROJECT_NAME} PRIVATE "Animation.h"
 											  "StaticObject.h"
 											  "Tile.h"
 											  "Timer.h"
-											  "Window.h"
 												)

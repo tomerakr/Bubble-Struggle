@@ -10,33 +10,36 @@ class Resources;
 class Tile;
 class Ball;
 class Button;
-class Window;
+class Controller;
 
 class LevelCreator
 {
 public:
 	LevelCreator();
-	Screen createLevel(Window* window);
+	Screen createLevel(Controller* window);
 
 private:
 	void undo();
 	void erase(const sf::Vector2f& mousePos);
 	void clear();
-	void save();
+	void save() const;
 
-	void setText(sf::Vector2f pos, int size, std::string text, sf::Text& mText);
-	void updateText(std::string text, sf::Text& mText) { mText.setString(text); }
-	void update(sf::Vector2f mousePos);
-	void follow(sf::Vector2f size, sf::Color color, Objects texture, bool setOrigin = false);
-	void unfollow();
-	float setXpos(int xVal);
-	float setYpos(int yVal);
-	bool inBoard(const sf::Vector2f& mousePos);
-	void handleMouse(const sf::Vector2f& mousePos);
-	void createBaseTiles();
 	void createBar();
-	int getLastLevel();
-	void draw(Window* window);
+	void createBaseTiles();
+	void setText(const sf::Vector2f& pos, int size, const std::string& text, sf::Text& mText);
+
+	void handleMouse	(const sf::Vector2f& mousePos);
+	void update			(const sf::Vector2f& mousePos);
+	void updateText		(const std::string& text, sf::Text& mText) { mText.setString(text); }
+	void followBall		();
+	void follow			(const sf::Vector2f& size, const sf::Color& color, const Objects texture, bool setOrigin = false);
+	void unfollow();
+
+	void placeInBoard	(const sf::Vector2f& mousePos);
+	void draw			(Controller* window);
+	int getLastLevel	() const;
+	float setPos		(int xVal, int straight) const;
+	bool inBoard		(const sf::Vector2f& mousePos) const;
 
 	enum class lastAction
 	{
@@ -47,7 +50,6 @@ private:
 
 	enum class buttonNames
 	{
-		UNDO,
 		ERASE,
 		CLEAR,
 		SAVE,
@@ -56,6 +58,7 @@ private:
 		INC,
 		DEC,
 		ROT,
+		NONE,
 	};
 
 	std::deque<lastAction> m_lastAction;
@@ -72,8 +75,8 @@ private:
 	sf::RectangleShape m_followShape;
 	bool m_delete = false;
 
-	sf::Vector2f m_floorSize;
-	sf::Vector2f m_wallSize;
-	sf::Vector2f m_tileSize;
-	int m_ballIndex;
+	sf::Vector2f m_floorSize = sf::Vector2f(200, thickness);
+	sf::Vector2f m_wallSize = sf::Vector2f(thickness, 200);
+	sf::Vector2f m_tileSize = m_wallSize;
+	int m_ballIndex = 5;
 };
