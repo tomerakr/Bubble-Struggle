@@ -11,7 +11,7 @@ Ball::Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, in
 }
 
 Ball::Ball(const sf::Vector2f& pos, int index, int indentaion)
-    : m_index(index)/*, m_board(nullptr)*/
+    : m_index(index), m_board(nullptr)
 {
     m_ball.setTexture(Resources::instance().getObjectTexture(Objects::Ball));
     m_ball.setRadius((defRadius - 10 * index));
@@ -19,12 +19,6 @@ Ball::Ball(const sf::Vector2f& pos, int index, int indentaion)
     m_ball.setPosition(sf::Vector2f(pos.x + indentaion * m_ball.getRadius(), pos.y));
     m_ball.setFillColor(Resources::instance().getColor(index));
 }
-
-//needs to make destructor work
-void Ball::reset()
-{
-    m_board->getWorld()->DestroyBody(m_body);
-} 
 
 void Ball::setBall2D(const b2Vec2& initialForce)
 {
@@ -51,7 +45,6 @@ void Ball::setBall2D(const b2Vec2& initialForce)
 
 void Ball::split()
 {
-    m_board->getWorld()->DestroyBody(m_body); //why here
     if (m_index < numOfBalls)
     {
         m_board->addBalls(m_ball.getPosition(), m_index + 1);
@@ -68,7 +61,7 @@ void Ball::update()
     }
 }
 
-//Ball::~Ball() //does not work for some reason?
-//{
-//    m_board->getWorld()->DestroyBody(m_body);
-//}
+Ball::~Ball()
+{
+    if (m_body) m_board->getWorld()->DestroyBody(m_body);
+}

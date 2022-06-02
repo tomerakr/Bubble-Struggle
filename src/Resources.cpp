@@ -37,12 +37,12 @@ Resources& Resources::instance()
 	return inst;
 }
 
-sf::Texture* const Resources::getBackgroundTexture(const Backgrounds texture)
+sf::Texture* Resources::getBackgroundTexture(const Backgrounds texture)
 {
 	return &m_backgroundTextures[int(texture)];
 }
 
-sf::Texture* const Resources::getObjectTexture(const Objects texture)
+sf::Texture* Resources::getObjectTexture(const Objects texture)
 {
 	return &m_objectTextures[int(texture)];
 }

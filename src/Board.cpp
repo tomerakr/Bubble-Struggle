@@ -1,6 +1,8 @@
 #include "Board.h"
 #include "Controller.h"
 
+#include <filesystem>
+
 Board::Board()
 	:m_currLevel(1)
 {
@@ -33,6 +35,13 @@ void Board::setLevel()
 
 	//std::cout << "Absolute path for " << p << " is "
 	//	<< std::filesystem::absolute(p) << '\n';
+	//auto res = std::filesystem::path("../../../resources");
+	//if (std::filesystem::exists(res))
+	//{
+	//	std::filesystem::copy(filename, res);
+	//	auto cmake = std::ofstream(res / "CMakeLists.txt", std::ios::app);
+	//	cmake << ""
+	//}
 	if (!file.is_open())
 	{
 		exit(EXIT_FAILURE);
@@ -43,10 +52,11 @@ void Board::setLevel()
 	auto xPosB = 0.f, yPosB = 0.f;
 
 	file >> ballsNum;
+	m_balls.reserve(ballsNum);
 	for (int i = 0; i < ballsNum; ++i)
 	{
 		file >> xPosB >> yPosB >> index >> direction;
-		m_balls.emplace_back(Ball{ this, sf::Vector2f(xPosB, yPosB), b2Vec2(direction * 20,  20), index });
+		m_balls.emplace_back(this, sf::Vector2f(xPosB, yPosB), b2Vec2(direction * 20,  20), index);
 	}
 
 	// ---- TILES ----

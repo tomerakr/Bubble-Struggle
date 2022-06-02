@@ -16,7 +16,7 @@ void Button::setText(const std::string& text)
 {
 	auto pos = m_icon.getPosition();
 	m_text.setPosition(pos.x, pos.y - 12);
-	m_text.setColor(sf::Color::White);
+	m_text.setFillColor(sf::Color::White);
 	m_text.setFont(*Resources::instance().getFont());
 	m_text.setCharacterSize(textSize);
 	m_text.setString(text);
