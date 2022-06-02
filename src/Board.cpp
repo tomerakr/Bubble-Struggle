@@ -86,6 +86,10 @@ void Board::draw(sf::RenderWindow& window)
 	{
 		tile.draw(window);
 	}
+	for (auto& gift : m_gifts)
+	{
+		gift.draw(window);
+	}
 }
 
 void Board::update()
@@ -102,7 +106,14 @@ void Board::update()
 			break;
 		}
 	}
+
+	for (auto& gift : m_gifts)
+	{
+		gift.update();
+	}
+
 	std::erase_if(m_balls, [](auto& ball) { return ball.popped(); });
+	//std::erase_if(m_gifts, [](auto& gift) { return gift.getIsDone(); });
 }
 
 void Board::reset()
@@ -125,4 +136,14 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 {
 	m_balls.emplace_back(Ball{ this, pos, b2Vec2(-20, -30), index });
 	m_balls.emplace_back(Ball{ this, pos, b2Vec2( 20, -30), index });
+}
+
+void Board::addGift(const sf::Vector2f position, const Objects giftType)
+{
+	//bool addGift = rand() % 2 == 0 ? true : false;
+
+	if (true)
+	{
+		m_gifts.emplace_back(Gift(position, this));
+	}
 }

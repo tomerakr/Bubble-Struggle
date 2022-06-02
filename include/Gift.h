@@ -1,14 +1,32 @@
-#include "MovingObject.h"
+#pragma once
 
+#include "MovingObject.h"
 #include "Macros.h"
-#include "Board.h"
+#include "box2d/box2d.h"
+#include "Timer.h"
+
+class Board;
 
 class Gift : public MovingObject
 {
 public:
-	Gift(const sf::Vector2f position, Board* board, const Gifts giftType = Gifts::Freeze);
+	Gift(const sf::Vector2f position, Board* board, const Objects giftType = Objects::GiftFreeze);
+
+	//~Gift();
+
+	void update();
+
+	bool getIsDone() const;
 
 private:
-	Gifts m_giftType;
+	Objects m_giftType;
 	Board* m_board;
+
+	b2Body* m_body;
+
+	b2PolygonShape m_rect2D;
+
+	Timer m_timer = Timer(giftTimer);
+
+	bool m_isDone = false;
 };
