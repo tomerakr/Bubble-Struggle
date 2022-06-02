@@ -19,18 +19,17 @@ public:
 	Ball(Ball&& other) : m_ball(std::move(other.m_ball)), m_board(std::move(other.m_board)), 
 		m_ball2D(std::move(other.m_ball2D)), m_body(std::exchange(other.m_body, nullptr)),
 		m_popped(other.m_popped), m_index(other.m_index)
-	{
+	{	
 		;
 	}
 
 	Ball& operator=(Ball&& other) noexcept
 	{
-		auto temp = std::move(other);
-		swap(std::move(*this), std::move(temp));
+		swap(*this, other);
 		return *this;
 	}
 
-	void swap(Ball&& that, Ball&& other)
+	void swap(Ball& that, Ball& other)
 	{
 		std::ranges::swap(that.m_ball, other.m_ball);
 		std::ranges::swap(that.m_popped, other.m_popped);
@@ -41,7 +40,6 @@ public:
 	}
 
 	~Ball();
-	void reset() { ; }	//until the destructor will work
 	void update();
 	void split();
 	bool popped() const					{ return m_popped; }

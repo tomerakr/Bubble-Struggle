@@ -119,13 +119,13 @@ Screen GameScreen::gamePlay(gameInfo& info)
 
 void GameScreen::update(float deltaTime)
 {
-	m_board.update();
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
 	for (auto& bear : m_bears)
 	{
 		otherBear = bear.update(deltaTime, otherBear);
 	}
 	m_bar.update(m_bears.front());
+	m_board.update();
 }
 
 Screen GameScreen::handleKeyboard()

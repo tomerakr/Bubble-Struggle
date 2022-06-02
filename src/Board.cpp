@@ -131,8 +131,9 @@ void Board::reset()
 
 void Board::addBalls(const sf::Vector2f& pos, const int index)
 {
+	const auto pos2 = pos;
 	m_balls.emplace_back(this, pos, b2Vec2(-20, -30), index);
-	m_balls.emplace_back(this, pos, b2Vec2( 20, -30), index);
+	m_balls.emplace_back(this, pos2, b2Vec2(20, -30), index);
 }
 
 void Board::addGift(const sf::Vector2f position, const Objects giftType)
