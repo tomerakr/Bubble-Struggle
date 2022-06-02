@@ -55,7 +55,7 @@ void Ball::update()
 {
     auto pos = m_body->GetPosition();
     m_ball.setPosition(pos.x, pos.y);
-    if ((m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER) || m_ball.getRadius() < 10)
+    if (m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER || m_ball.getRadius() < 10)
     {
         m_popped = true;
     }

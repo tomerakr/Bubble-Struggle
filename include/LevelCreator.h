@@ -19,7 +19,6 @@ public:
 	Screen createLevel(Controller* window);
 
 private:
-	void undo();
 	void erase(const sf::Vector2f& mousePos);
 	void clear();
 	void save() const;

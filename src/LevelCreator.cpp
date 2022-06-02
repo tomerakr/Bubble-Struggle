@@ -127,35 +127,6 @@ void LevelCreator::erase(const sf::Vector2f& mousePos)
 	std::erase_if(m_tiles, [](auto& tile) { return tile.second; });
 }
 
-void LevelCreator::undo()
-{
-	if (m_lastAction.empty())
-	{
-		return;
-	}
-	switch (m_lastAction.back())
-	{
-	case lastAction::BALL:
-		if (m_balls.size() > 0)
-		{
-			m_balls.pop_back();
-			m_lastAction.pop_back();
-		}
-		break;
-
-	case lastAction::TILE:
-		if (m_tiles.size() > 0)
-		{
-			m_tiles.pop_back();
-			m_lastAction.pop_back();
-		}
-		break;
-
-	default:
-		break;
-	}
-}
-
 void LevelCreator::save() const
 {
 	auto file = std::ofstream("Level 1" /*+ toString(get last level number) +*/ ".txt");
@@ -175,7 +146,7 @@ void LevelCreator::save() const
 	for (auto& tile : m_tiles)
 	{
 		auto pos = tile.first.getPos();
-		file << m_tileSize.x << ' ' << m_tileSize.y << ' ' << pos.x << ' ' << pos.y << ' ' << 0/*this is group needs change*/ << '\n';
+		//file << .x << ' ' << .y << ' ' << pos.x << ' ' << pos.y << ' ' << 0/*this is group needs change*/ << '\n';
 	}
 }
 

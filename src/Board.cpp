@@ -107,10 +107,7 @@ void Board::update()
 
 void Board::reset()
 {
-	for (auto& ball : m_balls)
-	{
-		ball.reset();
-	}
+	m_balls.clear();
 	for (auto& tile : m_tiles)
 	{
 		tile.reset();
@@ -123,6 +120,6 @@ void Board::reset()
 
 void Board::addBalls(const sf::Vector2f& pos, const int index)
 {
-	m_balls.emplace_back(Ball{ this, pos, b2Vec2(-20, -30), index });
-	m_balls.emplace_back(Ball{ this, pos, b2Vec2( 20, -30), index });
+	m_balls.emplace_back(this, pos, b2Vec2(-20, -30), index);
+	m_balls.emplace_back(this, pos, b2Vec2( 20, -30), index);
 }

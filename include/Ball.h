@@ -3,6 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "box2d/box2d.h"
 #include "Macros.h"
+#include <concepts>
 
 constexpr float defRadius = 90.f;
 
@@ -17,19 +18,26 @@ public:
 	void operator=(const Ball&) = delete;
 	Ball(Ball&& other) : m_ball(std::move(other.m_ball)), m_board(std::move(other.m_board)), 
 		m_ball2D(std::move(other.m_ball2D)), m_body(std::exchange(other.m_body, nullptr)),
-		m_popped(std::move(other.m_popped)), m_index(std::move(other.m_index))
-	{}
-
-	Ball& operator=(Ball&& other)
+		m_popped(other.m_popped), m_index(other.m_index)
 	{
-		m_ball = std::move(other.m_ball);
-		m_popped = std::move(other.m_popped);
-		m_index = std::move(other.m_index);
-		m_board = std::move(other.m_board);
-		m_ball2D = std::move(other.m_ball2D);
-		m_body = std::move(other.m_body);
+		;
+	}
 
+	Ball& operator=(Ball&& other) noexcept
+	{
+		auto temp = std::move(other);
+		swap(std::move(*this), std::move(temp));
 		return *this;
+	}
+
+	void swap(Ball&& that, Ball&& other)
+	{
+		std::ranges::swap(that.m_ball, other.m_ball);
+		std::ranges::swap(that.m_popped, other.m_popped);
+		std::ranges::swap(that.m_index, other.m_index);
+		std::ranges::swap(that.m_board, other.m_board);
+		std::ranges::swap(that.m_ball2D, other.m_ball2D);
+		std::ranges::swap(that.m_body, other.m_body);
 	}
 
 	~Ball();
