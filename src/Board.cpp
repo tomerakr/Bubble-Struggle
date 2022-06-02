@@ -13,16 +13,16 @@ void Board::setWorld()
 {
 	b2Vec2 gravity(0.0f, 10.0f);
 	m_world = std::make_unique<b2World>(gravity);
-	m_world->SetContactListener(new ContactListener());
+	m_world->SetContactListener(new ContactListener());	// need to free
 }
 
 void Board::createBoard()
-{	
+{
 	auto height = windowHieght - thickness - barHeight;
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height), FLOOR});			//floor
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f), FLOOR});				//ceiling
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f), WALL});						//left wall
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f), WALL});	//right wall
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f), FLOOR });	//ceiling
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f), WALL});				//left wall
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f), WALL}); //right wall
 }
 
 void Board::setLevel(int level)

@@ -1,5 +1,7 @@
 #include "ContactListener.h"
 
+#include "Macros.h"
+
 #include <iostream>
 
 void ContactListener::BeginContact(b2Contact* contact)
@@ -39,4 +41,26 @@ void ContactListener::BeginContact(b2Contact* contact)
         destroyObjects.groupIndex = POPPED_BALL_FILTER;
         fixtureA->SetFilterData(destroyObjects);
     }
+
+//      if rope collided with ceiling
+    else if (fixtureA->GetFilterData().groupIndex == FLOOR &&
+        fixtureB->GetFilterData().groupIndex == ROPE_FILTER ||
+        fixtureA->GetFilterData().groupIndex == ROPE_FILTER &&
+        fixtureB->GetFilterData().groupIndex == FLOOR)
+    {
+        b2Filter destroyObjects;
+        destroyObjects.groupIndex = TOUCH_WALL;
+        fixtureA->SetFilterData(destroyObjects);
+    }
+
+//      if ball collided with ceiling
+    //else if (fixtureA->GetFilterData().groupIndex == FLOOR &&
+    //    fixtureB->GetFilterData().groupIndex == BALL_FILTER ||
+    //    fixtureA->GetFilterData().groupIndex == BALL_FILTER &&
+    //    fixtureB->GetFilterData().groupIndex == FLOOR)
+    //{
+    //    b2Filter destroyObjects;
+    //    destroyObjects.groupIndex = POPPED_BALL_FILTER;
+    //    fixtureB->SetFilterData(destroyObjects);
+    //}
 }

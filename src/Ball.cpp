@@ -36,7 +36,7 @@ void Ball::setBall2D(const b2Vec2 initialForce)
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(m_ball.getPosition().x, m_ball.getPosition().y);
 
-    bodyDef.linearVelocity = initialForce;
+    bodyDef.linearVelocity = initialForce/* + b2Vec2(0, -100)*/;
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
     
     //add circle fixture

@@ -17,8 +17,9 @@ public:
 
 private:
 	void setFixture(b2Vec2 size);
+	void destroy();
 
-	bool m_freeze = false;
+	bool m_freeze = true;
 	bool m_done = false;
 
 	Board* m_board = nullptr;
