@@ -63,5 +63,8 @@ void Ball::update()
 
 Ball::~Ball()
 {
-    if (m_body) m_board->getWorld()->DestroyBody(m_body);
+    if (m_body)
+    {
+        m_board->getWorld()->DestroyBody(m_body);
+    }
 }

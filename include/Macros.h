@@ -9,6 +9,8 @@ constexpr int ropeWitdh = 20;
 constexpr int ropeHeight = 0;
 constexpr int bearWitdh = 80;
 constexpr int bearHieght = 120;
+constexpr int giftTimer = 3;
+
 //constexpr sf::Vector2f left = sf::Vector2f(-1, 0);
 //constexpr sf::Vector2f right = sf::Vector2f(1, 0);
 
@@ -18,8 +20,10 @@ constexpr int BALL_FILTER = -1;
 constexpr int ROPE_FILTER = -4;
 const int POPPED_BALL_FILTER = -5;
 const int BEAR_FILTER = -6;
-const int TOUCH_WALL = -7;
 constexpr int TILE = -7;
+const int TOUCH_WALL = -8;
+const int GIFT_FREEZE_FILTER = -9;
+
 
 
 //---------------------------------------------------------
@@ -83,12 +87,6 @@ enum class Keys
 	Left,
 	Right,
 	Shoot
-};
-
-enum class Gifts
-{
-	Freeze,
-	AddRope
 };
 //---------------------------------------------------------
 

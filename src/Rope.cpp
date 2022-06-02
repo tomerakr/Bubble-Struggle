@@ -27,11 +27,18 @@ void Rope::setFixture(const b2Vec2& size)
 
 void Rope::update()
 {
-	if (m_icon.getSize().y < maxRopeHeight || m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER ||
-		m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == TILE)		// if rope height is too long stop increasing height
+//		if rope collided with ball destroy rope
+	if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)		
 	{
-		m_done = true;
-		m_board->getWorld()->DestroyBody(m_box2DRope);
+		destroy();
+	}
+
+//		if rope reached max height destroy rope
+	else if (m_icon.getSize().y < maxRopeHeight)
+	{
+		m_board->addGift(sf::Vector2f(300, 300));
+
+		destroy();
 	}
 
 	else
