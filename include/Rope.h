@@ -15,7 +15,7 @@ public:
 	bool isDone() { return m_done; }
 
 private:
-	void setFixture(b2Vec2 size);
+	void setFixture(const b2Vec2& size);
 	void destroy();
 
 	bool m_freeze = true;
