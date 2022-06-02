@@ -1,8 +1,12 @@
 ﻿#configure_file ( ${CMAKE_BINARY_DIR} COPYONLY)
+
 configure_file ("bearBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("pandaBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("polarBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("poohBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("textBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("barBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
 configure_file ("icon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("ball.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("bear.png" ${CMAKE_BINARY_DIR} COPYONLY)

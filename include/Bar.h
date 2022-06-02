@@ -13,6 +13,7 @@ public:
 	void setBar(float time, const gameInfo& info);
 	void update( Bear &bear);
 	void draw(sf::RenderWindow &window, Bear& bear); //why not pointer to bear
+	void drawBackgroundText(sf::RenderWindow& window);
 
 
 private:
@@ -21,5 +22,8 @@ private:
 	int m_level;
 	sf::Text m_levelText;
 	sf::Text m_scoreText;
+	sf::RectangleShape m_background;
+	sf::RectangleShape m_textBackground;
+
 };
 

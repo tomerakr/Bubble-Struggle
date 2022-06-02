@@ -45,13 +45,15 @@ enum class Objects
 	GiftTime
 };
 
-constexpr int numOfBackgrounds = 4;
+constexpr int numOfBackgrounds = 6;
 enum class Backgrounds
 {
 	BearMenu,
 	PandaMenu,
 	PolarMenu,
 	PoohMenu,
+	Bar,
+	Text,
 	//GameBackground,
 };
 
