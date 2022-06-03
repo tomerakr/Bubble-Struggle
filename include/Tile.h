@@ -13,7 +13,8 @@ public:
 	void reset();
 	//void collision(Board* board);
 	bool contains(const sf::Vector2f& mousePos) { return m_icon.getGlobalBounds().contains(mousePos); }
-	const sf::Vector2f getPos() const { return m_icon.getPosition(); }
+	const sf::Vector2f& getPos() const  { return m_icon.getPosition(); }
+	const sf::Vector2f& getSize() const { return m_icon.getSize(); }
 
 private:
 	Board* m_board;

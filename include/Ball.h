@@ -13,12 +13,12 @@ class Ball
 {
 public:
 	Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, int index = 0);
-	Ball(const sf::Vector2f& pos, int index = 0, int indentaion = 0);
+	Ball(const sf::Vector2f& pos, int index = 0, int direction = 1, int indentaion = 0);
 	Ball(const Ball&) = delete;
 	void operator=(const Ball&) = delete;
-	Ball(Ball&& other) : m_ball(std::move(other.m_ball)), m_board(std::move(other.m_board)), 
+	Ball(Ball&& other) noexcept : m_ball(std::move(other.m_ball)), m_board(std::move(other.m_board)),
 		m_ball2D(std::move(other.m_ball2D)), m_body(std::exchange(other.m_body, nullptr)),
-		m_popped(other.m_popped), m_index(other.m_index)
+		m_popped(other.m_popped), m_index(other.m_index), m_direction(other.m_direction)
 	{	
 		;
 	}
@@ -33,6 +33,7 @@ public:
 	{
 		std::ranges::swap(that.m_ball, other.m_ball);
 		std::ranges::swap(that.m_popped, other.m_popped);
+		std::ranges::swap(that.m_direction, other.m_direction);
 		std::ranges::swap(that.m_index, other.m_index);
 		std::ranges::swap(that.m_board, other.m_board);
 		std::ranges::swap(that.m_ball2D, other.m_ball2D);
@@ -45,7 +46,8 @@ public:
 	bool popped() const					{ return m_popped; }
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	const sf::Vector2f& getPos() const	{ return m_ball.getPosition(); }
-	int getIndex() const			{ return m_index; }
+	int getIndex() const				{ return m_index; }
+	int getDirection() const			{ return m_direction; }
 	bool contains(const sf::Vector2f& mousePos) const { return m_ball.getGlobalBounds().contains(mousePos); }
 
 private:
@@ -53,6 +55,7 @@ private:
 	sf::CircleShape m_ball;
 	bool m_popped = false;
 	int m_index;
+	int m_direction;
 	Board* m_board;
 
 	b2CircleShape m_ball2D;

@@ -24,8 +24,6 @@ constexpr int TILE = -7;
 const int TOUCH_WALL = -8;
 const int GIFT_FREEZE_FILTER = -9;
 
-
-
 //---------------------------------------------------------
 constexpr int numOfObjects = 16;
 enum class Objects

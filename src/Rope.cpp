@@ -36,9 +36,9 @@ void Rope::update()
 //		if rope reached max height destroy rope
 	else if (m_icon.getSize().y < maxRopeHeight)
 	{
-		m_board->addGift(sf::Vector2f(300, 300));
+		//m_board->addGift(sf::Vector2f(300, 300));
 
-		destroy();
+		//destroy();
 	}
 
 	else

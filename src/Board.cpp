@@ -1,13 +1,10 @@
 #include "Board.h"
 #include "Controller.h"
 
-#include <filesystem>
-
 Board::Board()
 	:m_currLevel(1)
 {
 	setWorld();
-	createBoard();
 	setLevel();
 }
 
@@ -18,8 +15,9 @@ void Board::setWorld()
 	m_world->SetContactListener(new ContactListener());	// need to free
 }
 
-void Board::createBoard()
+void Board::createNormal()
 {
+	m_baseTiles.clear();
 	auto height = windowHieght - thickness - barHeight;
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height) });				//floor
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f) });					//ceiling
@@ -27,21 +25,18 @@ void Board::createBoard()
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f) });	//right wall
 }
 
+void Board::createSurvival()
+{
+	m_baseTiles.clear();
+	auto height = windowHieght - thickness - barHeight;
+	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWitdh * 3, thickness), sf::Vector2f(0.f, height) });	//floors
+	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWitdh * 3, thickness), sf::Vector2f(0.f, 0.f) });		//ceiling
+}
+
 void Board::setLevel()
 {
-	auto file = std::ifstream(Resources::instance().getLevelName(m_currLevel) + ".txt");
-	//namespace fs = std::filesystem;
-	//std::filesystem::path p = "LevelsNames.txt";
+	auto file = std::ifstream(Resources::instance().getLevelName(m_currLevel));
 
-	//std::cout << "Absolute path for " << p << " is "
-	//	<< std::filesystem::absolute(p) << '\n';
-	//auto res = std::filesystem::path("../../../resources");
-	//if (std::filesystem::exists(res))
-	//{
-	//	std::filesystem::copy(filename, res);
-	//	auto cmake = std::ofstream(res / "CMakeLists.txt", std::ios::app);
-	//	cmake << ""
-	//}
 	if (!file.is_open())
 	{
 		exit(EXIT_FAILURE);
@@ -60,15 +55,15 @@ void Board::setLevel()
 	}
 
 	// ---- TILES ----
-	auto tilesNum = 0, group = 0;
+	auto tilesNum = 0;
 	auto xPosT = 0.f, yPosT = 0.f,
 		 xSize = 0.f, ySize = 0.f;
 
 	file >> tilesNum;
 	for (int j = 0; j < tilesNum; ++j)
 	{
-		file >> xSize >> ySize >> xPosT >> yPosT >> group;
-		m_tiles.emplace_back(Tile{ this, sf::Vector2f(xSize, ySize), sf::Vector2f(xPosT, yPosT) });
+		file >> xSize >> ySize >> xPosT >> yPosT;
+		m_tiles.emplace_back(this, sf::Vector2f(xSize, ySize), sf::Vector2f(xPosT, yPosT));
 	}
 }
 
@@ -86,10 +81,10 @@ void Board::draw(sf::RenderWindow& window)
 	{
 		tile.draw(window);
 	}
-	for (auto& gift : m_gifts)
-	{
-		gift.draw(window);
-	}
+	//for (auto& gift : m_gifts)
+	//{
+	//	gift.draw(window);
+	//}
 }
 
 void Board::update()
@@ -107,10 +102,10 @@ void Board::update()
 		}
 	}
 
-	for (auto& gift : m_gifts)
-	{
-		gift.update();
-	}
+	//for (auto& gift : m_gifts)
+	//{
+	//	gift.update();
+	//}
 
 	std::erase_if(m_balls, [](auto& ball) { return ball.popped(); });
 	//std::erase_if(m_gifts, [](auto& gift) { return gift.getIsDone(); });
@@ -136,12 +131,12 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 	m_balls.emplace_back(this, pos2, b2Vec2(20, -30), index);
 }
 
-void Board::addGift(const sf::Vector2f position, const Objects giftType)
-{
-	//bool addGift = rand() % 2 == 0 ? true : false;
-
-	if (true)
-	{
-		m_gifts.emplace_back(Gift(position, this));
-	}
-}
+//void Board::addGift(const sf::Vector2f position, const Objects giftType)
+//{
+//	auto addGift = rand() % 2 == 0;
+//
+//	if (addGift)
+//	{
+//		m_gifts.emplace_back(Gift(position, this));
+//	}
+//}

@@ -4,6 +4,8 @@
 #include "Ball.h"
 #include "Button.h"
 #include "Controller.h"
+#include <filesystem>
+#include <iostream>
 
 constexpr int STRAIGHTy = 10;
 constexpr int STRAIGHTx = 5;
@@ -103,7 +105,7 @@ void LevelCreator::update(const sf::Vector2f& mousePos)
 
 void LevelCreator::clear()
 {
-	m_balls.clear();
+	//m_balls.clear();
 	m_tiles.clear();
 }
 
@@ -123,13 +125,14 @@ void LevelCreator::erase(const sf::Vector2f& mousePos)
 			tile.second = true;
 		}
 	}
-	std::erase_if(m_balls, [](auto& ball) { return ball.second; });
+	//std::erase_if(m_balls, [](auto& ball) { return ball.second; });
 	std::erase_if(m_tiles, [](auto& tile) { return tile.second; });
 }
 
 void LevelCreator::save() const
 {
-	auto file = std::ofstream("Level 1" /*+ toString(get last level number) +*/ ".txt");
+	const auto& levelName = "Level " + std::to_string(getLastLevel()) + ".txt";
+	auto file = std::ofstream(levelName);
 
 	if (!file.is_open())
 	{
@@ -139,20 +142,56 @@ void LevelCreator::save() const
 	for (auto& ball : m_balls)
 	{
 		auto pos = ball.first.getPos();
-		file << pos.x << ' ' << pos.y << ' ' << ball.first.getIndex() << ' ' << -1/*thats the direction for now*/ << '\n';
+		file << pos.x << ' ' << pos.y << ' ' << ball.first.getIndex() << ' ' << ball.first.getDirection() << '\n';
 	}
 
 	file << m_tiles.size() << '\n';
 	for (auto& tile : m_tiles)
 	{
 		auto pos = tile.first.getPos();
-		//file << .x << ' ' << .y << ' ' << pos.x << ' ' << pos.y << ' ' << 0/*this is group needs change*/ << '\n';
+		auto size = tile.first.getSize();
+		file << size.x << ' ' << size.y << ' ' << pos.x << ' ' << pos.y << '\n';
+	}
+
+	addToProperties(levelName);
+}
+
+void LevelCreator::addToProperties(const std::string& level) const
+{
+	auto res = std::filesystem::path("../../../resources");
+	if (std::filesystem::exists(res))
+	{
+		std::filesystem::copy(level, res);
+		auto cmake = std::ofstream(res / "CMakeLists.txt", std::ios::app);
+		cmake << "configure_file (\"" + level + "\" ${CMAKE_BINARY_DIR} COPYONLY)" << '\n';
+		auto levelsNames = std::ofstream(res / "LevelsNames.txt", std::ios::app);
+		levelsNames << level << '\n';
 	}
 }
 
 int LevelCreator::getLastLevel() const
 {
-	return 2;
+	auto lastLevl = 0;
+	auto res = std::filesystem::path("../../../resources");
+	if (std::filesystem::exists(res))
+	{
+		auto levelNames = std::ifstream(res / "LevelsNames.txt");
+		if (!levelNames.is_open())
+		{
+			exit(EXIT_FAILURE);
+		}
+		levelNames.seekg(-1, std::ios_base::end);
+		for (int i = levelNames.tellg(); i > 0; --i, levelNames.seekg(i, std::ios_base::beg))
+		{
+			if (levelNames.peek() == ' ')
+			{
+				levelNames.get();
+				break;
+			}
+		}
+		levelNames >> lastLevl;
+	}
+	return lastLevl + 1;
 }
 
 void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
@@ -234,9 +273,12 @@ void LevelCreator::placeInBoard(const sf::Vector2f& mousePos)
 		switch (m_action)
 		{
 		case buttonNames::BALL:
-			m_balls.push_back(std::make_pair(Ball{ sf::Vector2f(setPos(mousePos.x, STRAIGHTx), setPos(mousePos.y, STRAIGHTy)), m_ballIndex }, false));
+		{
+			auto pos = sf::Vector2f(setPos(mousePos.x, STRAIGHTx), setPos(mousePos.y, STRAIGHTy));
+			m_balls.push_back(std::make_pair(Ball{ pos, m_ballIndex, m_ballDirecetion }, false));
 			m_lastAction.push_back(lastAction::BALL);
 			break;
+		}
 
 		case buttonNames::TILE:
 			m_tiles.push_back(std::make_pair(Tile{ m_tileSize, sf::Vector2f(setPos(mousePos.x, STRAIGHTx), setPos(mousePos.y, STRAIGHTy)) }, false));
