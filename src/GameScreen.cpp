@@ -223,22 +223,23 @@ void GameScreen::draw(sf::RenderWindow& window, sf::View& view)
 
 void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 {
-	auto bearLeft = m_points.first - m_bears.front().getPos().x;
+	auto bearX = m_bears.front().getPos().x;
+
+	auto bearLeft = m_points.first - bearX;
 	auto leftViewSize = sf::Vector2f(windowWitdh - (bearLeft > 0 ? bearLeft : 0), windowHieght - barHeight);
-	if (m_bears.front().getPos().x <= -windowWitdh / 2 + bearWitdh / 2) leftViewSize.x = 0;
-	auto leftViewPos = sf::Vector2f(((bearLeft > 0 ? 0 : m_bears.front().getPos().x - m_points.first)), 0);
+	if (bearX <= -windowWitdh / 2 + bearWitdh / 2) leftViewSize.x = 0;
+	auto leftViewPos = sf::Vector2f(((bearLeft > 0 ? 0 : bearX - m_points.first)), 0);
 
-	auto bearRight = m_bears.front().getPos().x - m_points.second;
-
+	auto bearRight = bearX - m_points.second;
 	auto rightViewSize = sf::Vector2f((bearLeft > 0 ? windowWitdh - leftViewSize.x : windowWitdh - (bearRight > 0 ? bearRight : 0)), windowHieght - barHeight);
-	if (m_bears.front().getPos().x >= 3 * windowWitdh - windowWitdh / 2 + bearWitdh / 2) rightViewSize.x = 0;
-	auto rightViewPos = sf::Vector2f(m_bears.front().getPos().x + m_points.second, 0);
+	if (bearX >= 3 * windowWitdh + windowWitdh / 2 - bearWitdh / 2) rightViewSize.x = 0;
+	auto rightViewPos = sf::Vector2f(bearX + (bearLeft > 0 ? m_points.second : -m_points.first), 0);
 
 	leftView = sf::View(sf::FloatRect(leftViewPos.x, leftViewPos.y, leftViewSize.x, leftViewSize.y));
 	rightView = sf::View(sf::FloatRect(rightViewPos.x, rightViewPos.y, rightViewSize.x, rightViewSize.y));
 
 	float windowPortion = (windowHieght - barHeight) / static_cast<float>(windowHieght);
-	if (bearLeft > 0)
+	if (bearLeft > 0 || bearRight > 0)
 	{
 		rightView.setViewport({ 0.f, 0.f, rightViewSize.x / windowWitdh,  windowPortion });
 		leftView.setViewport({ rightViewSize.x / windowWitdh, 0.f, leftViewSize.x / windowWitdh, windowPortion });
