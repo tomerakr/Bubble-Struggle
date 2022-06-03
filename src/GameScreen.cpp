@@ -16,6 +16,9 @@ GameScreen::GameScreen(Controller* ctrl)
 	keys.push_back(sf::Keyboard::D);
 	keys.push_back(sf::Keyboard::LControl);
 	m_keys.push_back(keys);
+
+	m_points.first = windowWitdh / 2.f - bearWitdh / 2.f; //560
+	m_points.second = 3 * windowWitdh - m_points.first;
 }
 
 void GameScreen::game(const gameInfo& info)
@@ -100,7 +103,7 @@ Screen GameScreen::playSurvival()
 			break;
 		}
 	}
-	update(deltaTime.asSeconds());
+	updateSurvival(deltaTime.asSeconds());
 	return screen;
 }
 
@@ -141,6 +144,26 @@ void GameScreen::update(float deltaTime)
 	m_board.update();
 }
 
+void GameScreen::updateSurvival(float deltaTime)
+{
+	auto otherBear = std::make_pair(sf::Vector2f(), false);
+	for (auto& bear : m_bears)
+	{
+		otherBear = bear.update(deltaTime, otherBear);
+	}
+	if (m_bears.front().getPos().x < bearWitdh / 2)
+	{
+		m_bears.front().setPos(sf::Vector2f(m_bears.front().getPos().x + 3 * windowWitdh, m_bears.front().getPos().y));
+	}
+	else if (m_bears.front().getPos().x > 3 * windowWitdh - bearWitdh / 2)
+	{
+		m_bears.front().setPos(sf::Vector2f(m_bears.front().getPos().x - 3 * windowWitdh, m_bears.front().getPos().y));
+	}
+
+	m_bar.update(m_bears.front());
+	m_board.update();
+}
+
 Screen GameScreen::handleKeyboard()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -169,49 +192,13 @@ void GameScreen::draw()
 void GameScreen::drawSurvival()
 {
 	auto& window = m_controller->getWindow();
-	auto bearLeft = windowWitdh / 2 - bearWitdh / 2 - m_bears.front().getPos().x;
-	auto leftViewSize = sf::Vector2f(windowWitdh - (bearLeft > 0 ? bearLeft : 0), windowHieght - barHeight);
-	if (m_bears.front().getPos().x <= -windowWitdh / 2 + bearWitdh / 2) leftViewSize.x = 0;
-	auto leftViewPos = sf::Vector2f(((bearLeft > 0 ? 0 : m_bears.front().getPos().x + bearWitdh / 2 - windowWitdh / 2)), 0);
+	auto leftView = sf::View(), rightView = sf::View();
+	setViews(leftView, rightView);
 	
-	auto bearRight = m_bears.front().getPos().x - (3 * windowWitdh - windowWitdh / 2 - bearWitdh / 2);
-	auto rightViewSize = sf::Vector2f((bearLeft > 0 ? windowWitdh - leftViewSize.x : windowWitdh - (bearRight > 0 ? bearRight : 0)), windowHieght - barHeight);
-	if (m_bears.front().getPos().x >= 3 * windowWitdh - windowWitdh / 2 + bearWitdh / 2) rightViewSize.x = 0;
-	auto rightViewPos = sf::Vector2f(m_bears.front().getPos().x + bearWitdh / 2 - windowWitdh / 2 + 3 * windowWitdh, 0);
-
-	auto leftView = sf::View(sf::FloatRect(leftViewPos.x, leftViewPos.y, leftViewSize.x, leftViewSize.y));
-	auto rightView = sf::View(sf::FloatRect(rightViewPos.x, rightViewPos.y, rightViewSize.x, rightViewSize.y));
-
-	float windowPortion = (windowHieght - barHeight) / static_cast<float>(windowHieght);
-	if (bearLeft > 0)
-	{
-		rightView.setViewport({ 0.f, 0.f, rightViewSize.x / windowWitdh,  windowPortion });
-		leftView.setViewport({ rightViewSize.x / windowWitdh, 0.f, leftViewSize.x / windowWitdh, windowPortion });
-	}
-	else
-	{
-		leftView.setViewport({0.f, 0.f, leftViewSize.x / windowWitdh, windowPortion });
-		rightView.setViewport({ leftViewSize.x / windowWitdh, 0.f, rightViewSize.x / windowWitdh, windowPortion });
-	}
-
 	window.clear(sf::Color::White);
 
-	window.setView(leftView);
-	for (auto& bear : m_bears)
-	{
-		bear.drawRopes(window);
-		bear.draw(window);
-	}
-	m_board.draw(window);
-	m_bar.draw(window, m_bears.front());
-
-	window.setView(rightView);
-	for (auto& bear : m_bears)
-	{
-		bear.drawRopes(window);
-		bear.draw(window);
-	}
-	m_board.draw(window);
+	draw(window, leftView);
+	draw(window, rightView);
 
 	auto barView = sf::View(sf::FloatRect(0.f, windowHieght - barHeight, windowWitdh, windowHieght));
 	barView.setViewport({ 0, (windowHieght - barHeight) / static_cast<float>(windowHieght), 1, 1 });
@@ -220,4 +207,46 @@ void GameScreen::drawSurvival()
 
 	window.setView(sf::View(sf::FloatRect(0.f, 0.f, windowWitdh, windowHieght)));
 	window.display();
+}
+
+void GameScreen::draw(sf::RenderWindow& window, sf::View& view)
+{
+	window.setView(view);
+	for (auto& bear : m_bears)
+	{
+		bear.drawRopes(window);
+		bear.draw(window);
+	}
+	m_board.draw(window);
+	m_bar.draw(window, m_bears.front());
+}
+
+void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
+{
+	auto bearX = m_bears.front().getPos().x;
+
+	auto bearLeft = m_points.first - bearX;
+	auto leftViewSize = sf::Vector2f(windowWitdh - (bearLeft > 0 ? bearLeft : 0), windowHieght - barHeight);
+	if (bearX <= -windowWitdh / 2 + bearWitdh / 2) leftViewSize.x = 0;
+	auto leftViewPos = sf::Vector2f(((bearLeft > 0 ? 0 : bearX - m_points.first)), 0);
+
+	auto bearRight = bearX - m_points.second;
+	auto rightViewSize = sf::Vector2f((bearLeft > 0 ? windowWitdh - leftViewSize.x : windowWitdh - (bearRight > 0 ? bearRight : 0)), windowHieght - barHeight);
+	if (bearX >= 3 * windowWitdh + windowWitdh / 2 - bearWitdh / 2) rightViewSize.x = 0;
+	auto rightViewPos = sf::Vector2f(bearX + (bearLeft > 0 ? m_points.second : -m_points.first), 0);
+
+	leftView = sf::View(sf::FloatRect(leftViewPos.x, leftViewPos.y, leftViewSize.x, leftViewSize.y));
+	rightView = sf::View(sf::FloatRect(rightViewPos.x, rightViewPos.y, rightViewSize.x, rightViewSize.y));
+
+	float windowPortion = (windowHieght - barHeight) / static_cast<float>(windowHieght);
+	if (bearLeft > 0 || bearRight > 0)
+	{
+		rightView.setViewport({ 0.f, 0.f, rightViewSize.x / windowWitdh,  windowPortion });
+		leftView.setViewport({ rightViewSize.x / windowWitdh, 0.f, leftViewSize.x / windowWitdh, windowPortion });
+	}
+	else
+	{
+		leftView.setViewport({ 0.f, 0.f, leftViewSize.x / windowWitdh, windowPortion });
+		rightView.setViewport({ leftViewSize.x / windowWitdh, 0.f, rightViewSize.x / windowWitdh, windowPortion });
+	}
 }
