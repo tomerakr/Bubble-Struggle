@@ -13,12 +13,12 @@ public:
 	void setBar(float time, const gameInfo& info);
 	void update( Bear &bear);
 	void draw(sf::RenderWindow &window, Bear& bear); //why not pointer to bear
-	void drawBackgroundText(sf::RenderWindow& window);
+	//void drawBackgroundText(sf::RenderWindow& window);
 
 
 private:
 	Timer m_timer;
-	sf::RectangleShape m_lifeIcon;
+	std::vector<sf::RectangleShape> m_lifeIcons;
 	int m_level;
 	sf::Text m_levelText;
 	sf::Text m_scoreText;

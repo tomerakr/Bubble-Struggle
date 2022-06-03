@@ -16,8 +16,9 @@ Bar::Bar()
 	m_scoreText.setPosition(sf::Vector2f(250, windowHieght - barHeight / 2.f));
 	m_scoreText.setOrigin(textBarSize / 2.f, textBarSize / 2.f);
 
-	m_lifeIcon.setSize(sf::Vector2f(50.f, 50.f));
-	m_lifeIcon.setOrigin(sf::Vector2f(25.f, 25.f));
+
+	//m_lifeIcon.setSize(sf::Vector2f(50.f, 50.f));
+	//m_lifeIcon.setOrigin(sf::Vector2f(25.f, 25.f));
 
 	m_background.setTexture(Resources::instance().getBackgroundTexture(Backgrounds::Bar));
 	m_background.setSize(sf::Vector2f(windowWitdh, barHeight));
@@ -29,8 +30,9 @@ Bar::Bar()
 void Bar::setBar(float time, const gameInfo& info)
 {
 	m_timer = Timer{ time };
-	m_levelText.setString("level:" + std::to_string(m_level));
-	m_lifeIcon.setTexture(Resources::instance().getObjectTexture(Resources::instance().getSkin(info._skinIndex)._bear));
+	m_levelText.setString("level: " + std::to_string(m_level));
+
+	//m_lifeIcon.setTexture(Resources::instance().getObjectTexture(Resources::instance().getSkin(info._skinIndex)._bear));
 }
 
 void Bar::update(Bear &bear)
@@ -42,17 +44,24 @@ void Bar::update(Bear &bear)
 void Bar::draw(sf::RenderWindow& window, Bear& bear)
 {
 	window.draw(m_background);
-	drawBackgroundText(window);
+	//drawBackgroundText(window);
 	m_timer.draw(window);
 	window.draw(m_levelText);
 	window.draw(m_scoreText);
 
 	for (int i = 0; i < bear.getNumOfLives(); ++i)
 	{
-		m_lifeIcon.setPosition(sf::Vector2f(20 + i * 65 ,windowHieght - barHeight / 2));
-		window.draw(m_lifeIcon);
+	//	m_lifeIcon.setPosition(sf::Vector2f(20 + i * 65 ,windowHieght - barHeight / 2));
+		//window.draw(m_lifeIcon);
 	}
 }
+
+
+
+
+
+
+
 //
 //void Bar::drawBackgroundText()
 //{
