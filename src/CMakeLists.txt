@@ -19,4 +19,5 @@
                                               "PcInput.cpp"
                                               "OnlineInput.cpp"
                                               "ContactListener.cpp"
+                                              "Gift.cpp"
                                               )

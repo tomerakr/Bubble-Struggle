@@ -19,19 +19,19 @@ public:
 	Screen createLevel(Controller* window);
 
 private:
-	void undo();
 	void erase(const sf::Vector2f& mousePos);
 	void clear();
 	void save() const;
 
 	void createBar();
 	void createBaseTiles();
-	void setText(const sf::Vector2f& pos, int size, std::string text, sf::Text& mText);
+	void setText(const sf::Vector2f& pos, int size, const std::string& text, sf::Text& mText);
 
 	void handleMouse	(const sf::Vector2f& mousePos);
 	void update			(const sf::Vector2f& mousePos);
-	void updateText		(std::string text, sf::Text& mText) { mText.setString(text); }
-	void follow			(const sf::Vector2f& size, sf::Color color, Objects texture, bool setOrigin = false);
+	void updateText		(const std::string& text, sf::Text& mText) { mText.setString(text); }
+	void followBall		();
+	void follow			(const sf::Vector2f& size, const sf::Color& color, const Objects texture, bool setOrigin = false);
 	void unfollow();
 
 	void placeInBoard	(const sf::Vector2f& mousePos);
@@ -49,7 +49,6 @@ private:
 
 	enum class buttonNames
 	{
-		UNDO,
 		ERASE,
 		CLEAR,
 		SAVE,

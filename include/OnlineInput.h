@@ -14,5 +14,5 @@ public:
 	std::pair<sf::Vector2f, bool> getInput(gameInput input);
 
 private:
-	//sf::UdpSocket m_socket;
+	
 };

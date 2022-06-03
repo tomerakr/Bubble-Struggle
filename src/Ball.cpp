@@ -11,7 +11,7 @@ Ball::Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, in
 }
 
 Ball::Ball(const sf::Vector2f& pos, int index, int indentaion)
-    : m_index(index)/*, m_board(nullptr)*/
+    : m_index(index), m_board(nullptr)
 {
     m_ball.setTexture(Resources::instance().getObjectTexture(Objects::Ball));
     m_ball.setRadius((defRadius - 10 * index));
@@ -20,19 +20,13 @@ Ball::Ball(const sf::Vector2f& pos, int index, int indentaion)
     m_ball.setFillColor(Resources::instance().getColor(index));
 }
 
-//needs to make destructor work
-void Ball::reset()
-{
-    m_board->getWorld()->DestroyBody(m_body);
-} 
-
 void Ball::setBall2D(const b2Vec2& initialForce)
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(m_ball.getPosition().x, m_ball.getPosition().y);
 
-    bodyDef.linearVelocity = initialForce;
+    bodyDef.linearVelocity = initialForce/* + b2Vec2(0, -100)*/;
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
     
     //add circle fixture
@@ -51,7 +45,6 @@ void Ball::setBall2D(const b2Vec2& initialForce)
 
 void Ball::split()
 {
-    m_board->getWorld()->DestroyBody(m_body); //why here
     if (m_index < numOfBalls)
     {
         m_board->addBalls(m_ball.getPosition(), m_index + 1);
@@ -62,13 +55,16 @@ void Ball::update()
 {
     auto pos = m_body->GetPosition();
     m_ball.setPosition(pos.x, pos.y);
-    if ((m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER) || m_ball.getRadius() < 10)
+    if (m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER || m_ball.getRadius() < 10)
     {
         m_popped = true;
     }
 }
 
-//Ball::~Ball() //does not work for some reason?
-//{
-//    m_board->getWorld()->DestroyBody(m_body);
-//}
+Ball::~Ball()
+{
+    if (m_body)
+    {
+        m_board->getWorld()->DestroyBody(m_body);
+    }
+}

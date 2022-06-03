@@ -14,12 +14,8 @@ public:
 	void play();
 
 	sf::RenderWindow& getWindow() { return m_window; }
-	void clear() { m_window.clear(sf::Color::White); }
-	void display() { m_window.display(); }
-	void close() { m_window.close(); }
 
 private:
-
 	sf::RenderWindow m_window;
 	MenuScreen m_menu;
 	GameScreen m_game;

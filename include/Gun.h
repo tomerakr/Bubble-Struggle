@@ -8,7 +8,7 @@ class Gun
 {
 public:
 	Gun(int ropeTexture, Board* board);
-	void shoot(const sf::Vector2f bearPos);
+	void shoot(const sf::Vector2f& bearPos);
 	void update();
 	void drawRopes(sf::RenderWindow& window);
 

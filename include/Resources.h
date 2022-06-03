@@ -10,11 +10,11 @@ class Resources
 public:
 	static Resources& instance();
 
-	sf::Texture* const getBackgroundTexture(const Backgrounds texture);
-	sf::Texture* const getObjectTexture(const Objects texture);
+	sf::Texture* getBackgroundTexture(const Backgrounds texture);
+	sf::Texture* getObjectTexture(const Objects texture);
 	
-	sf::Color const getColor(const int index) { return m_colors[index]; }
-	sf::Font* const getFont() { return &m_font; }
+	sf::Color& getColor(const int index) { return m_colors[index]; }
+	sf::Font* getFont() { return &m_font; }
 
 	Skin getSkin(int skin) { return m_skins[skin]; }
 	std::string getLevelName(int index);

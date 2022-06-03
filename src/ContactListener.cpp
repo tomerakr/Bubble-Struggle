@@ -1,5 +1,7 @@
 #include "ContactListener.h"
 
+#include "Macros.h"
+
 #include <iostream>
 
 void ContactListener::BeginContact(b2Contact* contact)
@@ -38,5 +40,16 @@ void ContactListener::BeginContact(b2Contact* contact)
         b2Filter destroyObjects;
         destroyObjects.groupIndex = POPPED_BALL_FILTER;
         fixtureA->SetFilterData(destroyObjects);
+    }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+        fixtureB->GetFilterData().groupIndex == ROPE_FILTER ||
+        fixtureA->GetFilterData().groupIndex == ROPE_FILTER &&
+        fixtureB->GetFilterData().groupIndex == TILE)
+    {
+        b2Filter destroyObjects;
+        destroyObjects.groupIndex = TILE;
+        fixtureA->SetFilterData(destroyObjects);
+        fixtureB->SetFilterData(destroyObjects);
     }
 }

@@ -16,11 +16,11 @@ public:
 
 private:
 	void createButton();
-	gameInfo handlePress(sf::Vector2f mousePos);
-	void mainMenuPress(sf::Vector2f mousePos);
-	void numOfPlayersPress(sf::Vector2f mousePos);
-	void connectionPress(sf::Vector2f mousePos);
-	void handleHover(const sf::Vector2f mousePos);
+	gameInfo handlePress	(const sf::Vector2f& mousePos);
+	void mainMenuPress		(const sf::Vector2f& mousePos);
+	void numOfPlayersPress	(const sf::Vector2f& mousePos);
+	void connectionPress	(const sf::Vector2f& mousePos);
+	void handleHover		(const sf::Vector2f& mousePos);
 	void handleKeyboard();
 	void draw();
 

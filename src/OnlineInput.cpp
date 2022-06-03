@@ -8,6 +8,7 @@ constexpr int PORT = 6969;
 
 OnlineInput::OnlineInput()
 {
+	//sf::UdpSocket m_socket;
 	//m_socket.bind(PORT);
 }
 
