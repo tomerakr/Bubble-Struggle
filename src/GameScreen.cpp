@@ -169,9 +169,34 @@ void GameScreen::draw()
 void GameScreen::drawSurvival()
 {
 	auto& window = m_controller->getWindow();
-	window.setView(sf::View(sf::FloatRect(m_bears.front().getPos().x + bearWitdh / 2 - windowWitdh / 2, 0, windowWitdh, windowHieght)));
+	auto bearLeft = windowWitdh / 2 - bearWitdh / 2 - m_bears.front().getPos().x;
+	auto leftViewSize = sf::Vector2f(windowWitdh - (bearLeft > 0 ? bearLeft : 0), windowHieght - barHeight);
+	if (m_bears.front().getPos().x <= -windowWitdh / 2 + bearWitdh / 2) leftViewSize.x = 0;
+	auto leftViewPos = sf::Vector2f(((bearLeft > 0 ? 0 : m_bears.front().getPos().x + bearWitdh / 2 - windowWitdh / 2)), 0);
+	
+	auto bearRight = m_bears.front().getPos().x - (3 * windowWitdh - windowWitdh / 2 - bearWitdh / 2);
+	auto rightViewSize = sf::Vector2f((bearLeft > 0 ? windowWitdh - leftViewSize.x : windowWitdh - (bearRight > 0 ? bearRight : 0)), windowHieght - barHeight);
+	if (m_bears.front().getPos().x >= 3 * windowWitdh - windowWitdh / 2 + bearWitdh / 2) rightViewSize.x = 0;
+	auto rightViewPos = sf::Vector2f(m_bears.front().getPos().x + bearWitdh / 2 - windowWitdh / 2 + 3 * windowWitdh, 0);
+
+	auto leftView = sf::View(sf::FloatRect(leftViewPos.x, leftViewPos.y, leftViewSize.x, leftViewSize.y));
+	auto rightView = sf::View(sf::FloatRect(rightViewPos.x, rightViewPos.y, rightViewSize.x, rightViewSize.y));
+
+	float windowPortion = (windowHieght - barHeight) / static_cast<float>(windowHieght);
+	if (bearLeft > 0)
+	{
+		rightView.setViewport({ 0.f, 0.f, rightViewSize.x / windowWitdh,  windowPortion });
+		leftView.setViewport({ rightViewSize.x / windowWitdh, 0.f, leftViewSize.x / windowWitdh, windowPortion });
+	}
+	else
+	{
+		leftView.setViewport({0.f, 0.f, leftViewSize.x / windowWitdh, windowPortion });
+		rightView.setViewport({ leftViewSize.x / windowWitdh, 0.f, rightViewSize.x / windowWitdh, windowPortion });
+	}
+
 	window.clear(sf::Color::White);
 
+	window.setView(leftView);
 	for (auto& bear : m_bears)
 	{
 		bear.drawRopes(window);
@@ -180,5 +205,19 @@ void GameScreen::drawSurvival()
 	m_board.draw(window);
 	m_bar.draw(window, m_bears.front());
 
+	window.setView(rightView);
+	for (auto& bear : m_bears)
+	{
+		bear.drawRopes(window);
+		bear.draw(window);
+	}
+	m_board.draw(window);
+
+	auto barView = sf::View(sf::FloatRect(0.f, windowHieght - barHeight, windowWitdh, windowHieght));
+	barView.setViewport({ 0, (windowHieght - barHeight) / static_cast<float>(windowHieght), 1, 1 });
+	window.setView(barView);
+	m_bar.draw(window, m_bears.front());
+
+	window.setView(sf::View(sf::FloatRect(0.f, 0.f, windowWitdh, windowHieght)));
 	window.display();
 }
