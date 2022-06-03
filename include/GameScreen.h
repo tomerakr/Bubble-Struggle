@@ -26,7 +26,7 @@ private:
 	void update(float deltaTime);
 	Screen handleKeyboard();
 	void draw();
-	void drawSurvival() { ; }
+	void drawSurvival();
 
 	Controller* m_controller;
 	std::vector<Bear> m_bears;

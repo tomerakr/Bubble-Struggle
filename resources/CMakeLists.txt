@@ -24,6 +24,7 @@ configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
 #-------- FONT------------
 configure_file ("GILSANUB.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
 
-#------- LEVELS -----------
+#------- LEVELS ----------- most be last
 configure_file ("LevelsNames.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Level 1.txt" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Level 2.txt" ${CMAKE_BINARY_DIR} COPYONLY)

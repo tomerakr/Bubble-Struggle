@@ -31,6 +31,19 @@ void GameScreen::game(const gameInfo& info)
 		textureIndex = --textureIndex % numOfSkins;
 		textureIndex = (textureIndex == -1 ? numOfSkins - 1 : textureIndex);
 	}
+	switch (info._mode)
+	{
+	case gameMode::Normal:
+		m_board.createNormal();
+		break;
+
+	case gameMode::Survival:
+		m_board.createSurvival();
+		break;
+
+	default:
+		break;
+	}
 }
 
 Screen GameScreen::playNormal()
@@ -140,6 +153,23 @@ Screen GameScreen::handleKeyboard()
 void GameScreen::draw()
 {
 	auto& window = m_controller->getWindow();
+	window.clear(sf::Color::White);
+
+	for (auto& bear : m_bears)
+	{
+		bear.drawRopes(window);
+		bear.draw(window);
+	}
+	m_board.draw(window);
+	m_bar.draw(window, m_bears.front());
+
+	window.display();
+}
+
+void GameScreen::drawSurvival()
+{
+	auto& window = m_controller->getWindow();
+	window.setView(sf::View(sf::FloatRect(m_bears.front().getPos().x + bearWitdh / 2 - windowWitdh / 2, 0, windowWitdh, windowHieght)));
 	window.clear(sf::Color::White);
 
 	for (auto& bear : m_bears)

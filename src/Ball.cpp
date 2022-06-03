@@ -2,7 +2,7 @@
 #include "Board.h"
 
 Ball::Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, int index)
-	:Ball(pos, index, (initialForce.x > 0 ? 1 : -1))
+	:Ball(pos, index, (initialForce.x > 0 ? 1 : -1), (initialForce.x > 0 ? 1 : -1))
 {
     m_index = index;
     m_board = board;
@@ -10,8 +10,8 @@ Ball::Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, in
     setBall2D(initialForce);
 }
 
-Ball::Ball(const sf::Vector2f& pos, int index, int indentaion)
-    : m_index(index), m_board(nullptr)
+Ball::Ball(const sf::Vector2f& pos, int index, int direction, int indentaion)
+    : m_index(index), m_board(nullptr), m_body(nullptr), m_direction(direction)
 {
     m_ball.setTexture(Resources::instance().getObjectTexture(Objects::Ball));
     m_ball.setRadius((defRadius - 10 * index));

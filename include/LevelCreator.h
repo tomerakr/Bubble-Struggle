@@ -23,6 +23,7 @@ private:
 	void clear();
 	void save() const;
 
+	void addToProperties(const std::string& level) const;
 	void createBar();
 	void createBaseTiles();
 	void setText(const sf::Vector2f& pos, int size, const std::string& text, sf::Text& mText);
@@ -78,4 +79,5 @@ private:
 	sf::Vector2f m_wallSize = sf::Vector2f(thickness, 200);
 	sf::Vector2f m_tileSize = m_wallSize;
 	int m_ballIndex = 5;
+	int m_ballDirecetion = 1;
 };

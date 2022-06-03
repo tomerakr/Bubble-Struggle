@@ -48,3 +48,10 @@ void Board::colorBalll()
         m_balls[i].colorBall();
     }
 }
+
+
+//namespace fs = std::filesystem;
+//std::filesystem::path p = "LevelsNames.txt";
+//
+//std::cout << "Absolute path for " << p << " is "
+//	<< std::filesystem::absolute(p) << '\n';
