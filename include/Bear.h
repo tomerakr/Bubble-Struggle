@@ -26,6 +26,8 @@ public:
 private:
 	void defineBear2d(const sf::Vector2f&);
 
+	void resetFilter();
+
 	std::unique_ptr<Input> m_getInput = nullptr;
 	std::vector<sf::Keyboard::Key> m_keys;
 
@@ -35,4 +37,8 @@ private:
 
 	unsigned int m_score;
 	unsigned int m_lives;
+	const unsigned int m_Maxlives = m_lives;
+
+	bool m_hasShield = false;
+	bool m_freezeRope = false;
 };

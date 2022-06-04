@@ -6,11 +6,12 @@
 #include "Timer.h"
 
 class Board;
+class Bear;
 
 class Gift : public MovingObject
 {
 public:
-	Gift(const sf::Vector2f position, Board* board, const Objects giftType = Objects::GiftFreeze);
+	Gift(const sf::Vector2f position, Board* board, const int giftFilter = GIFT_FREEZE_FILTER);
 
 	//~Gift();
 
@@ -18,8 +19,7 @@ public:
 
 	bool getIsDone() const;
 
-private:
-	Objects m_giftType;
+protected:
 	Board* m_board;
 
 	b2Body* m_body;

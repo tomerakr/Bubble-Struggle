@@ -1,9 +1,9 @@
 #include "Gift.h"
 #include "Board.h"
+#include "Bear.h"
 
-Gift::Gift(const sf::Vector2f position, Board* board, const Objects giftType)
-	:MovingObject(position, sf::Vector2f(50, 50), Objects::Bear), m_giftType(giftType),
-		m_board(board)
+Gift::Gift(const sf::Vector2f position, Board* board, const int giftFilter)
+	:MovingObject(position, sf::Vector2f(50, 50), Objects::Bear), m_board(board)
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -16,7 +16,7 @@ Gift::Gift(const sf::Vector2f position, Board* board, const Objects giftType)
     b2FixtureDef fixtureDef;
     fixtureDef.density = 1;
     fixtureDef.shape = &m_rect2D;
-    fixtureDef.filter.groupIndex = GIFT_FREEZE_FILTER;
+    fixtureDef.filter.groupIndex = giftFilter;
 
     m_body->CreateFixture(&fixtureDef);
 }
@@ -29,6 +29,11 @@ void Gift::update()
     //{
     //    m_isDone = true;
     //}
+
+    if (m_body->GetFixtureList()->GetFilterData().groupIndex == TOUCH_BEAR)
+    {
+        m_body->SetTransform(b2Vec2(-500, -500), 0);
+    }
 
     m_icon.setPosition(sf::Vector2f(m_body->GetPosition().x, m_body->GetPosition().y));
 }

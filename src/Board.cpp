@@ -81,10 +81,10 @@ void Board::draw(sf::RenderWindow& window)
 	{
 		tile.draw(window);
 	}
-	//for (auto& gift : m_gifts)
-	//{
-	//	gift.draw(window);
-	//}
+	for (auto& gift : m_gifts)
+	{
+		gift.draw(window);
+	}
 }
 
 void Board::update()
@@ -102,10 +102,10 @@ void Board::update()
 		}
 	}
 
-	//for (auto& gift : m_gifts)
-	//{
-	//	gift.update();
-	//}
+	for (auto& gift : m_gifts)
+	{
+		gift.update();
+	}
 
 	std::erase_if(m_balls, [](auto& ball) { return ball.popped(); });
 	//std::erase_if(m_gifts, [](auto& gift) { return gift.getIsDone(); });
@@ -131,12 +131,40 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 	m_balls.emplace_back(this, pos2, b2Vec2(20, -30), index);
 }
 
-//void Board::addGift(const sf::Vector2f position, const Objects giftType)
-//{
-//	auto addGift = rand() % 2 == 0;
-//
-//	if (addGift)
-//	{
-//		m_gifts.emplace_back(Gift(position, this));
-//	}
-//}
+void Board::addGift(const sf::Vector2f position, const Objects giftType)
+{
+	auto addGift = rand() % 2 == 0;
+
+	auto _giftType = Objects::GiftShield;			// temp for testing
+
+	if (true)
+	{
+		switch (_giftType)
+		{
+		case Objects::GiftFreeze:
+		{
+			m_gifts.emplace_back(Gift(position, this, GIFT_FREEZE_FILTER));
+			break;
+		}
+		case Objects::GiftDoubleShot:
+		{
+			m_gifts.emplace_back(Gift(position, this, GIFT_DOUBLE_SHOT_FILTER));
+			break;
+		}
+		case Objects::GiftLife:
+		{
+			m_gifts.emplace_back(Gift(position, this, GIFT_LIFE_FILTER));
+			break;
+		}
+		case Objects::GiftShield:
+		{
+			m_gifts.emplace_back(Gift(position, this, GIFT_SHIELD_FILTER));
+			break;
+		}
+
+		default:
+			break;
+		}
+		
+	}
+}
