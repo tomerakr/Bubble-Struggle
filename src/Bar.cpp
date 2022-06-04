@@ -16,10 +16,6 @@ Bar::Bar()
 	m_scoreText.setPosition(sf::Vector2f(250, windowHieght - barHeight / 2.f));
 	m_scoreText.setOrigin(textBarSize / 2.f, textBarSize / 2.f);
 
-
-	//m_lifeIcon.setSize(sf::Vector2f(50.f, 50.f));
-	//m_lifeIcon.setOrigin(sf::Vector2f(25.f, 25.f));
-
 	m_background.setTexture(Resources::instance().getBackgroundTexture(Backgrounds::Bar));
 	m_background.setSize(sf::Vector2f(windowWitdh, barHeight));
 	m_background.setPosition(sf::Vector2f(0, windowHieght - barHeight));
@@ -31,6 +27,12 @@ void Bar::setBar(float time, const gameInfo& info)
 {
 	m_timer = Timer{ time };
 	m_levelText.setString("level: " + std::to_string(m_level));
+
+	for (int i = 0; i < info._numOfPlayers; ++i)
+	{
+		m_lifeIcons[i].setSize(sf::Vector2f(50.f, 50.f));
+		m_lifeIcons[i].setOrigin(sf::Vector2f(25.f, 25.f));
+	}
 
 	//m_lifeIcon.setTexture(Resources::instance().getObjectTexture(Resources::instance().getSkin(info._skinIndex)._bear));
 }
