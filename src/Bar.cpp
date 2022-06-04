@@ -17,7 +17,7 @@ Bar::Bar()
 	m_scoreText.setOrigin(textBarSize / 2.f, textBarSize / 2.f);
 
 	m_background.setTexture(Resources::instance().getBackgroundTexture(Backgrounds::Bar));
-	m_background.setSize(sf::Vector2f(windowWitdh, barHeight));
+	m_background.setSize(sf::Vector2f(windowWidth, barHeight));
 	m_background.setPosition(sf::Vector2f(0, windowHieght - barHeight));
 
 	m_textBackground.setTexture(Resources::instance().getBackgroundTexture(Backgrounds::Text));
