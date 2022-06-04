@@ -3,7 +3,7 @@
 
 Controller::Controller()
 	: m_menu(this), m_game(this),
-	m_window(sf::VideoMode(windowWitdh, windowHieght), "Bubble Trouble", sf::Style::Close | sf::Style::Titlebar)
+	m_window(sf::VideoMode(windowWidth, windowHieght), "Bubble Trouble", sf::Style::Close | sf::Style::Titlebar)
 {
 	m_window.setFramerateLimit(maxFPS);
 	auto icon = sf::Image{};

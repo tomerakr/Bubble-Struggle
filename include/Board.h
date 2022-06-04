@@ -9,7 +9,11 @@
 #include "Tile.h"
 #include "ContactListener.h"
 #include "MovingObject.h"
-//#include "Gift.h"
+#include "Gift.h"
+
+
+
+
 
 class Controller;
 
@@ -25,13 +29,13 @@ public:
 	void createSurvival();
 	b2World* getWorld() { return m_world.get(); }
 
-	//void addGift(const sf::Vector2f position, const Objects giftType = Objects::GiftFreeze);
+	void addGift(const sf::Vector2f position, const Objects giftType = Objects::GiftFreeze);
 
 
 private:
 	void setLevel();
 	void setWorld();
-	//std::vector<Gift> m_gifts;
+	std::vector<Gift> m_gifts;
 
 	std::vector<Ball> m_balls;
 	std::vector<Tile> m_tiles;

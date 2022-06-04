@@ -7,7 +7,7 @@ MenuScreen::MenuScreen(Controller* ctrl)
 	:m_controller(ctrl)
 {
 	createButton();
-	m_background.setSize(sf::Vector2f(windowWitdh, windowHieght));
+	m_background.setSize(sf::Vector2f(windowWidth, windowHieght));
 	m_background.setTexture(Resources::instance().getBackgroundTexture(Backgrounds::BearMenu));
 	m_info._skinIndex = 0;
 }
@@ -16,7 +16,7 @@ void MenuScreen::createButton()
 {
 	auto ySize = (windowHieght * (2.f / 3)) / (maxButtonInMenu + 1);
 	auto xSize = 300;
-	auto xPos = windowWitdh / 2.f;
+	auto xPos = windowWidth / 2.f;
 	auto yPos = windowHieght * (4.f / 13);
 
 	for (int i = 0; i < m_buttonNames.size(); ++i)

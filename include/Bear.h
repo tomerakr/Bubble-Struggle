@@ -15,6 +15,17 @@ class Bear : public MovingObject
 public:
 	Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex);
 
+	//Bear& operator=(Bear&& other) noexcept
+	//{
+	//	std::ranges::swap(m_score, other.m_score);
+	//	std::ranges::swap(m_lives, other.m_lives);
+	//	std::ranges::swap(m_board, other.m_board);
+	//	std::ranges::swap(m_box2DBear, other.m_box2DBear);
+	//	std::ranges::swap(m_gun, other.m_gun);
+	//	std::ranges::swap(m_keys, other.m_keys);
+	//	std::ranges::swap(m_getInput, other.m_getInput);
+	//	return *this;
+	//}
 	void setPos(const sf::Vector2f& pos) { m_icon.setPosition(pos); }
 	void jump();
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
@@ -27,6 +38,8 @@ public:
 private:
 	void defineBear2d(const sf::Vector2f&);
 
+	void resetFilter();
+
 	std::unique_ptr<Input> m_getInput = nullptr;
 	std::vector<sf::Keyboard::Key> m_keys;
 
@@ -36,4 +49,8 @@ private:
 
 	unsigned int m_score;
 	unsigned int m_lives;
+	const unsigned int m_Maxlives = m_lives;
+
+	bool m_hasShield = false;
+	bool m_freezeRope = false;
 };
