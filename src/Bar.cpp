@@ -17,7 +17,7 @@ Bar::Bar()
 	m_scoreText.setOrigin(textBarSize / 2.f, textBarSize / 2.f);
 
 	m_lifeIcon.setSize(sf::Vector2f(50.f, 50.f));
-	m_lifeIcon.setTexture(Resources::instance().getObjectTexture(Objects::BearsHeads));
+	m_lifeIcon.setTexture(Resources::instance().getObjectTexture(Objects::BearsHeads)); 
 }
 
 void Bar::setBar(float time, const gameInfo& info)
@@ -52,11 +52,6 @@ void Bar::draw(sf::RenderWindow& window, Bear& bear)
 		window.draw(m_lifeIcon);
 	}
 }
-
-
-
-
-
 
 
 //
