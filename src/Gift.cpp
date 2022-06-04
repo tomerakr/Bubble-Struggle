@@ -3,8 +3,12 @@
 #include "Bear.h"
 
 Gift::Gift(const sf::Vector2f position, Board* board, const int giftFilter)
-	:MovingObject(position, sf::Vector2f(50, 50), Objects::Bear), m_board(board)
+	:MovingObject(position, sf::Vector2f(50, 50), Objects::Gifts), m_board(board)
 {
+    auto textureSize = m_icon.getTexture()->getSize();
+    //texture index range: 0 - 4
+    m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(giftTypes::MAX)) * giftFilter, 0, textureSize.x / static_cast<int>(giftTypes::MAX), textureSize.y));
+
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(position.x + m_icon.getPosition().x / 2, position.y + m_icon.getPosition().y / 2);

@@ -1,6 +1,6 @@
 #pragma once
 
-constexpr int windowHieght = 800;
+constexpr int windowHeight = 800;
 constexpr int windowWidth = 1200;
 constexpr int barHeight = 100;
 constexpr int numOfBalls = 9;
@@ -8,7 +8,7 @@ constexpr int thickness = 10;
 constexpr int ropeWitdh = 20;
 constexpr int ropeHeight = 0;
 constexpr int bearWitdh = 80;
-constexpr int bearHieght = 120;
+constexpr int bearheight = 120;
 constexpr int giftTimer = 3;
 
 //constexpr sf::Vector2f left = sf::Vector2f(-1, 0);
@@ -30,18 +30,11 @@ const int GIFT_SHIELD_FILTER = -13;
 
 
 //---------------------------------------------------------
-constexpr int numOfObjects = 16;
 enum class Objects
 {
+	Bears,
+	Ropes,
 	Ball,
-	Bear,
-	Panda,
-	Polar,
-	Pooh,
-	Rope,
-	BambooRope,
-	PolarRope,
-	HoneyRope, 
 	Floor,
 	Wall,
 	Button,
@@ -49,23 +42,29 @@ enum class Objects
 	EraseButton,
 	ClearButton,
 	SaveButton,
-	GiftFreeze,
-	GiftDoubleShot,
-	GiftTime,
-	GiftLife,
-	GiftShield
+	Backgrounds,
+	BearsHeads,
+	Gifts,
+	MAX
 };
 
-constexpr int numOfBackgrounds = 6;
-enum class Backgrounds
+enum class giftTypes
 {
-	BearMenu,
-	PandaMenu,
-	PolarMenu,
-	PoohMenu,
-	Bar,
-	Text,
-	//GameBackground,
+	Freeze,
+	DoubleShot,
+	Time,
+	Life,
+	Shield,
+	MAX
+};
+
+enum class bearTypes
+{
+	REGULAR,
+	PANDA,
+	POLAR,
+	POOH,
+	MAX
 };
 
 constexpr int numOfScreens = 3;
@@ -97,14 +96,6 @@ enum class Keys
 };
 //---------------------------------------------------------
 
-struct Skin
-{
-	Objects _bear;
-	Objects _rope;
-	Backgrounds _background;
-};
-constexpr int numOfSkins = 4;
-
 struct gameInfo
 {
 	Screen _screen;
@@ -112,7 +103,6 @@ struct gameInfo
 	unsigned int _numOfPlayers;
 	receiveInfo _receive;
 	bool _newGame;
-	Skin _skin;
 	int _skinIndex;
 };
 
