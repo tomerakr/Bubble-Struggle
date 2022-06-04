@@ -22,7 +22,12 @@ const int POPPED_BALL_FILTER = -5;
 const int BEAR_FILTER = -6;
 constexpr int TILE = -7;
 const int TOUCH_WALL = -8;
-const int GIFT_FREEZE_FILTER = -9;
+const int TOUCH_BEAR = -9;
+const int GIFT_FREEZE_FILTER = -10;
+const int GIFT_DOUBLE_SHOT_FILTER = -11;
+const int GIFT_LIFE_FILTER = -12;
+const int GIFT_SHIELD_FILTER = -13;
+
 
 //---------------------------------------------------------
 constexpr int numOfObjects = 16;
@@ -46,7 +51,9 @@ enum class Objects
 	SaveButton,
 	GiftFreeze,
 	GiftDoubleShot,
-	GiftTime
+	GiftTime,
+	GiftLife,
+	GiftShield
 };
 
 constexpr int numOfBackgrounds = 4;

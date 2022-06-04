@@ -3,8 +3,9 @@
 constexpr float ropeHeightChange = 2;
 constexpr float maxRopeHeight = -(windowHieght - barHeight - thickness);
 
-Rope::Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board)
-	:MovingObject(bearPos, sf::Vector2f(ropeWitdh, ropeHeight), Resources::instance().getSkin(ropeTexture)._rope), m_board(board)
+Rope::Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board, bool freezeRope)
+	:MovingObject(bearPos, sf::Vector2f(ropeWitdh, ropeHeight), Resources::instance().getSkin(ropeTexture)._rope), m_board(board),
+			m_freeze(freezeRope)
 {
 	b2BodyDef bodyDef;
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
@@ -30,15 +31,18 @@ void Rope::update()
 //		if rope collided with ball destroy rope
 	if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)		
 	{
+		m_board->addGift(sf::Vector2f(300, 300));
+
 		destroy();
 	}
 
 //		if rope reached max height destroy rope
 	else if (m_icon.getSize().y < maxRopeHeight)
 	{
-		//m_board->addGift(sf::Vector2f(300, 300));
-
-		destroy();
+		if (!m_freeze)
+		{
+			destroy();
+		}
 	}
 
 	else
@@ -47,26 +51,6 @@ void Rope::update()
 		m_box2DRope->DestroyFixture(m_box2DRope->GetFixtureList());
 		setFixture(b2Vec2(m_icon.getSize().x / 2, -m_icon.getSize().y));
 	}
-
-	
-	//for (b2ContactEdge* edge = m_box2DRope->GetContactList(); edge; edge = edge->next)
-	//{
-	//	if (edge->contact->GetFixtureB()->GetFilterData().groupIndex == BALL_FILTER)
-	//	{
-	//		b2Filter filter;
-	//		filter.groupIndex = POPPED_BALL_FILTER;
-	//		edge->contact->GetFixtureB()->SetFilterData(filter);
-	//		m_done = true;
-	//		m_board->getWorld()->DestroyBody(m_box2DRope); //why we cant in destructor
-	//		break;
-	//	}
-	//	else if (edge->contact->GetFixtureB()->GetFilterData().groupIndex == FLOOR)
-	//	{
-	//		m_done = true;
-	//		m_board->getWorld()->DestroyBody(m_box2DRope);
-	//		break;
-	//	}
-	//}
 }
 
 void Rope::destroy()

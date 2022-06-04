@@ -9,8 +9,7 @@
 class Rope : public MovingObject
 {
 public:
-	Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board);
-	void setFreeze();
+	Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board, bool freezeRope);
 	void update();
 	bool isDone() { return m_done; }
 
@@ -18,7 +17,7 @@ private:
 	void setFixture(const b2Vec2& size);
 	void destroy();
 
-	bool m_freeze = true;
+	bool m_freeze = false;
 	bool m_done = false;
 
 	Board* m_board = nullptr;

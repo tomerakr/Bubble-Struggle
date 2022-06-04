@@ -46,9 +46,58 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear });
 	move(deltaTime, direction);
 
+	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
+	{
+		if (!m_hasShield)
+		{
+	//			start level again
+			m_board->reset();
+		}
+		else
+		{
+			m_hasShield = false;
+		}
+
+//			reset filter fixture
+		resetFilter();
+	}
+
+	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_FREEZE_FILTER)
+	{
+		m_freezeRope = true;
+
+		resetFilter();
+	}
+
+	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_DOUBLE_SHOT_FILTER)
+	{
+		m_gun.incMaxRopes();
+
+		resetFilter();
+	}
+
+	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_LIFE_FILTER)
+	{
+		if (m_lives + 1 <= m_Maxlives)
+		{
+			++m_lives;
+		}
+
+		resetFilter();
+	}
+
+	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_SHIELD_FILTER)
+	{
+		m_hasShield = true;
+
+		resetFilter();
+	}
+
 	if (shoot)
 	{
-		m_gun.shoot(m_icon.getPosition());
+		m_gun.shoot(m_icon.getPosition(), m_freezeRope);
+
+		m_freezeRope = false;
 	}
 
 	auto pos = m_icon.getPosition();
@@ -56,16 +105,7 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 
 	m_gun.update();
 
-	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
-	{
-		//			start level again
-		m_board->reset();
 
-		//			reset filter fixture
-		b2Filter bearFilter;
-		bearFilter.groupIndex = BEAR_FILTER;
-		m_box2DBear->GetFixtureList()->SetFilterData(bearFilter);
-	}
 	return std::make_pair(direction, shoot);
 }
 
@@ -81,4 +121,11 @@ void Bear::jump()
 const sf::Vector2f& Bear::getPos() const
 {
 	return m_icon.getPosition();
+}
+
+void Bear::resetFilter()
+{
+	b2Filter bearFilter;
+	bearFilter.groupIndex = BEAR_FILTER;
+	m_box2DBear->GetFixtureList()->SetFilterData(bearFilter);
 }
