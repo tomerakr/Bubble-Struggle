@@ -8,7 +8,7 @@ Timer::Timer(float time)
 {
 	m_timeline.setSize(sf::Vector2f(windowWidth, 10));
 	m_timeline.setFillColor(sf::Color::Red);
-	m_timeline.setPosition(sf::Vector2f(0,windowHieght - barHeight + 10));
+	m_timeline.setPosition(sf::Vector2f(0,windowHeight - barHeight + 10));
 }
 
 void Timer::update()

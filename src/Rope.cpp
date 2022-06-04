@@ -1,12 +1,16 @@
 #include "Rope.h"
 
 constexpr float ropeHeightChange = 2;
-constexpr float maxRopeHeight = -(windowHieght - barHeight - thickness);
+constexpr float maxRopeHeight = -(windowHeight - barHeight - thickness);
 
 Rope::Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board, bool freezeRope)
-	:MovingObject(bearPos, sf::Vector2f(ropeWitdh, ropeHeight), Resources::instance().getSkin(ropeTexture)._rope), m_board(board),
+	:MovingObject(bearPos, sf::Vector2f(ropeWitdh, ropeHeight), Objects::Ropes), m_board(board),
 			m_freeze(freezeRope)
 {
+	auto textureSize = m_icon.getTexture()->getSize();
+	//texture index range: 0 - 3
+	m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * ropeTexture, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
+
 	b2BodyDef bodyDef;
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
 	setFixture(b2Vec2(m_icon.getSize().x / 2, 0));

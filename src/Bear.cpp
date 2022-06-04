@@ -4,9 +4,13 @@
 #include "OnlineInput.h"
 
 Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex)
-	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHieght), Resources::instance().getSkin(textureIndex)._bear),
+	:MovingObject(pos, sf::Vector2f(bearWitdh, bearheight), Objects::Bears),
 	m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0)
 {
+	auto textureSize = m_icon.getTexture()->getSize();
+	//texture index range: 0 - 3
+	m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * textureIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
+
 	switch (readInput)
 	{
 	case receiveInfo::Solo:

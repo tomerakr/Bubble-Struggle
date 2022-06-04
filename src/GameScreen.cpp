@@ -25,14 +25,14 @@ void GameScreen::game(const gameInfo& info)
 {
 	m_bears.clear();
 	auto xPos = windowWidth / (info._numOfPlayers + 1);
-	auto yPos = windowHieght - barHeight - bearHieght - thickness;
+	auto yPos = windowHeight - barHeight - bearheight - thickness;
 	auto textureIndex = info._skinIndex;
 	for (int i = info._numOfPlayers; i > 0; --i)
 	{
 		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex });
 		m_bears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
 
-		m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % numOfSkins });
+		m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 		m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
 	}
 
@@ -222,18 +222,18 @@ void GameScreen::drawSurvival()
 	draw(window, leftView);
 	draw(window, rightView);
 
-	auto barView = sf::View(sf::FloatRect(0.f, windowHieght - barHeight, windowWidth, windowHieght));
-	barView.setViewport({ 0, (windowHieght - barHeight) / static_cast<float>(windowHieght), 1, 1 });
+	auto barView = sf::View(sf::FloatRect(0.f, windowHeight - barHeight, windowWidth, windowHeight));
+	barView.setViewport({ 0, (windowHeight - barHeight) / static_cast<float>(windowHeight), 1, 1 });
 	window.setView(barView);
 	m_bar.draw(window, m_bears.front());
 
 	//================ M I N I - M A P ================
-	//auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHieght - barHeight));
-	//miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHieght), 0.6, 0.3 });
+	//auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
+	//miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
 	//draw(window, miniMapView);
 	//=================================================
 
-	window.setView(sf::View(sf::FloatRect(0.f, 0.f, windowWidth, windowHieght)));
+	window.setView(sf::View(sf::FloatRect(0.f, 0.f, windowWidth, windowHeight)));
 	window.display();
 }
 
@@ -261,12 +261,12 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 	auto bearLeft = m_points.first - bearX;
 	auto bearRight = bearX - m_points.second;
 
-	auto leftViewSize = sf::Vector2f(windowWidth - (bearLeft > 0 ? bearLeft : 0), windowHieght - barHeight);
+	auto leftViewSize = sf::Vector2f(windowWidth - (bearLeft > 0 ? bearLeft : 0), windowHeight - barHeight);
 	//if (bearX <= -windowWidth / 2 + bearWitdh / 2) 
 	//	leftViewSize.x = 0;
 	auto leftViewPos = sf::Vector2f(((bearLeft > 0 || bearRight > 0 ? 0 : bearX - m_points.first)), 0);
 
-	auto rightViewSize = sf::Vector2f((bearLeft > 0 ? windowWidth - leftViewSize.x : windowWidth - (bearRight > 0 ? bearRight : 0)), windowHieght - barHeight);
+	auto rightViewSize = sf::Vector2f((bearLeft > 0 ? windowWidth - leftViewSize.x : windowWidth - (bearRight > 0 ? bearRight : 0)), windowHeight - barHeight);
 	//if (bearX >= 3 * windowWidth + windowWidth / 2 - bearWitdh / 2)
 	//	rightViewSize.x = 0;
 	auto rightViewPos = sf::Vector2f(bearX + (bearLeft > 0 ? m_points.second : -m_points.first), 0);
@@ -276,7 +276,7 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 	leftView = sf::View(sf::FloatRect(leftViewPos.x, leftViewPos.y, leftViewSize.x, leftViewSize.y));
 	rightView = sf::View(sf::FloatRect(rightViewPos.x, rightViewPos.y, rightViewSize.x, rightViewSize.y));
 
-	float windowPortion = (windowHieght - barHeight) / static_cast<float>(windowHieght);
+	float windowPortion = (windowHeight - barHeight) / static_cast<float>(windowHeight);
 	if (bearLeft > 0 || bearRight > 0)
 	{
 		rightView.setViewport({ 0.f, 0.f, rightViewSize.x / windowWidth,  windowPortion });

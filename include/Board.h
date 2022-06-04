@@ -29,7 +29,7 @@ public:
 	void createSurvival();
 	b2World* getWorld() { return m_world.get(); }
 
-	void addGift(const sf::Vector2f position, const Objects giftType = Objects::GiftFreeze);
+	void addGift(const sf::Vector2f position);
 
 
 private:

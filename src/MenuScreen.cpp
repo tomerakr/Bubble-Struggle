@@ -7,17 +7,20 @@ MenuScreen::MenuScreen(Controller* ctrl)
 	:m_controller(ctrl)
 {
 	createButton();
-	m_background.setSize(sf::Vector2f(windowWidth, windowHieght));
-	m_background.setTexture(Resources::instance().getBackgroundTexture(Backgrounds::BearMenu));
+	m_background.setSize(sf::Vector2f(windowWidth, windowHeight));
+	m_background.setTexture(Resources::instance().getObjectTexture(Objects::Backgrounds));
+	auto textureSize = m_background.getTexture()->getSize();
+	//texture index range: 0 - 3
+	m_background.setTextureRect(sf::IntRect(0, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 	m_info._skinIndex = 0;
 }
 
 void MenuScreen::createButton()
 {
-	auto ySize = (windowHieght * (2.f / 3)) / (maxButtonInMenu + 1);
+	auto ySize = (windowHeight * (2.f / 3)) / (maxButtonInMenu + 1);
 	auto xSize = 300;
 	auto xPos = windowWidth / 2.f;
-	auto yPos = windowHieght * (4.f / 13);
+	auto yPos = windowHeight * (4.f / 13);
 
 	for (int i = 0; i < m_buttonNames.size(); ++i)
 	{
@@ -174,14 +177,15 @@ void MenuScreen::handleKeyboard()
 	}
 	else if (right || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		m_info._skinIndex = (m_info._skinIndex + (right ? 1 : -1)) % numOfSkins;
+		m_info._skinIndex = (m_info._skinIndex + (right ? 1 : -1)) % static_cast<int>(bearTypes::MAX);
 		if (m_info._skinIndex == -1)
 		{
-			m_info._skinIndex = numOfSkins - 1;
+			m_info._skinIndex = static_cast<int>(bearTypes::MAX) - 1;
 		}
 
-		m_info._skin = Resources::instance().getSkin(m_info._skinIndex);
-		m_background.setTexture(Resources::instance().getBackgroundTexture(m_info._skin._background));
+		auto textureSize = m_background.getTexture()->getSize();
+		//texture index range: 0 - 3
+		m_background.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * m_info._skinIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 	}
 }
 

@@ -18,7 +18,7 @@ void Board::setWorld()
 void Board::createNormal()
 {
 	m_baseTiles.clear();
-	auto height = windowHieght - thickness - barHeight;
+	auto height = windowHeight - thickness - barHeight;
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWidth, thickness), sf::Vector2f(0.f, height) });				//floor
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWidth, thickness), sf::Vector2f(0.f, 0.f) });					//ceiling
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f) });						//left wall
@@ -28,7 +28,7 @@ void Board::createNormal()
 void Board::createSurvival()
 {
 	m_baseTiles.clear();
-	auto height = windowHieght - thickness - barHeight;
+	auto height = windowHeight - thickness - barHeight;
 	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWidth * 3, thickness), sf::Vector2f(0.f, height) });	//floors
 	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWidth * 3, thickness), sf::Vector2f(0.f, 0.f) });		//ceiling
 }
@@ -131,40 +131,44 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 	m_balls.emplace_back(this, pos2, b2Vec2(20, -30), index);
 }
 
-void Board::addGift(const sf::Vector2f position, const Objects giftType)
+void Board::addGift(const sf::Vector2f position)
 {
-	auto addGift = rand() % 2 == 0;
+	auto addGift = rand() % 4;
 
-	auto _giftType = Objects::GiftShield;			// temp for testing
-
-	if (true)
+	auto giftType = rand() % static_cast<int>(giftTypes::MAX);
+	if (!addGift)
 	{
-		switch (_giftType)
-		{
-		case Objects::GiftFreeze:
-		{
-			m_gifts.emplace_back(Gift(position, this, GIFT_FREEZE_FILTER));
-			break;
-		}
-		case Objects::GiftDoubleShot:
-		{
-			m_gifts.emplace_back(Gift(position, this, GIFT_DOUBLE_SHOT_FILTER));
-			break;
-		}
-		case Objects::GiftLife:
-		{
-			m_gifts.emplace_back(Gift(position, this, GIFT_LIFE_FILTER));
-			break;
-		}
-		case Objects::GiftShield:
-		{
-			m_gifts.emplace_back(Gift(position, this, GIFT_SHIELD_FILTER));
-			break;
-		}
-
-		default:
-			break;
-		}
-		
+		m_gifts.emplace_back(Gift(position, this, giftType));
 	}
+	//		break;
+	//if (true)
+	//{
+	//	switch (_giftType)
+	//	{
+	//	case Objects::GiftFreeze:
+	//	{
+	//		m_gifts.emplace_back(Gift(position, this, GIFT_FREEZE_FILTER));
+	//		break;
+	//	}
+	//	case Objects::GiftDoubleShot:
+	//	{
+	//		m_gifts.emplace_back(Gift(position, this, GIFT_DOUBLE_SHOT_FILTER));
+	//		break;
+	//	}
+	//	case Objects::GiftLife:
+	//	{
+	//		m_gifts.emplace_back(Gift(position, this, GIFT_LIFE_FILTER));
+	//		break;
+	//	}
+	//	case Objects::GiftShield:
+	//	{
+	//		m_gifts.emplace_back(Gift(position, this, GIFT_SHIELD_FILTER));
+	//		break;
+	//	}
+
+	//	default:
+	//		break;
+	//	}
+	//	
+	//}
 }

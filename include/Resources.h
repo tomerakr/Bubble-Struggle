@@ -10,13 +10,13 @@ class Resources
 public:
 	static Resources& instance();
 
-	sf::Texture* getBackgroundTexture(const Backgrounds texture);
+	//sf::Texture* getBackgroundTexture(const Backgrounds texture);
 	sf::Texture* getObjectTexture(const Objects texture);
 	
 	sf::Color& getColor(const int index) { return m_colors[index]; }
 	sf::Font* getFont() { return &m_font; }
 
-	Skin getSkin(int skin) { return m_skins[skin]; }
+	//Skin getSkin(int skin) { return m_skins[skin]; }
 	std::string getLevelName(int index);
 
 	void playSound(const Objects sound);
@@ -31,8 +31,8 @@ private:
 	std::vector<sf::Texture> m_backgroundTextures;
 	std::vector<std::string> m_backgroundTextureNames = { "bearBackground.png", "pandaBackground.png", "polarBackground.png", "poohBackground.png"};
 	std::vector<sf::Texture> m_objectTextures;
-	std::vector<std::string> m_objectTextureNames = { "ball.png", "bear.png", "panda.png", "polarBear.png", "pooh.png", "rope.png", "bambooRope.png", "polarRope.png", "honeyRope.png",
-		"floor.png", "wall.png", "button.png", "undo.png", "erase.png", "clear.png", "save.png" };
+	std::vector<std::string> m_objectTextureNames = { "bears.png", "ropes.png", "ball.png", "floor.png", "wall.png", "button.png", "undo.png", "erase.png",
+		"clear.png", "save.png",  "backgrounds.png", "bearHeads.png", "gifts.png" };
 
 	sf::Font m_font;
 	std::vector<std::unique_ptr<sf::SoundBuffer>> m_soundBuffer;
@@ -40,11 +40,6 @@ private:
 
 	sf::Color m_colors[numOfBalls] = {sf::Color(82, 194, 236), sf::Color(1, 111, 255),sf::Color(198, 111, 239), sf::Color(248, 135, 230), sf::Color(233, 74, 90),sf::Color(252, 139, 18), sf::Color(254, 194, 34), sf::Color(151, 216, 0),
 	sf::Color(70, 158, 28) };
-
-	Skin m_skins[numOfSkins] = { Skin{Objects::Bear, Objects::Rope, Backgrounds::BearMenu},
-								 Skin{Objects::Panda, Objects::BambooRope, Backgrounds::PandaMenu},
-								 Skin{Objects::Polar, Objects::PolarRope, Backgrounds::PolarMenu},
-								 Skin{Objects::Pooh, Objects::HoneyRope, Backgrounds::PoohMenu} };
 
 	std::vector <std::string> m_levels;
 };
