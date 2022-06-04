@@ -15,6 +15,7 @@ class Bear : public MovingObject
 public:
 	Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex);
 
+	void setPos(const sf::Vector2f& pos) { m_icon.setPosition(pos); }
 	void jump();
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
 	const sf::Vector2f& getPos() const;
