@@ -133,7 +133,7 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 
 void Board::addGift(const sf::Vector2f position)
 {
-	auto addGift = rand() % 4;
+	auto addGift = rand() % 14; //chance to get gift is 1 to 14
 
 	auto giftType = rand() % static_cast<int>(giftTypes::MAX);
 	if (!addGift)
@@ -165,7 +165,7 @@ void Board::addGift(const sf::Vector2f position)
 	//		m_gifts.emplace_back(Gift(position, this, GIFT_SHIELD_FILTER));
 	//		break;
 	//	}
-
+	//
 	//	default:
 	//		break;
 	//	}
