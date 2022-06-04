@@ -38,7 +38,7 @@ void Rope::update()
 	{
 		//m_board->addGift(sf::Vector2f(300, 300));
 
-		//destroy();
+		destroy();
 	}
 
 	else

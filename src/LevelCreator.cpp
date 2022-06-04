@@ -12,7 +12,7 @@ constexpr int STRAIGHTx = 5;
 
 LevelCreator::LevelCreator()
 {
-	m_background.setSize(sf::Vector2f(windowWitdh, windowHieght - barHeight - thickness));
+	m_background.setSize(sf::Vector2f(windowWidth, windowHieght - barHeight - thickness));
 	m_background.setFillColor(sf::Color(249, 254, 255));
 
 	createBaseTiles();
@@ -23,21 +23,21 @@ LevelCreator::LevelCreator()
 void LevelCreator::createBaseTiles()
 {
 	auto height = windowHieght - thickness - barHeight;
-	m_baseTiles.push_back(Tile{ sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height) });				//floor
-	m_baseTiles.push_back(Tile{ sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f) });				//ceiling
+	m_baseTiles.push_back(Tile{ sf::Vector2f(windowWidth, thickness), sf::Vector2f(0.f, height) });				//floor
+	m_baseTiles.push_back(Tile{ sf::Vector2f(windowWidth, thickness), sf::Vector2f(0.f, 0.f) });				//ceiling
 	m_baseTiles.push_back(Tile{ sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f) });						//left wall
-	m_baseTiles.push_back(Tile{ sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f) });	//right wall
+	m_baseTiles.push_back(Tile{ sf::Vector2f(thickness, height), sf::Vector2f(windowWidth - thickness, 0.f) });	//right wall
 }
 
 void LevelCreator::createBar()
 {
 	m_bar.setFillColor(sf::Color(217, 239, 255));
-	m_bar.setSize(sf::Vector2f(windowWitdh, barHeight));
+	m_bar.setSize(sf::Vector2f(windowWidth, barHeight));
 	m_bar.setPosition(sf::Vector2f(0.f, windowHieght - barHeight));
 
 	auto height = windowHieght - barHeight / 2;
 
-	setText(sf::Vector2f(windowWitdh / 2, height), 45, "Bubble Trouble", m_title);
+	setText(sf::Vector2f(windowWidth / 2, height), 45, "Bubble Trouble", m_title);
 	setText(sf::Vector2f(335, height - 15), 30, std::to_string(m_ballIndex), m_ballIndexText);
 
 	m_buttons.emplace_back(Button{sf::Vector2f(950, height), sf::Vector2f(60, 60), Objects::EraseButton });
@@ -331,7 +331,7 @@ float LevelCreator::setPos(int yVal, int straight) const
 
 bool LevelCreator::inBoard(const sf::Vector2f& mousePos) const
 {
-	return ((mousePos.x > thickness) && (mousePos.x < windowWitdh - thickness) &&
+	return ((mousePos.x > thickness) && (mousePos.x < windowWidth - thickness) &&
 		(mousePos.y > thickness) && (mousePos.y < windowHieght - barHeight - thickness));
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 constexpr int windowHieght = 800;
-constexpr int windowWitdh = 1200;
+constexpr int windowWidth = 1200;
 constexpr int barHeight = 100;
 constexpr int numOfBalls = 9;
 constexpr int thickness = 10;

@@ -30,10 +30,11 @@ private:
 
 	void updateSurvival(float deltaTime);
 	void drawSurvival();
+	void updateBearSurvivalPosition();
 	void draw(sf::RenderWindow& window, sf::View& view);
 	std::pair<int, int> m_points; //left point, right point
-	//Bear m_dummyBear;
-
+	std::vector<Bear> m_dummyBears;
+	Bear* m_mainBear;
 
 	Controller* m_controller;
 	std::vector<Bear> m_bears;

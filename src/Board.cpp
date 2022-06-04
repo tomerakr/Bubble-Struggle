@@ -19,18 +19,18 @@ void Board::createNormal()
 {
 	m_baseTiles.clear();
 	auto height = windowHieght - thickness - barHeight;
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, height) });				//floor
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWitdh, thickness), sf::Vector2f(0.f, 0.f) });					//ceiling
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWidth, thickness), sf::Vector2f(0.f, height) });				//floor
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWidth, thickness), sf::Vector2f(0.f, 0.f) });					//ceiling
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(0.f, 0.f) });						//left wall
-	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWitdh - thickness, 0.f) });	//right wall
+	m_baseTiles.push_back(Tile{this, sf::Vector2f(thickness, height), sf::Vector2f(windowWidth - thickness, 0.f) });	//right wall
 }
 
 void Board::createSurvival()
 {
 	m_baseTiles.clear();
 	auto height = windowHieght - thickness - barHeight;
-	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWitdh * 3, thickness), sf::Vector2f(0.f, height) });	//floors
-	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWitdh * 3, thickness), sf::Vector2f(0.f, 0.f) });		//ceiling
+	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWidth * 3, thickness), sf::Vector2f(0.f, height) });	//floors
+	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWidth * 3, thickness), sf::Vector2f(0.f, 0.f) });		//ceiling
 }
 
 void Board::setLevel()
@@ -127,7 +127,7 @@ void Board::reset()
 void Board::addBalls(const sf::Vector2f& pos, const int index)
 {
 	const auto pos2 = pos;
-	m_balls.emplace_back(this, pos, b2Vec2(-20, -30), index);
+	m_balls.push_back(Ball( this, pos, b2Vec2(-20, -30), index ));
 	m_balls.emplace_back(this, pos2, b2Vec2(20, -30), index);
 }
 
