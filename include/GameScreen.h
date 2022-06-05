@@ -26,11 +26,12 @@ private:
 	void setViews(sf::View& leftView, sf::View& rightView);
 	void update(float deltaTime);
 	Screen handleKeyboard();
-	void draw();		//change to draw normal
+	void drawNormal();
 
 	void updateSurvival(float deltaTime);
 	void drawSurvival();
 	void updateBearSurvivalPosition();
+	void updateBallSurvivalPosition();
 	void draw(sf::RenderWindow& window, sf::View& view);
 	std::pair<int, int> m_points; //left point, right point
 	std::vector<Bear> m_dummyBears;

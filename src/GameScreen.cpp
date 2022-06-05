@@ -62,7 +62,7 @@ Screen GameScreen::playNormal()
 	sf::Clock clock;
 	auto& window = m_controller->getWindow();
 
-	draw();
+	drawNormal();
 	const auto deltaTime = clock.restart();
 
 	if (sf::Event event; window.pollEvent(event))
@@ -165,6 +165,7 @@ void GameScreen::updateSurvival(float deltaTime)
 	}
 
 	updateBearSurvivalPosition();
+	updateBallSurvivalPosition();
 
 	m_bar.update(m_bears.front());
 	m_board.update();
@@ -186,6 +187,35 @@ void GameScreen::updateBearSurvivalPosition()
 	}
 }
 
+void GameScreen::updateBallSurvivalPosition()
+{
+	auto balls = m_board.getBalls();
+	for (auto& ball : *balls)
+	{
+		auto pos = ball.getPos();
+		auto radius = ball.getRaidus();
+		auto direction = ball.getDirection();
+		if (!ball.hadChild() && pos.x <= radius + EPSILON && direction == LEFT)
+		{
+			m_board.addBall(ball, 3 * windowWidth);
+			ball.creatingNewBall();
+		}
+		else if (pos.x <= -(radius + EPSILON) && direction == LEFT)
+		{
+			ball.destroy();
+		}
+		if (!ball.hadChild() && pos.x >= 3 * windowWidth - (radius + EPSILON) && direction == RIGHT)
+		{
+			m_board.addBall(ball, -(3 * windowWidth));
+			ball.creatingNewBall();
+		}
+		else if (pos.x >= 3 * windowWidth + radius + EPSILON && direction == RIGHT)
+		{
+			ball.destroy();
+		}
+	}
+}
+
 Screen GameScreen::handleKeyboard()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -195,7 +225,7 @@ Screen GameScreen::handleKeyboard()
 	return Screen::game;
 }
 
-void GameScreen::draw()
+void GameScreen::drawNormal()
 {
 	auto& window = m_controller->getWindow();
 	window.clear(sf::Color::White);
