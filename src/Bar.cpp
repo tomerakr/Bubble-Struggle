@@ -29,10 +29,7 @@ void Bar::setBar(float time, const gameInfo& info)
 	m_lifeIcon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * info._skinIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 }
 
-	//m_lifeIcon.setTexture(Resources::instance().getObjectTexture(Resources::instance().getSkin(info._skinIndex)._bear));
-}
-
-void Bar::update(Bear &bear)
+void Bar::update(Bear &bear)// ============= that was putin fault =================
 {
 	m_timer.update();
 	m_scoreText.setString(std::to_string(bear.getScore()));
