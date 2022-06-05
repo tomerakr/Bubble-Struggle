@@ -107,7 +107,7 @@ void Board::update()
 		gift.update();
 	}
 
-	std::erase_if(m_balls, [](auto& ball) { return ball.popped(); });
+	std::erase_if(m_balls, [](auto& ball) { return ball.popped() || ball.destroied(); });
 	//std::erase_if(m_gifts, [](auto& gift) { return gift.getIsDone(); });
 }
 

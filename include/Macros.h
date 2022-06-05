@@ -10,6 +10,9 @@ constexpr int ropeHeight = 0;
 constexpr int bearWitdh = 80;
 constexpr int bearheight = 120;
 constexpr int giftTimer = 3;
+constexpr int EPSILON = 5;
+constexpr int RIGHT = 1;
+constexpr int LEFT = -1;
 
 //constexpr sf::Vector2f left = sf::Vector2f(-1, 0);
 //constexpr sf::Vector2f right = sf::Vector2f(1, 0);

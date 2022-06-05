@@ -47,13 +47,22 @@ public:
 	void draw(sf::RenderWindow& window) { window.draw(m_ball); }
 	const sf::Vector2f& getPos() const	{ return m_ball.getPosition(); }
 	int getIndex() const				{ return m_index; }
+	int getRaidus() const				{ return m_ball.getRadius(); }
 	int getDirection() const			{ return m_direction; }
 	bool contains(const sf::Vector2f& mousePos) const { return m_ball.getGlobalBounds().contains(mousePos); }
+	//========================= ?  ?  ?  ?  ?  ?  =========================
+	b2Vec2 getForce() const	{ return m_body->GetLinearVelocity(); }
+	void destroy()		{ m_destroy = true; }
+	bool destroied() const	{ return m_destroy; }
+	void creatingNewBall()		{ m_hadChild = true; }
+	bool hadChild()	const	{ return m_hadChild; }
 
 private:
 	void setBall2D(const b2Vec2& initialForce);
 	sf::CircleShape m_ball;
 	bool m_popped = false;
+	bool m_destroy = false;
+	bool m_hadChild = false;
 	int m_index;
 	int m_direction;
 	Board* m_board;

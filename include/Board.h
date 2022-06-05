@@ -11,10 +11,6 @@
 #include "MovingObject.h"
 #include "Gift.h"
 
-
-
-
-
 class Controller;
 
 class Board
@@ -28,9 +24,15 @@ public:
 	void createNormal();
 	void createSurvival();
 	b2World* getWorld() { return m_world.get(); }
-
 	void addGift(const sf::Vector2f position);
 
+	std::vector<Ball>* getBalls() { return &m_balls; } // add iterator ~~~~~~~~~~~!!!!!!!!!!!!!
+	void addBall(Ball& ball, int distance)
+	{
+		auto pos = ball.getPos();
+		m_balls.emplace_back(this, sf::Vector2f(pos.x + distance - ball.getDirection() * ball.getRaidus(), pos.y), 
+				ball.getForce(), ball.getIndex());
+	}
 
 private:
 	void setLevel();
