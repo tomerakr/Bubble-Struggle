@@ -27,19 +27,21 @@ private:
 
 
 	std::vector<sf::Texture> m_backgroundTextures;
-	std::vector<std::string> m_backgroundTextureNames = { "bearBackground.png", "pandaBackground.png", "polarBackground.png", 
-														  "poohBackground.png", "barBackground.png", "textBackground.png"};
+	//std::vector<std::string> m_backgroundTextureNames = { "bearBackground.png", "pandaBackground.png", "polarBackground.png", 
+	//													  "poohBackground.png", "barBackground.png", "textBackground.png"};
 	std::vector<sf::Texture> m_objectTextures;
-	std::vector<std::string> m_objectTextureNames = { "bears.png", "ropes.png", "ball.png", "floor.png", "wall.png", "button.png", "undo.png", "erase.png",
-		"clear.png", "save.png",  "backgrounds.png", "bearHeads.png", "gifts.png" };
+	std::vector<std::string> m_objectTextureNames = { "bears.png", "ropes.png", "ball.png", "floor.png", 
+													  "wall.png", "button.png", "undo.png", "erase.png",
+													  "clear.png", "save.png",  "backgrounds.png", "bearHeads.png",
+													  "gifts.png" , "barBackground.png" };
 
 	sf::Font m_font;
 	std::vector<std::unique_ptr<sf::SoundBuffer>> m_soundBuffer;
 	std::vector<sf::Sound> m_sound;
 
-	sf::Color m_colors[numOfBalls] = {sf::Color(82, 194, 236), sf::Color(1, 111, 255),sf::Color(198, 111, 239), 
-									  sf::Color(248, 135, 230), sf::Color(233, 74, 90),sf::Color(252, 139, 18),
-									  sf::Color(254, 194, 34), sf::Color(151, 216, 0), sf::Color(70, 158, 28) };
+	sf::Color m_colors[numOfBalls] = {sf::Color(82, 194, 236),  sf::Color(1, 111, 255), sf::Color(198, 111, 239), 
+									  sf::Color(248, 135, 230), sf::Color(233, 74, 90), sf::Color(252, 139, 18),
+									  sf::Color(254, 194, 34),  sf::Color(151, 216, 0), sf::Color(70, 158, 28) };
 
 	std::vector <std::string> m_levels;
 };

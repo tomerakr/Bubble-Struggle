@@ -45,6 +45,7 @@ enum class Objects
 	Backgrounds,
 	BearsHeads,
 	Gifts,
+	BarBackground,
 	MAX
 };
 

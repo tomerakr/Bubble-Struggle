@@ -1,4 +1,5 @@
 ﻿#configure_file ( ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("bears.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("icon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("ball.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("button.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -12,6 +13,7 @@ configure_file ("ropes.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("backgrounds.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("bearHeads.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("gifts.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("barBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 #-------- FONT------------
 configure_file ("GILSANUB.ttf" ${CMAKE_BINARY_DIR} COPYONLY)

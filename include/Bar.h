@@ -20,6 +20,7 @@ private:
 	Timer m_timer;
 	std::vector<sf::RectangleShape> m_lifeIcons;
 	int m_level;
+	int m_numOfBears;
 	sf::Text m_levelText;
 	sf::Text m_scoreText;
 	sf::RectangleShape m_background;

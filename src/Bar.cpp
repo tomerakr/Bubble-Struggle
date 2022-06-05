@@ -1,5 +1,6 @@
 #include "Bar.h"
 #include "Resources.h"
+#include "cmath"
 
 Bar::Bar()
 	:m_level(1)
@@ -16,20 +17,30 @@ Bar::Bar()
 	m_scoreText.setPosition(sf::Vector2f(250, windowHeight - barHeight / 2.f));
 	m_scoreText.setOrigin(textBarSize / 2.f, textBarSize / 2.f);
 
-	m_lifeIcon.setSize(sf::Vector2f(50.f, 50.f));
-	m_lifeIcon.setTexture(Resources::instance().getObjectTexture(Objects::BearsHeads)); 
 }
 
 void Bar::setBar(float time, const gameInfo& info)
 {
+
+
 	m_timer = Timer{ time };
 	m_levelText.setString("level:" + std::to_string(m_level));
-	auto textureSize = m_lifeIcon.getTexture()->getSize();
+	m_numOfBears = info._numOfPlayers;
 	//texture index range: 0 - 3
-	m_lifeIcon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * info._skinIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
+
+	for (int i = 0; i < m_numOfBears; ++i)
+	{
+		m_lifeIcons.emplace_back();
+		m_lifeIcons[i].setSize(sf::Vector2f(50.f, 50.f));
+		m_lifeIcons[i].setOrigin(sf::Vector2f(25.f, 25.f));
+		m_lifeIcons[i].setTexture(Resources::instance().getObjectTexture(Objects::BearsHeads));
+		auto textureSize = m_lifeIcons[i].getTexture()->getSize();
+		m_lifeIcons[i].setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * (info._skinIndex + i), 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
+
+	}
 }
 
-void Bar::update(Bear &bear)// ============= that was putin fault =================
+void Bar::update(Bear &bear)
 {
 	m_timer.update();
 	m_scoreText.setString(std::to_string(bear.getScore()));
@@ -43,10 +54,13 @@ void Bar::draw(sf::RenderWindow& window, Bear& bear)
 	window.draw(m_levelText);
 	window.draw(m_scoreText);
 
-	for (int i = 0; i < bear.getNumOfLives(); ++i)
-	{
-		m_lifeIcon.setPosition(sf::Vector2f(20 + i * 65  ,windowHeight - barHeight + 30));
-		window.draw(m_lifeIcon);
+	for(int j = 0 ; j < m_numOfBears ; ++j)
+	{ 
+		for (int i = 0; i < bear.getNumOfLives(); ++i)
+		{
+			m_lifeIcons[((j+1) % m_numOfBears)].setPosition(sf::Vector2f((j * windowWidth) + pow(-1,j) * (50 + i * 65), windowHeight - barHeight / 2 + 10));
+			window.draw(m_lifeIcons[((j + 1) % m_numOfBears)]);
+		}
 	}
 }
 
