@@ -50,6 +50,9 @@ void LevelCreator::createBar()
 	m_buttons.back().flip();
 	m_buttons.emplace_back(Button{sf::Vector2f(120, height), sf::Vector2f(30, 30), Objects::Arrow });
 	m_buttons.back().flip();
+	m_buttons.emplace_back(Button{sf::Vector2f(250, height), sf::Vector2f(30, 30), Objects::Arrow }); //ball direction
+	m_buttons.back().flip();
+	m_buttons.back().setColor(sf::Color(255, 255, 255, 150));
 }
 
 void LevelCreator::setText(const sf::Vector2f& pos, int size, const std::string& text, sf::Text& mText)
@@ -161,7 +164,7 @@ void LevelCreator::addToProperties(const std::string& level) const
 	auto res = std::filesystem::path("../../../resources");
 	if (std::filesystem::exists(res))
 	{
-		std::filesystem::copy(level, res);
+		std::filesystem::copy(level, res); //copys only the name BUG?
 		auto cmake = std::ofstream(res / "CMakeLists.txt", std::ios::app);
 		cmake << "configure_file (\"" + level + "\" ${CMAKE_BINARY_DIR} COPYONLY)" << '\n';
 		auto levelsNames = std::ofstream(res / "LevelsNames.txt", std::ios::app);
@@ -211,10 +214,14 @@ void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
 		unfollow();
 		save();
 	}
+	else if (m_buttons[static_cast<int>(buttonNames::DIR)].isPressed(mousePos))
+	{
+		m_ballDirecetion *= -1;
+		m_buttons[static_cast<int>(buttonNames::DIR)].flip();
+	}
 	else if (m_buttons[static_cast<int>(buttonNames::BALL)].isPressed(mousePos))
 	{
 		m_action = buttonNames::BALL;
-
 		followBall();
 	}
 	else if (m_buttons[static_cast<int>(buttonNames::TILE)].isPressed(mousePos))
@@ -257,6 +264,7 @@ void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
 			follow(m_wallSize, sf::Color(255, 255, 255, 150), Objects::Wall);
 		}
 	}
+	
 	else if (!inBoard(mousePos))
 	{
 		unfollow();

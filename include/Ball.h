@@ -51,6 +51,7 @@ public:
 	int getDirection() const			{ return m_direction; }
 	bool contains(const sf::Vector2f& mousePos) const { return m_ball.getGlobalBounds().contains(mousePos); }
 	//========================= ?  ?  ?  ?  ?  ?  =========================
+	int getCurrDirection() const			{ return (m_body->GetLinearVelocity().x > 0 ? 1 : -1); }
 	b2Vec2 getForce() const	{ return m_body->GetLinearVelocity(); }
 	void destroy()		{ m_destroy = true; }
 	bool destroied() const	{ return m_destroy; }

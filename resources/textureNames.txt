@@ -1,12 +1,6 @@
+bears.png
+ropes.png
 ball.png
-bear.png
-panda.png
-polarBear.png
-pooh.png
-rope.png
-bambooRope.png
-polarRope.png
-honeyRope.png
 floor.png
 wall.png
 button.png
@@ -14,3 +8,7 @@ undo.png
 erase.png
 clear.png
 save.png
+backgrounds.png
+bearHeads.png
+gifts.png
+survivalBackground.png
