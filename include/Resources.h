@@ -33,7 +33,7 @@ private:
 	std::vector<std::string> m_objectTextureNames = { "bears.png", "ropes.png", "ball.png", "floor.png", 
 													  "wall.png", "button.png", "undo.png", "erase.png",
 													  "clear.png", "save.png",  "backgrounds.png", "bearHeads.png",
-													  "gifts.png" , "barBackground.png" };
+													  "gifts.png" , "barBackground.png", "textBackground.png"};
 
 	sf::Font m_font;
 	std::vector<std::unique_ptr<sf::SoundBuffer>> m_soundBuffer;

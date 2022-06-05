@@ -13,6 +13,8 @@ configure_file ("ropes.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("backgrounds.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("bearHeads.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("gifts.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("logo.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("textBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("barBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 #-------- FONT------------

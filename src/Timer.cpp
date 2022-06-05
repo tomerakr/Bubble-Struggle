@@ -6,9 +6,9 @@
 Timer::Timer(float time)
 	:m_levelTime(time), m_timeLeft(time)
 {
-	m_timeline.setSize(sf::Vector2f(windowWidth, 10));
+	m_timeline.setSize(sf::Vector2f(windowWidth -20, 10));
 	m_timeline.setFillColor(sf::Color::Red);
-	m_timeline.setPosition(sf::Vector2f(0,windowHeight - barHeight + 10));
+	m_timeline.setPosition(sf::Vector2f(10,windowHeight - barHeight + 10));
 }
 
 void Timer::update()

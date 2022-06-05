@@ -3,7 +3,7 @@
 #include <string>
 #include "GameObject.h"
 
-constexpr int textSize = 40;
+constexpr int textSize = 25;
 
 class Button : public GameObject
 {

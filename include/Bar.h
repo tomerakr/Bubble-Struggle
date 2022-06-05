@@ -4,7 +4,7 @@
 #include "Macros.h"
 #include "Bear.h"
 
-constexpr int textBarSize = 40;
+constexpr int textBarSize = 30;
 
 class Bar
 {
@@ -13,7 +13,7 @@ public:
 	void setBar(float time, const gameInfo& info);
 	void update( Bear &bear);
 	void draw(sf::RenderWindow &window, Bear& bear); //why not pointer to bear
-	//void drawBackgroundText(sf::RenderWindow& window);
+	void drawBackgroundText(sf::RenderWindow& window, sf::Vector2f pos, sf::Vector2f size);
 
 
 private:
@@ -24,7 +24,7 @@ private:
 	sf::Text m_levelText;
 	sf::Text m_scoreText;
 	sf::RectangleShape m_background;
-	sf::RectangleShape m_textBackground;
+	sf::RectangleShape m_objectsBackground;
 
 };
 
