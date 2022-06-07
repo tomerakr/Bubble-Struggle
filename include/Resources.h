@@ -24,16 +24,10 @@ private:
 	Resources(const Resources&) = delete;
 	Resources& operator=(const Resources&) = delete;
 	void readLevelsNames();
+	void readTextureNames();
 
-
-	std::vector<sf::Texture> m_backgroundTextures;
-	//std::vector<std::string> m_backgroundTextureNames = { "bearBackground.png", "pandaBackground.png", "polarBackground.png", 
-	//													  "poohBackground.png", "barBackground.png", "textBackground.png"};
 	std::vector<sf::Texture> m_objectTextures;
-	std::vector<std::string> m_objectTextureNames = { "bears.png", "ropes.png", "ball.png", "floor.png", 
-													  "wall.png", "button.png", "undo.png", "erase.png",
-													  "clear.png", "save.png",  "backgrounds.png", "bearHeads.png",
-													  "gifts.png" , "barBackground.png", "textBackground.png"};
+	std::vector<std::string> m_objectTextureNames;
 
 	sf::Font m_font;
 	std::vector<std::unique_ptr<sf::SoundBuffer>> m_soundBuffer;

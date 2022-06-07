@@ -37,6 +37,7 @@ private:
 	std::vector<Bear> m_dummyBears;
 	Bear* m_mainBear;
 
+	sf::RectangleShape m_background;
 	Controller* m_controller;
 	std::vector<Bear> m_bears;
 	Board m_board;

@@ -58,6 +58,7 @@ private:
 		INC,
 		DEC,
 		ROT,
+		DIR,
 		NONE,
 	};
 

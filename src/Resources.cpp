@@ -7,6 +7,8 @@ Resources::Resources()
 	{
 		exit(EXIT_FAILURE);
 	}
+	
+	readTextureNames();
 
 	m_objectTextures.reserve(static_cast<int>(Objects::MAX));
 	for (int i = 0; i < static_cast<int>(Objects::MAX); ++i)
@@ -19,6 +21,24 @@ Resources::Resources()
 	}
 
 	readLevelsNames();
+}
+
+void Resources::readTextureNames()
+{
+	auto textures = std::ifstream("textureNames.txt");
+	if (!textures.is_open())
+	{
+		exit(EXIT_FAILURE);
+	}
+	
+	auto textureName = std::string();
+	std::getline(textures, textureName);
+
+	while (!textureName.empty())
+	{
+		m_objectTextureNames.push_back(textureName);
+		std::getline(textures, textureName);
+	} 
 }
 
 Resources& Resources::instance()

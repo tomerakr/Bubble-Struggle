@@ -44,6 +44,9 @@ void GameScreen::game(const gameInfo& info)
 
 	case gameMode::Survival:
 	{
+		m_background.setTexture(Resources::instance().getObjectTexture(Objects::SurvivalBackground));
+		m_background.setSize(sf::Vector2f(3 * windowWidth, windowHeight));
+
 		auto pos = m_bears.front().getPos();
 		m_dummyBears.front().setPos(sf::Vector2f(pos.x + 3 * windowWidth, pos.y));
 		m_mainBear = &m_bears.front();
@@ -189,31 +192,31 @@ void GameScreen::updateBearSurvivalPosition()
 
 void GameScreen::updateBallSurvivalPosition()
 {
-	auto balls = m_board.getBalls();
-	for (auto& ball : *balls)
-	{
-		auto pos = ball.getPos();
-		auto radius = ball.getRaidus();
-		auto direction = ball.getDirection();
-		if (!ball.hadChild() && pos.x <= radius + EPSILON && direction == LEFT)
-		{
-			m_board.addBall(ball, 3 * windowWidth);
-			ball.creatingNewBall();
-		}
-		else if (pos.x <= -(radius + EPSILON) && direction == LEFT)
-		{
-			ball.destroy();
-		}
-		if (!ball.hadChild() && pos.x >= 3 * windowWidth - (radius + EPSILON) && direction == RIGHT)
-		{
-			m_board.addBall(ball, -(3 * windowWidth));
-			ball.creatingNewBall();
-		}
-		else if (pos.x >= 3 * windowWidth + radius + EPSILON && direction == RIGHT)
-		{
-			ball.destroy();
-		}
-	}
+	//auto balls = m_board.getBalls();
+	//for (auto& ball : *balls)
+	//{
+	//	auto pos = ball.getPos();
+	//	auto radius = ball.getRaidus();
+	//	auto direction = ball.getCurrDirection();
+	//	if (!ball.hadChild() && pos.x <= radius + EPSILON && direction == LEFT)
+	//	{
+	//		m_board.addBall(ball, 3 * windowWidth);
+	//		ball.creatingNewBall();
+	//	}
+	//	else if (pos.x <= -(radius + EPSILON) && direction == LEFT)
+	//	{
+	//		ball.destroy();
+	//	}
+	//	if (!ball.hadChild() && pos.x >= 3 * windowWidth - (radius + EPSILON) && direction == RIGHT)
+	//	{
+	//		m_board.addBall(ball, -(3 * windowWidth));
+	//		ball.creatingNewBall();
+	//	}
+	//	else if (pos.x >= 3 * windowWidth + radius + EPSILON && direction == RIGHT)
+	//	{
+	//		ball.destroy();
+	//	}
+	//}
 }
 
 Screen GameScreen::handleKeyboard()
@@ -248,6 +251,7 @@ void GameScreen::drawSurvival()
 	setViews(leftView, rightView);
 	
 	window.clear(sf::Color::White);
+	window.draw(m_background);
 
 	draw(window, leftView);
 	draw(window, rightView);
