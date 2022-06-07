@@ -1,5 +1,9 @@
 #pragma once
 
+#include <vector>
+#include <utility>
+#include "SFML/Graphics.hpp"
+
 constexpr int windowHeight = 800;
 constexpr int windowWidth = 1200;
 constexpr int barHeight = 100;
@@ -111,10 +115,6 @@ struct gameInfo
 	bool _newGame;
 	int _skinIndex;
 };
-
-#include <vector>
-#include <utility>
-#include "SFML/Graphics.hpp"
 
 struct gameInput
 {

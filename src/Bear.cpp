@@ -3,13 +3,16 @@
 #include "PcInput.h"
 #include "OnlineInput.h"
 
+constexpr int NUM_OF_BEARS_IN_ROW = 6;
+
 Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearheight), Objects::Bears),
-	m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0)
+	m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0), m_animation(sf::Vector2u(NUM_OF_BEARS_IN_ROW, 1/*num of bears*/), 0.09)
 {
-	auto textureSize = m_icon.getTexture()->getSize();
+	m_animation.changeTexture(m_icon.getTexture(), 0);
 	//texture index range: 0 - 3
-	m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * textureIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
+	m_icon.setTextureRect(m_animation.getUvRect());
+	//m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * textureIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 
 	switch (readInput)
 	{
@@ -49,6 +52,8 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 {
 	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear });
 	move(deltaTime, direction);
+	m_animation.update(deltaTime, direction.x == LEFT, direction.x == 0 && direction.y == 0);
+	m_icon.setTextureRect(m_animation.getUvRect());
 
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
 	{

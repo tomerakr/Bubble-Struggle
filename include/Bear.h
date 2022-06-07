@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "MovingObject.h" //do we need this class? for what reason
+#include "Animation.h"
 #include "Macros.h"
 #include "Gun.h"
 #include "Rope.h"
@@ -46,6 +47,7 @@ private:
 	Gun m_gun;
 	b2Body* m_box2DBear = nullptr;
 	Board* m_board = nullptr;
+	Animation m_animation;
 
 	unsigned int m_score;
 	unsigned int m_lives;
