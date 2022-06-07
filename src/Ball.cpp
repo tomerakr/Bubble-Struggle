@@ -20,6 +20,13 @@ Ball::Ball(const sf::Vector2f& pos, int index, int direction, int indentaion)
     m_ball.setFillColor(Resources::instance().getColor(index));
 }
 
+void Ball::destroy()
+{
+    m_destroy = true;
+    destroyBody();
+    m_body = nullptr;
+}
+
 void Ball::setBall2D(const b2Vec2& initialForce)
 {
     b2BodyDef bodyDef;
@@ -51,8 +58,20 @@ void Ball::split()
     }
 }
 
+void Ball::destroyBody()
+{
+    if (m_body)
+    { 
+        m_board->getWorld()->DestroyBody(m_body);
+    }
+}
+
 void Ball::update()
 {
+    if (!m_body)
+    {
+        return;
+    }
     auto pos = m_body->GetPosition();
     m_ball.setPosition(pos.x, pos.y);
     if (m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER || m_ball.getRadius() < 10)
@@ -61,10 +80,10 @@ void Ball::update()
     }
 }
 
-Ball::~Ball()
-{
-    if (m_body)
-    {
-        m_board->getWorld()->DestroyBody(m_body);
-    }
-}
+//Ball::~Ball()
+//{
+//    if (m_body)
+//    {
+//        m_board->getWorld()->DestroyBody(m_body);
+//    }
+//}

@@ -2,6 +2,7 @@
 configure_file ("textureNames.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("backgrounds.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("ball.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("barBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("bearHeads.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("bears.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("button.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -15,6 +16,7 @@ configure_file ("save.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("survivalBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("undo.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("textBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 #-------- FONT------------
 configure_file ("GILSANUB.ttf" ${CMAKE_BINARY_DIR} COPYONLY)

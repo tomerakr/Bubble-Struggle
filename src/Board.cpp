@@ -36,7 +36,6 @@ void Board::createSurvival()
 void Board::setLevel()
 {
 	auto file = std::ifstream(Resources::instance().getLevelName(m_currLevel));
-
 	if (!file.is_open())
 	{
 		exit(EXIT_FAILURE);
@@ -97,6 +96,7 @@ void Board::update()
 
 		if (ball.popped())
 		{
+			ball.destroyBody();
 			ball.split();
 			break;
 		}
@@ -133,7 +133,7 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 
 void Board::addGift(const sf::Vector2f position)
 {
-	auto addGift = rand() % 14; //chance to get gift is 1 to 14
+	auto addGift = rand() % 14; //chances to get gift is 1 to 14
 
 	auto giftType = rand() % static_cast<int>(giftTypes::MAX);
 	if (!addGift)

@@ -30,7 +30,7 @@ public:
 	void addBall(Ball& ball, int distance)
 	{
 		auto pos = ball.getPos();
-		m_balls.emplace_back(this, sf::Vector2f(pos.x + distance - ball.getDirection() * ball.getRaidus(), pos.y), 
+		m_balls.emplace_back(this, sf::Vector2f(pos.x + distance - ball.getCurrDirection() * ball.getRaidus(), pos.y),
 				ball.getForce(), ball.getIndex());
 	}
 
