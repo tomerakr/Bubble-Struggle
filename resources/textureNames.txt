@@ -12,3 +12,5 @@ backgrounds.png
 bearHeads.png
 gifts.png
 survivalBackground.png
+barBackground.png
+textBackground.png
