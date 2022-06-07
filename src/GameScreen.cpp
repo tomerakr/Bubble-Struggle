@@ -192,31 +192,31 @@ void GameScreen::updateBearSurvivalPosition()
 
 void GameScreen::updateBallSurvivalPosition()
 {
-	//auto balls = m_board.getBalls();
-	//for (auto& ball : *balls)
-	//{
-	//	auto pos = ball.getPos();
-	//	auto radius = ball.getRaidus();
-	//	auto direction = ball.getCurrDirection();
-	//	if (!ball.hadChild() && pos.x <= radius + EPSILON && direction == LEFT)
-	//	{
-	//		m_board.addBall(ball, 3 * windowWidth);
-	//		ball.creatingNewBall();
-	//	}
-	//	else if (pos.x <= -(radius + EPSILON) && direction == LEFT)
-	//	{
-	//		ball.destroy();
-	//	}
-	//	if (!ball.hadChild() && pos.x >= 3 * windowWidth - (radius + EPSILON) && direction == RIGHT)
-	//	{
-	//		m_board.addBall(ball, -(3 * windowWidth));
-	//		ball.creatingNewBall();
-	//	}
-	//	else if (pos.x >= 3 * windowWidth + radius + EPSILON && direction == RIGHT)
-	//	{
-	//		ball.destroy();
-	//	}
-	//}
+	auto balls = m_board.getBalls();
+	for (int i = 0; i < balls->size(); ++i)
+	{
+		auto pos = (* balls)[i].getPos();
+		auto radius = (*balls)[i].getRaidus();
+		auto direction = (*balls)[i].getCurrDirection();
+		if (!(*balls)[i].hadChild() && pos.x <= radius + EPSILON && direction == LEFT)
+		{
+			m_board.addBall((*balls)[i], 3 * windowWidth);
+			(*balls)[i].creatingNewBall();
+		}
+		else if (pos.x <= -(radius + EPSILON) && direction == LEFT)
+		{
+			(*balls)[i].destroy();
+		}
+		if (!(*balls)[i].hadChild() && pos.x >= 3 * windowWidth - (radius + EPSILON) && direction == RIGHT)
+		{
+			m_board.addBall((*balls)[i], -(3 * windowWidth));
+			(*balls)[i].creatingNewBall();
+		}
+		else if (pos.x >= 3 * windowWidth + radius + EPSILON && direction == RIGHT)
+		{
+			(*balls)[i].destroy();
+		}
+	}
 }
 
 Screen GameScreen::handleKeyboard()
