@@ -151,7 +151,7 @@ void GameScreen::update(float deltaTime)
 	{
 		otherBear = bear.update(deltaTime, otherBear);
 	}
-	m_bar.update(m_bears.front());
+	m_bar.update(m_bears);
 	m_board.update();
 }
 
@@ -170,7 +170,7 @@ void GameScreen::updateSurvival(float deltaTime)
 	updateBearSurvivalPosition();
 	updateBallSurvivalPosition();
 
-	m_bar.update(m_bears.front());
+	m_bar.update(m_bears);
 	m_board.update();
 }
 
@@ -239,7 +239,7 @@ void GameScreen::drawNormal()
 		bear.draw(window);
 	}
 	m_board.draw(window);
-	m_bar.draw(window, m_bears.front());
+	m_bar.draw(window, m_bears);
 
 	window.display();
 }
@@ -259,7 +259,7 @@ void GameScreen::drawSurvival()
 	auto barView = sf::View(sf::FloatRect(0.f, windowHeight - barHeight, windowWidth, windowHeight));
 	barView.setViewport({ 0, (windowHeight - barHeight) / static_cast<float>(windowHeight), 1, 1 });
 	window.setView(barView);
-	m_bar.draw(window, m_bears.front());
+	m_bar.draw(window, m_bears);
 
 	//================ M I N I - M A P ================
 	//auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
@@ -285,7 +285,7 @@ void GameScreen::draw(sf::RenderWindow& window, sf::View& view)
 		bear.draw(window);
 	}
 	m_board.draw(window);
-	m_bar.draw(window, m_bears.front());
+	m_bar.draw(window, m_bears);
 }
 
 void GameScreen::setViews(sf::View& leftView, sf::View& rightView)

@@ -53,4 +53,6 @@ private:
 
 	bool m_hasShield = false;
 	bool m_freezeRope = false;
+
+	
 };

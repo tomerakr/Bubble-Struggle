@@ -13,9 +13,12 @@ Timer::Timer(float time)
 
 void Timer::update()
 {
-	m_timeLeft -= m_clock.getElapsedTime().asSeconds();
-	m_timeline.setSize(sf::Vector2f(windowWidth * (m_timeLeft / m_levelTime), 10));
-	m_clock.restart();
+	if (!timeEnd())
+	{
+		m_timeLeft -= m_clock.getElapsedTime().asSeconds();
+		m_timeline.setSize(sf::Vector2f(windowWidth * (m_timeLeft / m_levelTime), 10));
+		m_clock.restart();
+	}
 }
 
 const int Timer::getTimeLeft()
