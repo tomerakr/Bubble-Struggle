@@ -99,6 +99,13 @@ enum class Keys
 	Right,
 	Shoot
 };
+
+enum class Sound
+{
+	theme,
+	click,
+	MAX
+};
 //---------------------------------------------------------
 
 struct gameInfo

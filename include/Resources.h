@@ -17,7 +17,7 @@ public:
 
 	std::string getLevelName(int index);
 
-	void playSound(const Objects sound);
+	void playSound(const Sound& sound);
 
 private:
 	Resources();

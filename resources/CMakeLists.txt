@@ -18,10 +18,14 @@ configure_file ("undo.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("textBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
-#-------- FONT------------
-configure_file ("GILSANUB.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
+# ================== S O U N D ==================
+configure_file ("theme.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("click.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 
-#------- LEVELS ----------- must be last
+# ================== F O N T ==================
+configure_file ("Font.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
+
+# ================ L E V E L S ================ must be last
 configure_file ("LevelsNames.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Level 1.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Level 2.txt" ${CMAKE_BINARY_DIR} COPYONLY)
