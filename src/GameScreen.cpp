@@ -18,7 +18,7 @@ GameScreen::GameScreen(Controller* ctrl)
 	m_keys.push_back(keys);
 
 	m_points.first = windowWidth / 2.f;
-	m_points.second = 3 * windowWidth - m_points.first;
+	m_points.second = SurvivalWidth - m_points.first;
 }
 
 void GameScreen::game(const gameInfo& info)
@@ -45,10 +45,10 @@ void GameScreen::game(const gameInfo& info)
 	case gameMode::Survival:
 	{
 		m_background.setTexture(Resources::instance().getObjectTexture(Objects::SurvivalBackground));
-		m_background.setSize(sf::Vector2f(3 * windowWidth, windowHeight));
+		m_background.setSize(sf::Vector2f(SurvivalWidth, windowHeight));
 
 		auto pos = m_bears.front().getPos();
-		m_dummyBears.front().setPos(sf::Vector2f(pos.x + 3 * windowWidth, pos.y));
+		m_dummyBears.front().setPos(sf::Vector2f(pos.x + SurvivalWidth, pos.y));
 		m_mainBear = &m_bears.front();
 		m_board.createSurvival();
 		break;
@@ -169,24 +169,39 @@ void GameScreen::updateSurvival(float deltaTime)
 
 	updateBearSurvivalPosition();
 	updateBallSurvivalPosition();
-
+	addBalls(deltaTime);
 	m_bar.update(m_bears.front());
 	m_board.update();
+}
+
+void GameScreen::addBalls(float deltaTime)
+{
+	m_totalTime += deltaTime;
+
+	if (m_totalTime >= m_addBallSpaceTime)
+	{
+		m_totalTime -= m_addBallSpaceTime;
+
+		auto pos = sf::Vector2f(rand() % SurvivalWidth, 100);
+		auto force = b2Vec2((rand() % 2 == 0 ? -1 : 1) * 20, -30); // 50 - 50 for each direction
+		auto index = rand() % numOfBalls;
+		m_board.addBall(pos, force, index);
+	}
 }
 
 void GameScreen::updateBearSurvivalPosition()
 {
 	auto bearPos = m_bears.front().getPos();
 	auto dummyBearPos = m_dummyBears.front().getPos();
-	if (bearPos.x > 0 && bearPos.x < 3 * windowWidth)
+	if (bearPos.x > 0 && bearPos.x < SurvivalWidth)
 	{
 		m_mainBear = &m_bears.front();
-		m_dummyBears.front().setPos(sf::Vector2f(bearPos.x + ((bearPos.x > m_points.second ? -1 : 1)) * 3 * windowWidth, bearPos.y));
+		m_dummyBears.front().setPos(sf::Vector2f(bearPos.x + ((bearPos.x > m_points.second ? -1 : 1)) * SurvivalWidth, bearPos.y));
 	}
 	else
 	{
 		m_mainBear = &m_dummyBears.front();
-		m_bears.front().setPos(sf::Vector2f(dummyBearPos.x + (dummyBearPos.x > m_points.second ? -1 : 1) * 3 * windowWidth, dummyBearPos.y));
+		m_bears.front().setPos(sf::Vector2f(dummyBearPos.x + (dummyBearPos.x > m_points.second ? -1 : 1) * SurvivalWidth, dummyBearPos.y));
 	}
 }
 
@@ -200,19 +215,19 @@ void GameScreen::updateBallSurvivalPosition()
 		auto direction = (*balls)[i].getCurrDirection();
 		if (!(*balls)[i].hadChild() && pos.x <= radius + EPSILON && direction == LEFT)
 		{
-			m_board.addBall((*balls)[i], 3 * windowWidth);
+			m_board.addBall((*balls)[i], SurvivalWidth);
 			(*balls)[i].creatingNewBall();
 		}
 		else if (pos.x <= -(radius + EPSILON) && direction == LEFT)
 		{
 			(*balls)[i].destroy();
 		}
-		if (!(*balls)[i].hadChild() && pos.x >= 3 * windowWidth - (radius + EPSILON) && direction == RIGHT)
+		if (!(*balls)[i].hadChild() && pos.x >= SurvivalWidth - (radius + EPSILON) && direction == RIGHT)
 		{
-			m_board.addBall((*balls)[i], -(3 * windowWidth));
+			m_board.addBall((*balls)[i], -(SurvivalWidth));
 			(*balls)[i].creatingNewBall();
 		}
-		else if (pos.x >= 3 * windowWidth + radius + EPSILON && direction == RIGHT)
+		else if (pos.x >= SurvivalWidth + radius + EPSILON && direction == RIGHT)
 		{
 			(*balls)[i].destroy();
 		}
@@ -262,9 +277,9 @@ void GameScreen::drawSurvival()
 	m_bar.draw(window, m_bears.front());
 
 	//================ M I N I - M A P ================
-	//auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
-	//miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
-	//draw(window, miniMapView);
+	auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
+	miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
+	draw(window, miniMapView);
 	//=================================================
 
 	window.setView(sf::View(sf::FloatRect(0.f, 0.f, windowWidth, windowHeight)));
@@ -301,7 +316,7 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 	auto leftViewPos = sf::Vector2f(((bearLeft > 0 || bearRight > 0 ? 0 : bearX - m_points.first)), 0);
 
 	auto rightViewSize = sf::Vector2f((bearLeft > 0 ? windowWidth - leftViewSize.x : windowWidth - (bearRight > 0 ? bearRight : 0)), windowHeight - barHeight);
-	//if (bearX >= 3 * windowWidth + windowWidth / 2 - bearWitdh / 2)
+	//if (bearX >= SurvivalWidth + windowWidth / 2 - bearWitdh / 2)
 	//	rightViewSize.x = 0;
 	auto rightViewPos = sf::Vector2f(bearX + (bearLeft > 0 ? m_points.second : -m_points.first), 0);
 

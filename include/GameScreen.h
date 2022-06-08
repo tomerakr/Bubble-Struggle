@@ -29,6 +29,7 @@ private:
 	void drawNormal();
 
 	void updateSurvival(float deltaTime);
+	void addBalls(float deltaTime);
 	void drawSurvival();
 	void updateBearSurvivalPosition();
 	void updateBallSurvivalPosition();
@@ -36,6 +37,8 @@ private:
 	std::pair<int, int> m_points; //left point, right point
 	std::vector<Bear> m_dummyBears;
 	Bear* m_mainBear;
+	float m_addBallSpaceTime = 10; //each 10 seconds add new ball
+	float m_totalTime = 0;
 
 	sf::RectangleShape m_background;
 	Controller* m_controller;

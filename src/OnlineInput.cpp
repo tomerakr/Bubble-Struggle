@@ -4,7 +4,7 @@
 //sf::IpAddress m_remoteAddress;
 //sf::SocketSelector m_socketSelector;
 
-constexpr int PORT = 6969;
+constexpr int PORT = 696942;
 
 OnlineInput::OnlineInput()
 {
