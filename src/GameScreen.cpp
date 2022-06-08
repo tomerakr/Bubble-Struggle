@@ -170,7 +170,7 @@ void GameScreen::updateSurvival(float deltaTime)
 	updateBearSurvivalPosition();
 	updateBallSurvivalPosition();
 	addBalls(deltaTime);
-	m_bar.update(m_bears.front());
+	m_bar.update(m_bears);
 	m_board.update();
 }
 
