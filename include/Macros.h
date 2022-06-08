@@ -1,5 +1,9 @@
 #pragma once
 
+#include <vector>
+#include <utility>
+#include "SFML/Graphics.hpp"
+
 constexpr int windowHeight = 800;
 constexpr int windowWidth = 1200;
 constexpr int barHeight = 100;
@@ -13,24 +17,19 @@ constexpr int giftTimer = 3;
 constexpr int EPSILON = 5;
 constexpr int RIGHT = 1;
 constexpr int LEFT = -1;
-
-//constexpr sf::Vector2f left = sf::Vector2f(-1, 0);
-//constexpr sf::Vector2f right = sf::Vector2f(1, 0);
+constexpr int SurvivalWidth = 3 * windowWidth;
 
 constexpr int BALL_FILTER = -1;
-//constexpr int FLOOR = -2;
-//constexpr int WALL = -3;
 constexpr int ROPE_FILTER = -4;
-const int POPPED_BALL_FILTER = -5;
-const int BEAR_FILTER = -6;
+constexpr int POPPED_BALL_FILTER = -5;
+constexpr int BEAR_FILTER = -6;
 constexpr int TILE = -7;
-const int TOUCH_WALL = -8;
-const int TOUCH_BEAR = -9;
-const int GIFT_FREEZE_FILTER = -10;
-const int GIFT_DOUBLE_SHOT_FILTER = -11;
-const int GIFT_LIFE_FILTER = -12;
-const int GIFT_SHIELD_FILTER = -13;
-
+constexpr int TOUCH_WALL = -8;
+constexpr int TOUCH_BEAR = -9;
+constexpr int GIFT_FREEZE_FILTER = -10;
+constexpr int GIFT_DOUBLE_SHOT_FILTER = -11;
+constexpr int GIFT_LIFE_FILTER = -12;
+constexpr int GIFT_SHIELD_FILTER = -13;
 
 //---------------------------------------------------------
 enum class Objects
@@ -73,12 +72,12 @@ enum class bearTypes
 	MAX
 };
 
-constexpr int numOfScreens = 3;
 enum class Screen
 {
 	menu,
 	game,
-	levelCreator
+	levelCreator,
+	MAX
 };
 
 enum class gameMode
@@ -111,10 +110,6 @@ struct gameInfo
 	bool _newGame;
 	int _skinIndex;
 };
-
-#include <vector>
-#include <utility>
-#include "SFML/Graphics.hpp"
 
 struct gameInput
 {

@@ -32,7 +32,7 @@ private:
 	void update			(const sf::Vector2f& mousePos);
 	void updateText		(const std::string& text, sf::Text& mText) { mText.setString(text); }
 	void followBall		();
-	void follow			(const sf::Vector2f& size, const sf::Color& color, const Objects texture, bool setOrigin = false);
+	void followMouse	(const sf::Vector2f& size, const sf::Color& color, const Objects texture, bool setOrigin = false);
 	void unfollow();
 
 	void placeInBoard	(const sf::Vector2f& mousePos);
@@ -76,6 +76,8 @@ private:
 	sf::RectangleShape m_followShape;
 	bool m_delete = false;
 
+	sf::Color m_backgroundColor = sf::Color(249, 254, 255);
+	sf::Color m_semiTransparent = sf::Color(255, 255, 255, 150);
 	sf::Vector2f m_floorSize = sf::Vector2f(200, thickness);
 	sf::Vector2f m_wallSize = sf::Vector2f(thickness, 200);
 	sf::Vector2f m_tileSize = m_wallSize;

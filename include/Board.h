@@ -27,6 +27,10 @@ public:
 	void addGift(const sf::Vector2f position);
 
 	std::vector<Ball>* getBalls() { return &m_balls; } // add iterator ~~~~~~~~~~~!!!!!!!!!!!!!
+	void addBall(const sf::Vector2f& pos, b2Vec2 force, int index)
+	{
+		m_balls.emplace_back(this, pos, force, index);
+	}
 	void addBall(Ball& ball, int distance)
 	{
 		auto pos = ball.getPos();

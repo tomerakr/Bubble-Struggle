@@ -13,11 +13,10 @@ constexpr int STRAIGHTx = 5;
 LevelCreator::LevelCreator()
 {
 	m_background.setSize(sf::Vector2f(windowWidth, windowHeight - barHeight - thickness));
-	m_background.setFillColor(sf::Color(249, 254, 255));
+	m_background.setFillColor(m_backgroundColor);
 
 	createBaseTiles();
 	createBar();
-	m_buttons[static_cast<int>(buttonNames::BALL)].setColor(Resources::instance().getColor(m_ballIndex));
 }
 
 void LevelCreator::createBaseTiles()
@@ -37,22 +36,22 @@ void LevelCreator::createBar()
 
 	auto height = windowHeight - barHeight / 2;
 
-	setText(sf::Vector2f(windowWidth / 2, height), 45, "Bubble Trouble", m_title);
-	setText(sf::Vector2f(335, height - 15), 30, std::to_string(m_ballIndex), m_ballIndexText);
+	setText(sf::Vector2f(320, height - 25), 22, std::to_string(m_ballIndex), m_ballIndexText);
 
 	m_buttons.emplace_back(Button{sf::Vector2f(950, height), sf::Vector2f(60, 60), Objects::EraseButton });
 	m_buttons.emplace_back(Button{sf::Vector2f(1050,height), sf::Vector2f(60, 60), Objects::ClearButton });
 	m_buttons.emplace_back(Button{sf::Vector2f(1150,height), sf::Vector2f(60, 60), Objects::SaveButton });
 	m_buttons.emplace_back(Button{sf::Vector2f(250, height), sf::Vector2f(60, 60), Objects::Ball });
+	m_buttons.back().setColor(Resources::instance().getColor(m_ballIndex));
 	m_buttons.emplace_back(Button{sf::Vector2f(50,	height), sf::Vector2f(20, 70), Objects::Wall });
-	m_buttons.emplace_back(Button{sf::Vector2f(310, height + 20), sf::Vector2f(30, 30), Objects::Arrow });
-	m_buttons.emplace_back(Button{sf::Vector2f(350, height + 20), sf::Vector2f(30, 30), Objects::Arrow });
+	m_buttons.emplace_back(Button{sf::Vector2f(310, height + 20), sf::Vector2f(30, 30), Objects::Arrow }); //ball dec size
+	m_buttons.emplace_back(Button{sf::Vector2f(350, height + 20), sf::Vector2f(30, 30), Objects::Arrow }); //ball inc size
 	m_buttons.back().flip();
-	m_buttons.emplace_back(Button{sf::Vector2f(120, height), sf::Vector2f(30, 30), Objects::Arrow });
+	m_buttons.emplace_back(Button{sf::Vector2f(120, height), sf::Vector2f(30, 30), Objects::Arrow }); //tile rotation
 	m_buttons.back().flip();
 	m_buttons.emplace_back(Button{sf::Vector2f(250, height), sf::Vector2f(30, 30), Objects::Arrow }); //ball direction
 	m_buttons.back().flip();
-	m_buttons.back().setColor(sf::Color(255, 255, 255, 150));
+	m_buttons.back().setColor(m_semiTransparent);
 }
 
 void LevelCreator::setText(const sf::Vector2f& pos, int size, const std::string& text, sf::Text& mText)
@@ -95,7 +94,6 @@ Screen LevelCreator::createLevel(Controller* ctrl)
 			break;
 		}
 	}
-	
 	draw(ctrl);
 
 	return screen;
@@ -108,7 +106,7 @@ void LevelCreator::update(const sf::Vector2f& mousePos)
 
 void LevelCreator::clear()
 {
-	//m_balls.clear();
+	m_balls.clear();
 	m_tiles.clear();
 }
 
@@ -119,6 +117,7 @@ void LevelCreator::erase(const sf::Vector2f& mousePos)
 		if (ball.first.contains(mousePos))
 		{
 			ball.second = true;
+			break;
 		}
 	}
 	for (auto& tile : m_tiles)
@@ -126,9 +125,10 @@ void LevelCreator::erase(const sf::Vector2f& mousePos)
 		if (tile.first.contains(mousePos))
 		{
 			tile.second = true;
+			break;
 		}
 	}
-	//std::erase_if(m_balls, [](auto& ball) { return ball.second; });
+	std::erase_if(m_balls, [](auto& ball) { return ball.second; });
 	std::erase_if(m_tiles, [](auto& tile) { return tile.second; });
 }
 
@@ -155,21 +155,8 @@ void LevelCreator::save() const
 		auto size = tile.first.getSize();
 		file << size.x << ' ' << size.y << ' ' << pos.x << ' ' << pos.y << '\n';
 	}
-
+	
 	addToProperties(levelName);
-}
-
-void LevelCreator::addToProperties(const std::string& level) const
-{
-	auto res = std::filesystem::path("../../../resources");
-	if (std::filesystem::exists(res))
-	{
-		std::filesystem::copy(level, res); //copys only the name BUG?
-		auto cmake = std::ofstream(res / "CMakeLists.txt", std::ios::app);
-		cmake << "configure_file (\"" + level + "\" ${CMAKE_BINARY_DIR} COPYONLY)" << '\n';
-		auto levelsNames = std::ofstream(res / "LevelsNames.txt", std::ios::app);
-		levelsNames << level << '\n';
-	}
 }
 
 int LevelCreator::getLastLevel() const
@@ -195,6 +182,19 @@ int LevelCreator::getLastLevel() const
 		levelNames >> lastLevl;
 	}
 	return lastLevl + 1;
+}
+
+void LevelCreator::addToProperties(const std::string& level) const //copy deletes content of file and saves it empty
+{
+	auto dest = std::filesystem::path("../../../resources");
+	if (std::filesystem::exists(dest))
+	{
+		std::filesystem::copy_file(level, dest);
+		auto cmake = std::ofstream(dest / "CMakeLists.txt", std::ios::app);
+		cmake << "configure_file (\"" + level + "\" ${CMAKE_BINARY_DIR} COPYONLY)" << '\n';
+		auto levelsNames = std::ofstream(dest / "LevelsNames.txt", std::ios::app);
+		levelsNames << level << '\n';
+	}
 }
 
 void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
@@ -227,11 +227,11 @@ void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
 	else if (m_buttons[static_cast<int>(buttonNames::TILE)].isPressed(mousePos))
 	{
 		m_action = buttonNames::TILE;
-		follow(m_tileSize, sf::Color(255, 255, 255, 150), Objects::Wall);
+		followMouse(m_wallSize, sf::Color(255, 255, 255, 150), Objects::Wall);
 	}
 	else if (m_buttons[static_cast<int>(buttonNames::INC)].isPressed(mousePos))
 	{
-		m_ballIndex = ++m_ballIndex % 9;
+		m_ballIndex = ++m_ballIndex % numOfBalls;
 		m_buttons[static_cast<int>(buttonNames::BALL)].setColor(Resources::instance().getColor(m_ballIndex));
 		updateText(std::to_string(m_ballIndex), m_ballIndexText);
 
@@ -242,8 +242,8 @@ void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
 	}
 	else if (m_buttons[static_cast<int>(buttonNames::DEC)].isPressed(mousePos))
 	{
-		m_ballIndex = --m_ballIndex % 9;
-		m_ballIndex = (-1 == m_ballIndex ? 8 : m_ballIndex);
+		m_ballIndex = --m_ballIndex;
+		m_ballIndex = (-1 == m_ballIndex ? numOfBalls - 1 : m_ballIndex);
 		updateText(std::to_string(m_ballIndex), m_ballIndexText);
 		m_buttons[static_cast<int>(buttonNames::BALL)].setColor(Resources::instance().getColor(m_ballIndex));	
 
@@ -261,7 +261,7 @@ void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
 
 		if (m_action == buttonNames::TILE)
 		{
-			follow(m_wallSize, sf::Color(255, 255, 255, 150), Objects::Wall);
+			followMouse(m_wallSize, m_semiTransparent, Objects::Wall);
 		}
 	}
 	
@@ -276,30 +276,33 @@ void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
 
 void LevelCreator::placeInBoard(const sf::Vector2f& mousePos)
 {
-	if (inBoard(mousePos))
+	if (!inBoard(mousePos))
 	{
-		switch (m_action)
-		{
-		case buttonNames::BALL:
-		{
-			auto pos = sf::Vector2f(setPos(mousePos.x, STRAIGHTx), setPos(mousePos.y, STRAIGHTy));
-			m_balls.push_back(std::make_pair(Ball{ pos, m_ballIndex, m_ballDirecetion }, false));
-			m_lastAction.push_back(lastAction::BALL);
-			break;
-		}
+		return;
+	}
 
-		case buttonNames::TILE:
-			m_tiles.push_back(std::make_pair(Tile{ m_tileSize, sf::Vector2f(setPos(mousePos.x, STRAIGHTx), setPos(mousePos.y, STRAIGHTy)) }, false));
-			m_lastAction.push_back(lastAction::TILE);
-			break;
+	switch (m_action)
+	{
+	case buttonNames::BALL:
+	{
+		auto pos = sf::Vector2f(setPos(mousePos.x, STRAIGHTx), setPos(mousePos.y, STRAIGHTy));
+		m_balls.push_back(std::make_pair(Ball{ pos, m_ballIndex, m_ballDirecetion }, false));
+		m_lastAction.push_back(lastAction::BALL);
+		break;
+	}
 
-		case buttonNames::ERASE:
-			erase(mousePos);
-			break;
+	case buttonNames::TILE:
+		m_tiles.push_back(std::make_pair(Tile{ m_tileSize, sf::Vector2f(setPos(mousePos.x, STRAIGHTx),
+															setPos(mousePos.y, STRAIGHTy)) }, false));
+		m_lastAction.push_back(lastAction::TILE);
+		break;
 
-		default:
-			break;
-		}
+	case buttonNames::ERASE:
+		erase(mousePos);
+		break;
+
+	default:
+		break;
 	}
 }
 
@@ -308,20 +311,13 @@ void LevelCreator::followBall()
 	auto size = (defRadius - 10 * m_ballIndex) * 2;
 	auto color = Resources::instance().getColor(m_ballIndex);
 	color = sf::Color(color.r, color.g, color.b, 100);
-	follow(sf::Vector2f(size, size), color, Objects::Ball, true);
+	followMouse(sf::Vector2f(size, size), color, Objects::Ball, true);
 }
 
-void LevelCreator::follow(const sf::Vector2f& size, const sf::Color& color, const Objects texture, bool setOrigin)
+void LevelCreator::followMouse(const sf::Vector2f& size, const sf::Color& color, const Objects texture, bool setOrigin)
 {
 	m_followShape.setSize(size);
-	if (setOrigin)
-	{
-		m_followShape.setOrigin(sf::Vector2f(size.x / 2, size.y / 2));
-	}
-	else
-	{
-		m_followShape.setOrigin(0, 0);
-	}
+	m_followShape.setOrigin((setOrigin ? sf::Vector2f(size.x / 2, size.y / 2) : sf::Vector2f(0, 0)));
 	m_followShape.setFillColor(color);
 	m_followShape.setTexture(Resources::instance().getObjectTexture(texture), true);
 }
@@ -351,7 +347,6 @@ void LevelCreator::draw(Controller* ctrl)
 	window.draw(m_followShape);
 	window.draw(m_bar);
 	window.draw(m_ballIndexText);
-	window.draw(m_title);
 
 	for (auto& tile : m_baseTiles)
 	{
