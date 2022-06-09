@@ -108,6 +108,6 @@ void ContactListener::BeginContact(b2Contact* contact)
     else if (fixtureB->GetFilterData().groupIndex == ROPE_FILTER ||
         fixtureA->GetFilterData().groupIndex == ROPE_FILTER)
     {
-        int i = 42;
+        int i = 42; 
     }
 }
