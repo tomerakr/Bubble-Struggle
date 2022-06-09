@@ -66,4 +66,3 @@ target_link_libraries (${CMAKE_PROJECT_NAME} sfml-audio sfml-graphics sfml-main)
 target_link_libraries (${CMAKE_PROJECT_NAME} box2d)
 
 configure_file (C:/SFML/SFML-2.5.1/bin/openal32.dll ${CMAKE_BINARY_DIR} COPYONLY)
-
