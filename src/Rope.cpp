@@ -42,7 +42,7 @@ void Rope::update()
 	}
 
 //		if rope reached max height destroy rope
-	else if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == TILE)
+	else if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == TILE)   
 	{
 		if (!m_freeze)
 		{
