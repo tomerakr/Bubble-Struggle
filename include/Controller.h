@@ -5,7 +5,7 @@
 #include "LevelCreator.h"
 #include "SFML/Graphics.hpp"
 
-constexpr int maxFPS = 300;
+constexpr int maxFPS = 50;
 
 class Controller
 {

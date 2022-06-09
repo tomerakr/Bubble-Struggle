@@ -105,9 +105,4 @@ void ContactListener::BeginContact(b2Contact* contact)
         fixtureA->SetFilterData(destroyObjects);
         fixtureB->SetFilterData(destroyObjects);
     }
-    else if (fixtureB->GetFilterData().groupIndex == ROPE_FILTER ||
-        fixtureA->GetFilterData().groupIndex == ROPE_FILTER)
-    {
-        int i = 42; 
-    }
 }
