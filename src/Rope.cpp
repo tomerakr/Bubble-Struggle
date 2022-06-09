@@ -13,11 +13,12 @@ Rope::Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board, bool free
 		textureSize.x / static_cast<int>(bearTypes::MAX), 0));
 
 	b2BodyDef bodyDef;
-	//bodyDef.type = b2_dynamicBody;
+	bodyDef.type = b2_dynamicBody;
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
 	setFixture(b2Vec2(m_icon.getSize().x / 2, 1));
 	m_pos = b2Vec2(bearPos.x + m_icon.getSize().x / 2, bearPos.y);
 	m_box2DRope->SetTransform(m_pos, 0);
+	m_box2DRope->SetFixedRotation(true);
 }
 
 void Rope::setFixture(const b2Vec2& size)
@@ -27,8 +28,7 @@ void Rope::setFixture(const b2Vec2& size)
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &ropeRectangle;
-	fixtureDef.filter.groupIndex = ROPE_FILTER;
-	fixtureDef.density = 1;
+	fixtureDef.filter.groupIndex = ROPE_FILTER; 
 
 	m_box2DRope->CreateFixture(&fixtureDef);
 }

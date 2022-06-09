@@ -20,11 +20,11 @@ constexpr int LEFT = -1;
 constexpr int SurvivalWidth = 3 * windowWidth;
 
 constexpr int BALL_FILTER = -1;
-//constexpr int CEILING = -3;
 constexpr int ROPE_FILTER = -4;
 constexpr int POPPED_BALL_FILTER = -5;
 constexpr int BEAR_FILTER = -6;
 constexpr int TILE = -7;
+constexpr int CEILING = -14;
 constexpr int TOUCH_WALL = -8;
 constexpr int TOUCH_BEAR = -9;
 constexpr int GIFT_FREEZE_FILTER = -10;

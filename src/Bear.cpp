@@ -35,7 +35,9 @@ Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, 
 void Bear::defineBear2d(const sf::Vector2f& pos)
 {
 	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody; // ?????
 	bodyDef.position.Set(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2);
+
 	m_box2DBear = m_board->getWorld()->CreateBody(&bodyDef);
 
 	b2PolygonShape bearRectangle;
@@ -43,8 +45,8 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &bearRectangle;
+	fixtureDef.density = 1;
 	fixtureDef.filter.groupIndex = BEAR_FILTER;
-
 	m_box2DBear->CreateFixture(&fixtureDef);
 }
 
