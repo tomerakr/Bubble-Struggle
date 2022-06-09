@@ -10,6 +10,7 @@
 #include "ContactListener.h"
 #include "MovingObject.h"
 #include "Gift.h"
+#include "DebugDraw.h"
 
 class Controller;
 
@@ -24,6 +25,14 @@ public:
 	void createNormal();
 	void createSurvival();
 	b2World* getWorld() { return m_world.get(); }
+
+	//=======================================
+	void SetDebugDraw(DebugDraw* d)
+	{
+		m_world->SetDebugDraw(d);
+	}
+	//=======================================
+
 	void addGift(const sf::Vector2f position);
 
 	std::vector<Ball>* getBalls() { return &m_balls; } // add iterator ~~~~~~~~~~~!!!!!!!!!!!!!

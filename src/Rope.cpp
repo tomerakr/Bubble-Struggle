@@ -15,7 +15,9 @@ Rope::Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board, bool free
 	bodyDef.type = b2_dynamicBody;
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
 	setFixture(b2Vec2(m_icon.getSize().x / 2, 1));
-	m_box2DRope->SetTransform(b2Vec2(bearPos.x + m_icon.getSize().x / 2, bearPos.y), 0);
+	m_pos = b2Vec2(bearPos.x + m_icon.getSize().x / 2, bearPos.y);
+	m_box2DRope->SetTransform(m_pos, 0);
+	m_box2DRope->SetFixedRotation(true);
 }
 
 void Rope::setFixture(const b2Vec2& size)
@@ -37,7 +39,6 @@ void Rope::update()
 	if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)		
 	{
 		m_board->addGift(sf::Vector2f(300, 300));
-
 		destroy();
 	}
 
@@ -52,8 +53,11 @@ void Rope::update()
 
 	else
 	{
+
 		m_icon.setSize(sf::Vector2f(m_icon.getSize().x, m_icon.getSize().y - ropeHeightChange)); // make rope longer
 		m_box2DRope->DestroyFixture(m_box2DRope->GetFixtureList());
+		m_pos = b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2);
+		m_box2DRope->SetTransform(m_pos, 0);
 		setFixture(b2Vec2(m_icon.getSize().x / 2, -m_icon.getSize().y));
 
 		auto textureSize = m_icon.getTexture()->getSize();

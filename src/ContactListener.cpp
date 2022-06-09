@@ -95,10 +95,10 @@ void ContactListener::BeginContact(b2Contact* contact)
     }
 
 //      if rope collided with wall
-    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    else if (fixtureA->GetFilterData().groupIndex == CEILING &&
         fixtureB->GetFilterData().groupIndex == ROPE_FILTER ||
         fixtureA->GetFilterData().groupIndex == ROPE_FILTER &&
-        fixtureB->GetFilterData().groupIndex == TILE)
+        fixtureB->GetFilterData().groupIndex == CEILING)
     {
         b2Filter destroyObjects;
         destroyObjects.groupIndex = TILE;

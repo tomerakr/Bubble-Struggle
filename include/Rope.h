@@ -22,5 +22,6 @@ private:
 	int m_ropeIndex;
 	Board* m_board = nullptr;
 	b2Body* m_box2DRope = nullptr;
+	b2Vec2 m_pos;
 };
 
