@@ -155,6 +155,7 @@ void LevelCreator::save() const
 		auto size = tile.first.getSize();
 		file << size.x << ' ' << size.y << ' ' << pos.x << ' ' << pos.y << '\n';
 	}
+	file.close();
 	
 	addToProperties(levelName);
 }
@@ -189,7 +190,7 @@ void LevelCreator::addToProperties(const std::string& level) const //copy delete
 	auto dest = std::filesystem::path("../../../resources");
 	if (std::filesystem::exists(dest))
 	{
-		std::filesystem::copy_file(level, dest);
+		std::filesystem::copy(level, dest);
 		auto cmake = std::ofstream(dest / "CMakeLists.txt", std::ios::app);
 		cmake << "configure_file (\"" + level + "\" ${CMAKE_BINARY_DIR} COPYONLY)" << '\n';
 		auto levelsNames = std::ofstream(dest / "LevelsNames.txt", std::ios::app);

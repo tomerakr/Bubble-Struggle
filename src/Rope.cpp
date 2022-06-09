@@ -12,9 +12,10 @@ Rope::Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board, bool free
 	m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * m_ropeIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), 0));
 
 	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
-	setFixture(b2Vec2(m_icon.getSize().x / 2, 0));
-	m_box2DRope->SetTransform(b2Vec2(bearPos.x + m_icon.getSize().x / 2, bearPos.y), 0);
+	setFixture(b2Vec2(m_icon.getSize().x / 2, 1));
+	m_box2DRope->SetTransform(b2Vec2(bearPos.x + m_icon.getSize().x / 2, bearPos.y + 1), 0);
 }
 
 void Rope::setFixture(const b2Vec2& size)

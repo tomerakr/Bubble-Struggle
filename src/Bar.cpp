@@ -4,7 +4,6 @@
 #include <sstream>
 #include <iomanip>
 
-
 #include "Bar.h"
 #include "Resources.h"
 #include "cmath"
@@ -36,7 +35,6 @@ void Bar::setBackgroud()
 
 void Bar::setBar(float time, const gameInfo& info)
 {
-
 	if (info._mode == gameMode::Survival)
 	{
 		m_levelText.setString("Survival");
@@ -91,14 +89,15 @@ void Bar::draw(sf::RenderWindow& window, std::vector<Bear> &bears)
 	{
 		drawBackgroundText(window, sf::Vector2f((j * (windowWidth - (40 + 15) * 4 + 5)) + pow(-1, j) * 25, windowHeight - barHeight / 2 + 10), sf::Vector2f((40 + 15) * 4, 55)); // bears 
 
+	
 		for (int i = 0; i < bears[j].getNumOfLives(); ++i)
 		{
-			m_lifeIcons[((j+1) % m_numOfBears)].setPosition(sf::Vector2f((j * windowWidth) + pow(-1,j) * (50 + i * 55), windowHeight - barHeight / 2 + 10));
+			m_lifeIcons[((j + 1) % m_numOfBears)].setPosition(sf::Vector2f((j * windowWidth) + pow(-1,j) * (50 + i * 55), windowHeight - barHeight / 2 + 10));
 			window.draw(m_lifeIcons[((j + 1) % m_numOfBears)]);
-
-			m_ropes[((j + 1) % m_numOfBears)].setPosition(sf::Vector2f((j * windowWidth) + pow(-1, j) * (420), windowHeight - barHeight / 2 + 10));
-			window.draw(m_ropes[((j + 1) % m_numOfBears)]);
 		}
+
+		m_ropes[((j + 1) % m_numOfBears)].setPosition(sf::Vector2f((j * windowWidth) + pow(-1, j) * (420), windowHeight - barHeight / 2 + 10));
+		window.draw(m_ropes[((j + 1) % m_numOfBears)]);
 
 		m_scoreText.setPosition(sf::Vector2f((j * (windowWidth - 80)) + pow(-1, j) * 270, windowHeight - barHeight / 2.f + 10));
 		window.draw(m_scoreText);

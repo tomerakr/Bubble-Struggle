@@ -61,7 +61,10 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 		{
 	//			start level again
 			m_board->reset();
-			--m_lives;
+			if (m_lives > 0)
+			{
+				--m_lives;
+			}
 		}
 		else
 		{
