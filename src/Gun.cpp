@@ -13,7 +13,7 @@ void Gun::shoot(const sf::Vector2f& bearPos, const bool freezeRope)
 
    	if (m_ropes.size() < m_maxRopes && m_timeFromLastShot >= m_coolDown)
 	{
-		m_ropes.emplace_back(Rope(sf::Vector2f(bearPos.x + bearWitdh / 2 - ropeWitdh / 2, bearPos.y + bearheight),
+		m_ropes.emplace_back(Rope(sf::Vector2f(bearPos.x + bearWitdh / 2 - ropeWitdh / 2, bearPos.y + bearHeight),
 								m_ropeTexture, m_board, freezeRope));
 
 		m_clock.restart();

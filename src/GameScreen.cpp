@@ -27,7 +27,7 @@ void GameScreen::game(const gameInfo& info)
 {
 	m_bears.clear();
 	auto xPos = windowWidth / (info._numOfPlayers + 1);
-	auto yPos = windowHeight - barHeight - bearheight - thickness;
+	auto yPos = windowHeight - barHeight - bearHeight - thickness;
 	auto textureIndex = info._skinIndex;
 	for (int i = info._numOfPlayers; i > 0; --i)
 	{

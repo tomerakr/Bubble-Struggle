@@ -1,27 +1,23 @@
 #include "OnlineInput.h"
+#include <iostream>
 
-//sf::IpAddress m_myAddress = sf::IpAddress::getLocalAddress();
-//sf::IpAddress m_remoteAddress;
-//sf::SocketSelector m_socketSelector;
-
-constexpr int PORT = 696942;
+sf::SocketSelector m_socketSelector;
 
 OnlineInput::OnlineInput()
 {
-	//sf::UdpSocket m_socket;
-	//m_socket.bind(PORT);
+	m_socket.bind(sf::Socket::AnyPort);
 }
 
 std::pair<sf::Vector2f, bool> OnlineInput::getInput(gameInput input)
 {
-	//sf::Packet info;
-	//info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
-	//m_socket.send(info, otherAdress, otherPort);
-	//m_socket.receive(info, otherOdress, otherPort);
-
-	//auto xDir = 0.f, yDir = 0.f;
-	//auto shoot = false;
-
+	sf::Packet info;
+	info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
+	m_socket.send(info, sf::IpAddress("10.32.6.101"), m_remotePort);
+	m_socket.receive(info, m_remoteAddress, m_remotePort);
+	
+	auto xDir = 0.f, yDir = 0.f;
+	auto shoot = false;
+	std::cout << xDir << yDir << shoot << '\n';
 	//info >> xDir >> yDir >> shoot;
 
 	//return std::make_pair(sf::Vector2f(xDir, yDir), shoot);

@@ -46,7 +46,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     )
 endif ()
 
-add_executable (${CMAKE_PROJECT_NAME} WIN32)
+add_executable (${CMAKE_PROJECT_NAME} )#WIN32)
 
 add_subdirectory (include)
 add_subdirectory (src)
@@ -62,7 +62,7 @@ find_package (SFML 2.5 COMPONENTS graphics audio REQUIRED)
 
 set_target_properties (sfml-main sfml-system sfml-window sfml-graphics sfml-audio sfml-network PROPERTIES MAP_IMPORTED_CONFIG_RELWITHDEBINFO RELEASE)
 
-target_link_libraries (${CMAKE_PROJECT_NAME} sfml-audio sfml-graphics sfml-main)
+target_link_libraries (${CMAKE_PROJECT_NAME} sfml-audio sfml-graphics sfml-main sfml-network)
 target_link_libraries (${CMAKE_PROJECT_NAME} box2d)
 
 configure_file (C:/SFML/SFML-2.5.1/bin/openal32.dll ${CMAKE_BINARY_DIR} COPYONLY)
