@@ -9,6 +9,9 @@
 #include <vector>
 #include "Input.h"
 
+constexpr int MAX_LIFE = 4;
+constexpr int START_LIFE = 3;
+
 class Board;
 
 class Bear : public MovingObject
@@ -51,7 +54,6 @@ private:
 
 	unsigned int m_score;
 	unsigned int m_lives;
-	const unsigned int m_Maxlives = m_lives;
 
 	bool m_hasShield = false;
 	bool m_freezeRope = false;

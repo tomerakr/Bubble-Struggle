@@ -2,16 +2,19 @@
 #include "Board.h"
 #include "Bear.h"
 
+constexpr int giftSideSize = 50;
+
 Gift::Gift(const sf::Vector2f position, Board* board, const int giftFilter)
-	:MovingObject(position, sf::Vector2f(50, 50), Objects::Gifts), m_board(board)
+	:MovingObject(position, sf::Vector2f(giftSideSize, giftSideSize), Objects::Gifts), m_board(board)
 {
     auto textureSize = m_icon.getTexture()->getSize();
     //texture index range: 0 - 4
-    m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(giftTypes::MAX)) * giftFilter, 0, textureSize.x / static_cast<int>(giftTypes::MAX), textureSize.y));
+    m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(giftTypes::MAX)) * giftFilter, 0,
+        textureSize.x / static_cast<int>(giftTypes::MAX), textureSize.y));
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(position.x + m_icon.getPosition().x / 2, position.y + m_icon.getPosition().y / 2);
+    bodyDef.position.Set(position.x + m_icon.getSize().x / 2, position.y + m_icon.getSize().y / 2);
 
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
 
@@ -28,7 +31,7 @@ Gift::Gift(const sf::Vector2f position, Board* board, const int giftFilter)
 void Gift::update()
 {
     //m_timer.update();
-
+    //
     //if (m_timer.timeEnd())
     //{
     //    m_isDone = true;
@@ -36,10 +39,15 @@ void Gift::update()
 
     if (m_body->GetFixtureList()->GetFilterData().groupIndex == TOUCH_BEAR)
     {
-        m_body->SetTransform(b2Vec2(-500, -500), 0);
+        m_board->getWorld()->DestroyBody(m_body);   //temp solution
+        m_icon.setSize(sf::Vector2f(0, 0));
+        m_isDone = true;
     }
-
-    m_icon.setPosition(sf::Vector2f(m_body->GetPosition().x, m_body->GetPosition().y));
+    else
+    {
+        m_icon.setPosition(sf::Vector2f(m_body->GetPosition().x - m_icon.getSize().x / 2,
+            m_body->GetPosition().y - m_icon.getSize().y / 2));
+    }
 }
 
 bool Gift::getIsDone() const

@@ -59,57 +59,42 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 	{
 		if (!m_hasShield)
 		{
-	//			start level again
-			m_board->reset();
-			if (m_lives > 0)
+			--m_lives;
+			if (0 == m_lives)
 			{
-				--m_lives;
+				m_lives = START_LIFE;
 			}
+			m_board->reset();
 		}
 		else
 		{
 			m_hasShield = false;
 		}
-
-//			reset filter fixture
-		resetFilter();
 	}
-
-	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_FREEZE_FILTER)
+	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_FREEZE_FILTER)
 	{
 		m_freezeRope = true;
-
-		resetFilter();
 	}
-
-	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_DOUBLE_SHOT_FILTER)
+	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_DOUBLE_SHOT_FILTER)
 	{
 		m_gun.incMaxRopes();
-
-		resetFilter();
 	}
-
-	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_LIFE_FILTER)
+	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_LIFE_FILTER)
 	{
-		if (m_lives + 1 <= m_Maxlives)
+		if (m_lives < MAX_LIFE)
 		{
 			++m_lives;
 		}
-
-		resetFilter();
 	}
-
-	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_SHIELD_FILTER)
+	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_SHIELD_FILTER)
 	{
 		m_hasShield = true;
-
-		resetFilter();
 	}
+	resetFilter();
 
 	if (shoot)
 	{
 		m_gun.shoot(m_icon.getPosition(), m_freezeRope);
-
 		m_freezeRope = false;
 	}
 
@@ -117,7 +102,6 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 	m_box2DBear->SetTransform(b2Vec2(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2), 0);
 
 	m_gun.update();
-
 
 	return std::make_pair(direction, shoot);
 }

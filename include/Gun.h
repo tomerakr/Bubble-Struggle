@@ -11,13 +11,13 @@ public:
 	void shoot(const sf::Vector2f& bearPos, const bool freezeRope);
 	void update();
 	void drawRopes(sf::RenderWindow& window);
-	void incMaxRopes() { m_maxRopes++; }
+	void incMaxRopes() { ++m_maxRopes; }
 
 private:
 	std::vector<Rope> m_ropes;
 	int m_maxRopes = 1;
-	Board* m_board;
 	int m_ropeTexture;
+	Board* m_board;
 
 	const float m_coolDown = 0.5f;
 	float m_timeFromLastShot = 0;

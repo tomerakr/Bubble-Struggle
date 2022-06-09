@@ -26,23 +26,24 @@ GameScreen::GameScreen(Controller* ctrl)
 void GameScreen::game(const gameInfo& info)
 {
 	m_bears.clear();
+	m_board.reset();
 	auto xPos = windowWidth / (info._numOfPlayers + 1);
 	auto yPos = windowHeight - barHeight - bearHeight - thickness;
 	auto textureIndex = info._skinIndex;
 
-	m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex });
-	m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
+	//m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex });
+	//m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
+	//
+	//m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex++ % static_cast<int>(bearTypes::MAX) });
+	//m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
 
-	m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex++ % static_cast<int>(bearTypes::MAX) });
-	m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
-
-	for (int i = info._numOfPlayers - 1; i > 0; --i)
+	for (int i = info._numOfPlayers; i > 0; --i)
 	{
-		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex });
+		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 		m_bears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
 
-		m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
-		m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
+		//m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
+		//m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
 	}
 
 	switch (info._mode)
@@ -286,9 +287,9 @@ void GameScreen::drawSurvival()
 	m_bar.draw(window, m_bears);
 
 	//================ M I N I - M A P ================
-	auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
-	miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
-	draw(window, miniMapView);
+	//auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
+	//miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
+	//draw(window, miniMapView);
 	//=================================================
 
 	window.setView(sf::View(sf::FloatRect(0.f, 0.f, windowWidth, windowHeight)));
@@ -335,14 +336,21 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 	rightView = sf::View(sf::FloatRect(rightViewPos.x, rightViewPos.y, rightViewSize.x, rightViewSize.y));
 
 	float windowPortion = (windowHeight - barHeight) / static_cast<float>(windowHeight);
-	if (bearLeft > 0 || bearRight > 0)
-	{
-		rightView.setViewport({ 0.f, 0.f, rightViewSize.x / windowWidth,  windowPortion });
-		leftView.setViewport({ rightViewSize.x / windowWidth, 0.f, leftViewSize.x / windowWidth, windowPortion });
-	}
-	else
-	{
-		leftView.setViewport({ 0.f, 0.f, leftViewSize.x / windowWidth, windowPortion });
-		rightView.setViewport({ leftViewSize.x / windowWidth, 0.f, rightViewSize.x / windowWidth, windowPortion });
-	}
+
+	auto firstSizeX = ((bearLeft > 0 || bearRight > 0) ? rightViewSize.x : leftViewSize.x);
+	auto secondSizeX = ((bearLeft > 0 || bearRight > 0) ? leftViewSize.x : rightViewSize.x);
+
+	rightView.setViewport({ 0.f, 0.f, firstSizeX / windowWidth,  windowPortion });
+	leftView.setViewport({ firstSizeX / windowWidth, 0.f, secondSizeX / windowWidth, windowPortion });
+
+	//if (bearLeft > 0 || bearRight > 0)
+	//{
+	//	rightView.setViewport({ 0.f, 0.f, rightViewSize.x / windowWidth,  windowPortion });
+	//	leftView.setViewport({ rightViewSize.x / windowWidth, 0.f, leftViewSize.x / windowWidth, windowPortion });
+	//}
+	//else
+	//{
+	//	leftView.setViewport({ 0.f, 0.f, leftViewSize.x / windowWidth, windowPortion });
+	//	rightView.setViewport({ leftViewSize.x / windowWidth, 0.f, rightViewSize.x / windowWidth, windowPortion });
+	//}
 }

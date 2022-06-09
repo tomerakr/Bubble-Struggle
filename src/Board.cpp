@@ -119,11 +119,15 @@ void Board::update()
 
 void Board::reset()
 {
-	m_balls.clear();
 	for (auto& tile : m_tiles)
 	{
 		tile.reset();
 	}
+	for (auto& ball : m_balls)
+	{
+		ball.destroyBody();
+	}
+
 	m_balls.clear();
 	m_tiles.clear();
 
@@ -146,35 +150,4 @@ void Board::addGift(const sf::Vector2f position)
 	{
 		m_gifts.emplace_back(Gift(position, this, giftType));
 	}
-	//		break;
-	//if (true)
-	//{
-	//	switch (_giftType)
-	//	{
-	//	case Objects::GiftFreeze:
-	//	{
-	//		m_gifts.emplace_back(Gift(position, this, GIFT_FREEZE_FILTER));
-	//		break;
-	//	}
-	//	case Objects::GiftDoubleShot:
-	//	{
-	//		m_gifts.emplace_back(Gift(position, this, GIFT_DOUBLE_SHOT_FILTER));
-	//		break;
-	//	}
-	//	case Objects::GiftLife:
-	//	{
-	//		m_gifts.emplace_back(Gift(position, this, GIFT_LIFE_FILTER));
-	//		break;
-	//	}
-	//	case Objects::GiftShield:
-	//	{
-	//		m_gifts.emplace_back(Gift(position, this, GIFT_SHIELD_FILTER));
-	//		break;
-	//	}
-	//
-	//	default:
-	//		break;
-	//	}
-	//	
-	//}
 }

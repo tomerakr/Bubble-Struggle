@@ -1,7 +1,5 @@
 #include "ContactListener.h"
-
 #include "Macros.h"
-
 #include <iostream>
 
 void ContactListener::BeginContact(b2Contact* contact)
@@ -9,12 +7,7 @@ void ContactListener::BeginContact(b2Contact* contact)
     auto fixtureA = contact->GetFixtureA();
     auto fixtureB = contact->GetFixtureB();
 
-    if (fixtureA == nullptr || fixtureB == nullptr)
-    {
-        return;
-    }
-
-    if (fixtureA->GetBody() == nullptr || fixtureB->GetBody() == nullptr)
+    if ((!fixtureA || !fixtureB) || (!fixtureA->GetBody() || !fixtureB->GetBody()))
     {
         return;
     }
@@ -95,10 +88,10 @@ void ContactListener::BeginContact(b2Contact* contact)
     }
 
 //      if rope collided with wall
-    else if (fixtureA->GetFilterData().groupIndex == CEILING &&
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
         fixtureB->GetFilterData().groupIndex == ROPE_FILTER ||
         fixtureA->GetFilterData().groupIndex == ROPE_FILTER &&
-        fixtureB->GetFilterData().groupIndex == CEILING)
+        fixtureB->GetFilterData().groupIndex == TILE)
     {
         b2Filter destroyObjects;
         destroyObjects.groupIndex = TILE;
