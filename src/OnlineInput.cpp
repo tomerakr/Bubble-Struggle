@@ -12,7 +12,7 @@ std::pair<sf::Vector2f, bool> OnlineInput::getInput(gameInput input)
 {
 	sf::Packet info;
 	info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
-	m_socket.send(info, sf::IpAddress("10.32.6.101"), m_remotePort);
+	m_socket.send(info, m_remoteAddress, m_remotePort);
 	m_socket.receive(info, m_remoteAddress, m_remotePort);
 	
 	auto xDir = 0.f, yDir = 0.f;
