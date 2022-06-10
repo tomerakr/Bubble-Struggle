@@ -46,9 +46,9 @@ public:
 		m_balls.emplace_back(this, sf::Vector2f(pos.x + distance - ball.getCurrDirection() * ball.getRaidus(), pos.y),
 				ball.getForce(), ball.getIndex());
 	}
+	void setLevel();
 
 private:
-	void setLevel();
 	void setWorld();
 	std::vector<Gift> m_gifts;
 

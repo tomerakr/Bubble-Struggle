@@ -5,7 +5,6 @@ Board::Board()
 	:m_currLevel(1)
 {
 	setWorld();
-	setLevel();
 }
 
 void Board::setWorld()
@@ -29,8 +28,8 @@ void Board::createSurvival()
 {
 	m_baseTiles.clear();
 	auto height = windowHeight - thickness - barHeight;
-	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWidth * 3, thickness), sf::Vector2f(0.f, height) });	//floors
-	m_baseTiles.push_back(Tile{ this, sf::Vector2f(windowWidth * 3, thickness), sf::Vector2f(0.f, 0.f) });		//ceiling
+	m_baseTiles.push_back(Tile{ this, sf::Vector2f(SurvivalWidth * 3, thickness), sf::Vector2f(-SurvivalWidth, height) });	//floors
+	m_baseTiles.push_back(Tile{ this, sf::Vector2f(SurvivalWidth * 3, thickness), sf::Vector2f(-SurvivalWidth, 0.f) });		//ceiling
 }
 
 void Board::setLevel()
@@ -86,12 +85,12 @@ void Board::draw(sf::RenderWindow& window)
 	}
 
 	//------- BOX2D VIEWER -------
-	//
-	//DebugDraw d(window);
-	//uint32 flags = b2Draw::e_shapeBit;
-	//d.SetFlags(flags);
-	//m_world->SetDebugDraw(&d);
-	//m_world->DebugDraw();
+	
+	DebugDraw d(window);
+	uint32 flags = b2Draw::e_shapeBit;
+	d.SetFlags(flags);
+	m_world->SetDebugDraw(&d);
+	m_world->DebugDraw();
 }
 
 void Board::update()
@@ -123,7 +122,11 @@ void Board::reset()
 {
 	for (auto& tile : m_tiles)
 	{
-		tile.reset();
+		tile.destroyBody();
+	}
+	for (auto& tile : m_baseTiles)
+	{
+		tile.destroyBody();
 	}
 	for (auto& ball : m_balls)
 	{
@@ -131,9 +134,8 @@ void Board::reset()
 	}
 
 	m_balls.clear();
+	m_baseTiles.clear();
 	m_tiles.clear();
-
-	setLevel();
 }
 
 void Board::addBalls(const sf::Vector2f& pos, const int index)
