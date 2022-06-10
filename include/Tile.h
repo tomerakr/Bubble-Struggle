@@ -10,7 +10,7 @@ class Tile : public StaticObject
 public:
 	Tile(Board* board, const sf::Vector2f& size, const sf::Vector2f& pos);
 	Tile(const sf::Vector2f& size, const sf::Vector2f& pos);
-	void reset();
+	void destroyBody();
 	//void collision(Board* board);
 	bool contains(const sf::Vector2f& mousePos) { return m_icon.getGlobalBounds().contains(mousePos); }
 	const sf::Vector2f& getPos() const  { return m_icon.getPosition(); }

@@ -30,9 +30,10 @@ public:
 	//	std::ranges::swap(m_getInput, other.m_getInput);
 	//	return *this;
 	//}
-	void setPos(const sf::Vector2f& pos) { m_icon.setPosition(pos); }
+	void setPos(const sf::Vector2f& pos);
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
 	const sf::Vector2f& getPos() const;
+	void destroyBody();
 	std::pair<const sf::Vector2f&, bool> update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear);
 	void drawRopes(sf::RenderWindow& window);
 	unsigned int getNumOfLives(){ return m_lives; }

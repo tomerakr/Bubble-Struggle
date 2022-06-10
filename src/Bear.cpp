@@ -135,3 +135,14 @@ void Bear::resetFilter()
 	bearFilter.groupIndex = BEAR_FILTER;
 	m_box2DBear->GetFixtureList()->SetFilterData(bearFilter);
 }
+
+void Bear::setPos(const sf::Vector2f& pos)
+{
+	auto size = m_icon.getSize();
+	m_box2DBear->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2), 0);
+}
+
+void Bear::destroyBody()
+{
+	m_board->getWorld()->DestroyBody(m_box2DBear);
+}
