@@ -52,13 +52,10 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
 {
 	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear });
-	m_box2DBear->SetTransform(m_box2DBear->GetTransform().p + b2Vec2(deltaTime * m_speedPerSecond * direction.x, 0), 0);
+	m_icon.move(deltaTime * m_speedPerSecond * direction);
 	m_animation.update(deltaTime, direction.x == LEFT, direction.x == 0);
 	m_icon.setTextureRect(m_animation.getUvRect());
-	if (direction.y != 0)
-	{
-		jump();
-	}
+
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
 	{
 		if (!m_shield)
@@ -101,9 +98,9 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 		m_gun.shoot(m_icon.getPosition());
 	}
 
-	auto pos = m_box2DBear->GetTransform().p;
-	m_icon.setPosition(sf::Vector2f(pos.x - m_icon.getSize().x / 2, pos.y - m_icon.getSize().y / 2));
-
+	auto pos = m_icon.getPosition();
+	auto size = m_icon.getSize();
+	m_box2DBear->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2), 0);
 	m_gun.update();
 
 	return std::make_pair(direction, shoot);
@@ -112,16 +109,6 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 void Bear::drawRopes(sf::RenderWindow& window)
 {
 	m_gun.drawRopes(window);
-}
-
-void Bear::jump()
-{
-	auto impulse = m_box2DBear->GetMass() * -1;
-	m_box2DBear->ApplyLinearImpulse(b2Vec2(0, impulse), m_box2DBear->GetWorldCenter(), true);
-	//m_touchGround = (m_box2DBear->GetLinearVelocity().y == 0 ? true : false);
-	//if (m_touchGround)
-	//{
-	//}
 }
 
 const sf::Vector2f& Bear::getPos() const

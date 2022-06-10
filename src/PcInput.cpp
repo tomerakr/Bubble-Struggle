@@ -22,11 +22,6 @@ sf::Vector2f PcInput::readDirection(std::vector<sf::Keyboard::Key> keys)
 		direction = sf::Vector2f(0, 0);
 	}
 
-	if (sf::Keyboard::isKeyPressed(keys[static_cast<int>(Keys::Up)]))
-	{
-		direction.y = -1;
-	}
-
 	return direction;
 }
 

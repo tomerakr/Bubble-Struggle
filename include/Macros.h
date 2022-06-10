@@ -98,7 +98,6 @@ enum class Keys
 {
 	Left,
 	Right,
-	Up,
 	Shoot
 };
 

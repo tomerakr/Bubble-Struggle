@@ -63,5 +63,4 @@ private:
 	int32 m_velocityIteration = 6;
 	int32 m_positionIteration = 2;
 	int m_currLevel;
-
 };

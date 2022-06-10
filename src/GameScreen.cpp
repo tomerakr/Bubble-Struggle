@@ -10,14 +10,12 @@ GameScreen::GameScreen(Controller* ctrl)
 	auto keys = std::vector<sf::Keyboard::Key>();
 	keys.push_back(sf::Keyboard::Left);
 	keys.push_back(sf::Keyboard::Right);
-	keys.push_back(sf::Keyboard::Up);
 	keys.push_back(sf::Keyboard::Space);
 	m_keys.push_back(keys);
 
 	keys.clear();
 	keys.push_back(sf::Keyboard::A);
 	keys.push_back(sf::Keyboard::D);
-	keys.push_back(sf::Keyboard::W);
 	keys.push_back(sf::Keyboard::LControl);
 	m_keys.push_back(keys);
 
@@ -33,13 +31,13 @@ void GameScreen::game(const gameInfo& info)
 	auto yPos = windowHeight - barHeight - bearHeight - thickness;
 	auto textureIndex = info._skinIndex;
 
-	//m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex });
-	//m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
+	m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex });
+	m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
 	//
 	//m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 	//m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
 
-	for (int i = info._numOfPlayers; i > 0; --i)
+	for (int i = info._numOfPlayers - 1; i > 0; --i)
 	{
 		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 		m_bears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);

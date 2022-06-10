@@ -15,8 +15,7 @@ public:
 	sf::UdpSocket m_socket;
 
 private:
-	unsigned short m_myPort = 8765;
-	unsigned short m_remotePort = 8764;
+	unsigned short m_port = 55001;
 	sf::IpAddress m_myAddress = sf::IpAddress::getLocalAddress();
-	sf::IpAddress m_remoteAddress = sf::IpAddress("10.32.6.101");
+	sf::IpAddress m_remoteAddress = sf::IpAddress("10.100.102.14");
 };
