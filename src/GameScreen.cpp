@@ -5,7 +5,7 @@
 GameScreen::GameScreen(Controller* ctrl)
 	: m_controller(ctrl), m_board()
 {
-	Resources::instance().playSound(Sound::theme);
+	//Resources::instance().playSound(Sound::theme);
 
 	auto keys = std::vector<sf::Keyboard::Key>();
 	keys.push_back(sf::Keyboard::Left);
@@ -27,8 +27,8 @@ GameScreen::GameScreen(Controller* ctrl)
 
 void GameScreen::game(const gameInfo& info)
 {
-	m_bears.clear();
-	m_board.reset();
+	clear();
+
 	auto xPos = windowWidth / (info._numOfPlayers + 1);
 	auto yPos = windowHeight - barHeight - bearHeight - thickness;
 	auto textureIndex = info._skinIndex;
@@ -41,26 +41,31 @@ void GameScreen::game(const gameInfo& info)
 
 	for (int i = info._numOfPlayers; i > 0; --i)
 	{
-		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex });
+		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 		m_bears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
 
-		m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
-		m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
 	}
+	textureIndex = info._skinIndex;
 
 	switch (info._mode)
 	{
 	case gameMode::Normal:
 		m_board.createNormal();
+		m_board.setLevel();
 		break;
 
 	case gameMode::Survival:
 	{
+		//createSuvival();
 		m_background.setTexture(Resources::instance().getObjectTexture(Objects::SurvivalBackground));
 		m_background.setSize(sf::Vector2f(SurvivalWidth, windowHeight));
 
-		auto pos = m_bears.front().getPos();
-		m_dummyBears.front().setPos(sf::Vector2f(pos.x + SurvivalWidth, pos.y));
+		for (int i = info._numOfPlayers; i > 0; --i)
+		{
+			m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * i + SurvivalWidth, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
+			m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
+		}
+
 		m_mainBear = &m_bears.front();
 		m_board.createSurvival();
 		break;
@@ -70,6 +75,11 @@ void GameScreen::game(const gameInfo& info)
 		break;
 	}
 }
+
+//void GameScreen::createSuvival()
+//{
+//
+//}
 
 Screen GameScreen::playNormal()
 {
@@ -289,9 +299,9 @@ void GameScreen::drawSurvival()
 	m_bar.draw(window, m_bears);
 
 	//================ M I N I - M A P ================
-	//auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
-	//miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
-	//draw(window, miniMapView);
+	auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
+	miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
+	draw(window, miniMapView);
 	//=================================================
 
 	window.setView(sf::View(sf::FloatRect(0.f, 0.f, windowWidth, windowHeight)));
@@ -355,4 +365,19 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 	//	leftView.setViewport({ 0.f, 0.f, leftViewSize.x / windowWidth, windowPortion });
 	//	rightView.setViewport({ leftViewSize.x / windowWidth, 0.f, rightViewSize.x / windowWidth, windowPortion });
 	//}
+}
+
+void GameScreen::clear()
+{
+	for (auto& bear : m_bears)
+	{
+		bear.destroyBody();
+	}
+	for (auto& bear : m_dummyBears)
+	{
+		bear.destroyBody();
+	}
+	m_bears.clear();
+	m_dummyBears.clear();
+	m_board.reset();
 }

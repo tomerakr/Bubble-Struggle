@@ -24,6 +24,7 @@ private:
 	Screen playSurvival();
 
 	void setViews(sf::View& leftView, sf::View& rightView);
+	void clear();
 	void update(float deltaTime);
 	Screen handleKeyboard();
 	void drawNormal();
