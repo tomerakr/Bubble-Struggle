@@ -5,7 +5,7 @@ sf::SocketSelector m_socketSelector;
 
 OnlineInput::OnlineInput()
 {
-	m_socket.bind(sf::Socket::AnyPort);
+	m_socket.bind(m_myPort);
 }
 
 std::pair<sf::Vector2f, bool> OnlineInput::getInput(gameInput input)

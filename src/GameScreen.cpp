@@ -10,14 +10,12 @@ GameScreen::GameScreen(Controller* ctrl)
 	auto keys = std::vector<sf::Keyboard::Key>();
 	keys.push_back(sf::Keyboard::Left);
 	keys.push_back(sf::Keyboard::Right);
-	keys.push_back(sf::Keyboard::Up);
 	keys.push_back(sf::Keyboard::Space);
 	m_keys.push_back(keys);
 
 	keys.clear();
 	keys.push_back(sf::Keyboard::A);
 	keys.push_back(sf::Keyboard::D);
-	keys.push_back(sf::Keyboard::W);
 	keys.push_back(sf::Keyboard::LControl);
 	m_keys.push_back(keys);
 
