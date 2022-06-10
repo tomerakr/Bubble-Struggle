@@ -1,0 +1,126 @@
+=================================== G A M E ===================================
+Bubble Trouble
+
+================================== N A M E S ==================================
+Miriam Manolache	- 314101304
+Netanel Bondar		- 207211848
+Tomer Akrish		- 315224295
+
+============================= G A M E - R U L E S =============================
+
+
+================================ O B J E C T S ================================
+Ball	- 
+Bear	- 
+Rope	- 
+Tile	- 
+Button	- 
+
+======================= F I L E - D E S C R I P T I O N =======================
+---------------------------------- .h files -----------------------------------
+Animation.h - 
+
+Ball.h - 
+
+Bar.h - 
+
+Bear.h - 
+
+Board.h - 
+
+Button.h - 
+
+ContactListener.h - 
+
+Controller.h - 
+
+GameObject.h - 
+
+GameScreen.h - 
+
+Gun.h - 
+
+Input.h - 
+
+LevelCreator.h - 
+
+Macros.h - Including all constants used across the program. For example: window and bear size, filter indexes etc.
+
+MenuScreen.h - 
+
+MovingObject.h - 
+
+OnlineInput.h - 
+
+PcInput.h - 
+
+Resources.h - 
+
+Rope.h - 
+
+StaticObject.h - 
+
+Tile.h - 
+
+Timer.h - 
+
+---------------------------------- .cpp files ---------------------------------
+Animation.cpp - 
+
+Ball.cpp - The balls the player needs to destroy. Handles all things related to the balls.
+			For example: Destroy itself and spawn 2 smaller balls, movement etc.
+
+Bar.cpp - 
+
+Bear.cpp - Derived from the MovingObject class. Handles all things related to the bear object the player controls.
+			For example: Handles different inputs based on the game mode, movement, animation, has a Gun member to 
+							manage its ropes and so on.
+
+Board.cpp - Manages all objects related to the game itself, has vectors of gifts, balls, tiles and the box2d world.
+				Handles their drawings, builds the level and so on.
+
+Button.cpp - 
+
+ContactListener.cpp - Derived from the built in base class b2ContactListener. 
+						Checks and handles collisions between certain objects in the game. 
+						For example: rope with ball, ball with player and so on.
+
+Controller.cpp - 
+
+GameObject.cpp - Base class for objects in the game like Button, Moving and Static Objects etc.
+					Handles the size, position and texture of the object. In addition has function to draws itself.
+
+GameScreen.cpp - 
+
+Gun.cpp - Manages a list of ropes for each bear. Handles their drawings, shot cool-down and their destruction.
+
+LevelCreator.cpp - 
+
+MenuScreen.cpp - 
+
+MovingObject.cpp - 
+
+OnlineInput.cpp - 
+
+PcInput.cpp - 
+
+Resources.cpp - A singleton which stores and handles all textures, levels, balls colors and so on for the other
+					objects to use.
+
+Rope.cpp - Handles the ropes shot by the guns. Handles its size, movement, destruction and box2d attributes.
+
+Tile.cpp - 
+
+Timer.cpp - 
+
+
+============================= C O N T A I N E R S =============================
+
+
+============================= A L G O R I T H M S =============================
+
+
+============================== K N O W N - B U G ==============================
+
+
+=============================== C O M M E N T S ===============================

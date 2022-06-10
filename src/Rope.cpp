@@ -33,6 +33,7 @@ void Rope::setFixture(const b2Vec2& size)
 	fixtureDef.filter.groupIndex = ROPE_FILTER; 
 
 	m_box2DRope->CreateFixture(&fixtureDef);
+
 }
 
 void Rope::update()
