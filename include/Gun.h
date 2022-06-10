@@ -8,8 +8,9 @@ class Gun
 {
 public:
 	Gun(int ropeTexture, Board* board);
-	void shoot(const sf::Vector2f& bearPos, const bool freezeRope);
+	void shoot(const sf::Vector2f& bearPos);
 	void update();
+	void freeze() { m_freeze = true; }
 	void drawRopes(sf::RenderWindow& window);
 	void incMaxRopes() { ++m_maxRopes; }
 
@@ -21,6 +22,6 @@ private:
 
 	const float m_coolDown = 0.5f;
 	float m_timeFromLastShot = 0;
-
+	bool m_freeze = false;
 	sf::Clock m_clock;
 };

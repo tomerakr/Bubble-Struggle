@@ -31,7 +31,6 @@ public:
 	//	return *this;
 	//}
 	void setPos(const sf::Vector2f& pos) { m_icon.setPosition(pos); }
-	void jump();
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
 	const sf::Vector2f& getPos() const;
 	std::pair<const sf::Vector2f&, bool> update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear);
@@ -41,7 +40,7 @@ public:
 
 private:
 	void defineBear2d(const sf::Vector2f&);
-
+	void jump();
 	void resetFilter();
 
 	std::unique_ptr<Input> m_getInput = nullptr;
@@ -55,8 +54,8 @@ private:
 	unsigned int m_score;
 	unsigned int m_lives;
 
-	bool m_hasShield = false;
+	bool m_touchGround = true;
+	bool m_shield = false;
 	bool m_freezeRope = false;
-
-	
+	float m_speedPerSecond = 200.f;
 };

@@ -85,11 +85,13 @@ void Board::draw(sf::RenderWindow& window)
 		gift.draw(window);
 	}
 
-	DebugDraw d(window);
-	uint32 flags = b2Draw::e_shapeBit;
-	d.SetFlags(flags);
-	m_world->SetDebugDraw(&d);
-	m_world->DebugDraw();
+	//------- BOX2D VIEWER -------
+	//
+	//DebugDraw d(window);
+	//uint32 flags = b2Draw::e_shapeBit;
+	//d.SetFlags(flags);
+	//m_world->SetDebugDraw(&d);
+	//m_world->DebugDraw();
 }
 
 void Board::update()

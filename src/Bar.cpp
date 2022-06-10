@@ -44,7 +44,7 @@ void Bar::setBar(float time, const gameInfo& info)
 		m_levelText.setString("level:" + std::to_string(m_level));
 		m_timer = Timer{ time };
 	}
-		m_numOfBears = info._numOfPlayers;
+	m_numOfBears = info._numOfPlayers;
 	
 	for (int i = 0; i < m_numOfBears; ++i)
 	{
@@ -62,7 +62,8 @@ void Bar::setBearInfo(const gameInfo& info, Objects texture, sf::RectangleShape 
 	element.setOrigin(sf::Vector2f(size.x / 2, size.y / 2));
 	element.setTexture(Resources::instance().getObjectTexture(texture));
 	auto textureSize = element.getTexture()->getSize();
-	element.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * (info._skinIndex + index), 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
+	element.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * (info._skinIndex + index),
+		0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 }
 
 void Bar::update(std::vector<Bear> &bears)

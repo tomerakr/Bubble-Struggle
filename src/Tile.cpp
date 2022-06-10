@@ -14,7 +14,7 @@ Tile::Tile(Board* board, const sf::Vector2f& size, const sf::Vector2f& pos)
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &groundBox;
 	fixtureDef.density = 1;
-	fixtureDef.filter.groupIndex =  (pos.y == windowHeight - thickness - barHeight ? TILE : CEILING);
+	fixtureDef.filter.groupIndex = TILE;// (pos.y == windowHeight - thickness - barHeight ? TILE : CEILING);
 	m_tileBody->CreateFixture(&fixtureDef);
 };
 

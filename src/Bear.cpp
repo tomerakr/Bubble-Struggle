@@ -35,11 +35,10 @@ Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, 
 void Bear::defineBear2d(const sf::Vector2f& pos)
 {
 	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody; // ?????
+	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2);
 
 	m_box2DBear = m_board->getWorld()->CreateBody(&bodyDef);
-
 	b2PolygonShape bearRectangle;
 	bearRectangle.SetAsBox(m_icon.getSize().x / 2, m_icon.getSize().y / 2);
 
@@ -53,13 +52,16 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
 {
 	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear });
-	move(deltaTime, direction);
-	m_animation.update(deltaTime, direction.x == LEFT, direction.x == 0 && direction.y == 0);
+	m_box2DBear->SetTransform(m_box2DBear->GetTransform().p + b2Vec2(deltaTime * m_speedPerSecond * direction.x, 0), 0);
+	m_animation.update(deltaTime, direction.x == LEFT, direction.x == 0);
 	m_icon.setTextureRect(m_animation.getUvRect());
-
+	if (direction.y != 0)
+	{
+		jump();
+	}
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
 	{
-		if (!m_hasShield)
+		if (!m_shield)
 		{
 			--m_lives;
 			if (0 == m_lives)
@@ -70,12 +72,12 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 		}
 		else
 		{
-			m_hasShield = false;
+			m_shield = false;
 		}
 	}
 	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_FREEZE_FILTER)
 	{
-		m_freezeRope = true;
+		m_gun.freeze();
 	}
 	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_DOUBLE_SHOT_FILTER)
 	{
@@ -90,18 +92,17 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 	}
 	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_SHIELD_FILTER)
 	{
-		m_hasShield = true;
+		m_shield = true;
 	}
 	resetFilter();
 
 	if (shoot)
 	{
-		m_gun.shoot(m_icon.getPosition(), m_freezeRope);
-		m_freezeRope = false;
+		m_gun.shoot(m_icon.getPosition());
 	}
 
-	auto pos = m_icon.getPosition();
-	m_box2DBear->SetTransform(b2Vec2(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2), 0);
+	auto pos = m_box2DBear->GetTransform().p;
+	m_icon.setPosition(sf::Vector2f(pos.x - m_icon.getSize().x / 2, pos.y - m_icon.getSize().y / 2));
 
 	m_gun.update();
 
@@ -115,6 +116,12 @@ void Bear::drawRopes(sf::RenderWindow& window)
 
 void Bear::jump()
 {
+	auto impulse = m_box2DBear->GetMass() * -1;
+	m_box2DBear->ApplyLinearImpulse(b2Vec2(0, impulse), m_box2DBear->GetWorldCenter(), true);
+	//m_touchGround = (m_box2DBear->GetLinearVelocity().y == 0 ? true : false);
+	//if (m_touchGround)
+	//{
+	//}
 }
 
 const sf::Vector2f& Bear::getPos() const

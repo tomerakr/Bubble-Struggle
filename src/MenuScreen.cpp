@@ -98,6 +98,7 @@ gameInfo MenuScreen::handlePress(const sf::Vector2f& mousePos)
 
 void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
 {
+	auto clickSound = false;
 	auto mainMenu = static_cast<int>(menuNames::mainMenu);
 	if (m_buttons[mainMenu][int(buttonNames::Exit)].isPressed(mousePos) && m_wantedMenu == mainMenu)
 	{
@@ -108,20 +109,28 @@ void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
 	{
 		m_info._mode = gameMode::Normal;
 		m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
+		clickSound = true;
 	}
 	else if(m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Survival)].isPressed(mousePos))
 	{
 		m_info._mode = gameMode::Survival;
 		m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
+		clickSound = true;
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::CreateLevel)].isPressed(mousePos))
 	{
 		m_info._screen = Screen::levelCreator;
+		clickSound = true;
+	}
+	if (clickSound)
+	{
+		Resources::instance().playSound(Sound::click);
 	}
 }
 
 void MenuScreen::numOfPlayersPress(const sf::Vector2f& mousePos)
 {
+	auto clickSound = false;
 	if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Solo)].isPressed(mousePos))
 	{
 		m_info._numOfPlayers = 1;
@@ -129,22 +138,30 @@ void MenuScreen::numOfPlayersPress(const sf::Vector2f& mousePos)
 		m_info._screen = Screen::game;
 		m_info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
+		clickSound = true;
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Duo)].isPressed(mousePos))
 	{
 		m_info._numOfPlayers = 2;
 		m_wantedMenu = static_cast<int>(menuNames::connection);
+		clickSound = true;
+	}
+	if (clickSound)
+	{
+		Resources::instance().playSound(Sound::click);
 	}
 }
 
 void MenuScreen::connectionPress(const sf::Vector2f& mousePos)
 {
+	auto clickSound = false;
 	if (m_buttons[m_wantedMenu][int(buttonNames::SamePC)].isPressed(mousePos))
 	{
 		m_info._receive = receiveInfo::SamePc;
 		m_info._screen = Screen::game;
 		m_info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
+		clickSound = true;
 	}
 	else if (m_buttons[m_wantedMenu][int(buttonNames::Online)].isPressed(mousePos))
 	{
@@ -152,6 +169,11 @@ void MenuScreen::connectionPress(const sf::Vector2f& mousePos)
 		m_info._screen = Screen::game;
 		m_info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
+		clickSound = true;
+	}
+	if (clickSound)
+	{
+		Resources::instance().playSound(Sound::click);
 	}
 }
 

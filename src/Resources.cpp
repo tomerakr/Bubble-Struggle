@@ -7,15 +7,13 @@ Resources::Resources()
 	{
 		exit(EXIT_FAILURE);
 	}
-	//m_soundBuffer.emplace_back();
-	//m_sound.emplace_back();
-	//if (!m_soundBuffer.back()->loadFromFile("theme.wav"))
-	//{
-	//	exit(EXIT_FAILURE);
-	//}
-	//m_sound.back().setBuffer(*m_soundBuffer.back());
-	//m_sound.back().setVolume(15);
-	//m_sound.back().setLoop(true);
+	if (!m_soundBuffer[0].loadFromFile("theme.wav"))
+	{
+		exit(EXIT_FAILURE);
+	}
+	m_sound[0].setBuffer(m_soundBuffer[0]);
+	m_sound[0].setVolume(15);
+	m_sound[0].setLoop(true);
 	
 	readTextureNames();
 
