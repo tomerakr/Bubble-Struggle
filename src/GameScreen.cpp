@@ -33,6 +33,7 @@ void GameScreen::game(const gameInfo& info)
 
 	m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex });
 	m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
+	if (info._host) m_bears.back().setHost();
 	//
 	//m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 	//m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
@@ -41,7 +42,6 @@ void GameScreen::game(const gameInfo& info)
 	{
 		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 		m_bears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
-
 	}
 	textureIndex = info._skinIndex;
 
@@ -175,8 +175,8 @@ void GameScreen::update(float deltaTime)
 	m_bar.update(m_bears);
 	m_board.update();
 
-//		if no balls left, proceed to next level
-	if (m_board.getNumBalls() < 1)
+	//if no balls left, proceed to next level
+	if (m_board.getNumBalls() == 0)
 	{
 		m_board.nextLevel();
 	}
@@ -304,9 +304,9 @@ void GameScreen::drawSurvival()
 	m_bar.draw(window, m_bears);
 
 	//================ M I N I - M A P ================
-	auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
-	miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
-	draw(window, miniMapView);
+	//auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
+	//miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
+	//draw(window, miniMapView);
 	//=================================================
 
 	window.setView(sf::View(sf::FloatRect(0.f, 0.f, windowWidth, windowHeight)));

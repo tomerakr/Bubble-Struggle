@@ -1,4 +1,6 @@
 #include "Controller.h"
+#include "SFML/Network.hpp"
+#include <iostream>
 
 int main()
 {

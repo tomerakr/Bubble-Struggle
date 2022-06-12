@@ -19,17 +19,6 @@ class Bear : public MovingObject
 public:
 	Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex);
 
-	//Bear& operator=(Bear&& other) noexcept
-	//{
-	//	std::ranges::swap(m_score, other.m_score);
-	//	std::ranges::swap(m_lives, other.m_lives);
-	//	std::ranges::swap(m_board, other.m_board);
-	//	std::ranges::swap(m_box2DBear, other.m_box2DBear);
-	//	std::ranges::swap(m_gun, other.m_gun);
-	//	std::ranges::swap(m_keys, other.m_keys);
-	//	std::ranges::swap(m_getInput, other.m_getInput);
-	//	return *this;
-	//}
 	void setPos(const sf::Vector2f& pos);
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
 	const sf::Vector2f& getPos() const;
@@ -38,10 +27,10 @@ public:
 	void drawRopes(sf::RenderWindow& window);
 	unsigned int getNumOfLives(){ return m_lives; }
 	unsigned int getScore()		{ return m_score; }
+	void setHost()				{ m_host = true; }
 
 private:
 	void defineBear2d(const sf::Vector2f&);
-	void jump();
 	void resetFilter();
 
 	std::unique_ptr<Input> m_getInput = nullptr;
@@ -51,12 +40,13 @@ private:
 	b2Body* m_box2DBear = nullptr;
 	Board* m_board = nullptr;
 	Animation m_animation;
+	sf::Vector2f m_pos;
 
 	unsigned int m_score;
 	unsigned int m_lives;
 
-	bool m_touchGround = true;
 	bool m_shield = false;
 	bool m_freezeRope = false;
+	bool m_host = false;
 	float m_speedPerSecond = 200.f;
 };
