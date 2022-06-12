@@ -32,6 +32,7 @@ constexpr int TIME_FILTER = -9;
 constexpr int LIFE_FILTER = -10;
 constexpr int DOUBLE_SHOT_FILTER = -11;
 constexpr int ROPE_TOUCH_WALL = -12;
+constexpr int BEAR_HIT_WALL = -13;
 
 //---------------------------------------------------------
 enum class Objects
@@ -124,4 +125,5 @@ struct gameInput
 {
 	std::vector<sf::Keyboard::Key> _keys;
 	std::pair<sf::Vector2f, bool> _otherBear; //direction, shoot
+	bool _host;
 };

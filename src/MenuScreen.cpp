@@ -122,6 +122,10 @@ void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
 		m_info._screen = Screen::levelCreator;
 		clickSound = true;
 	}
+	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Help)].isPressed(mousePos))
+	{
+		
+	}
 	if (clickSound)
 	{
 		Resources::instance().playSound(Sound::click);

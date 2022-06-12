@@ -99,6 +99,17 @@ void ContactListener::BeginContact(b2Contact* contact)
         fixtureB->SetFilterData(destroyObjects);
     }
 
+
+    else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
+        fixtureB->GetFilterData().groupIndex == TILE)
+    {
+        b2Filter hitAWall;
+
+        hitAWall.groupIndex = BEAR_HIT_WALL;
+        fixtureA->SetFilterData(hitAWall);
+    }
+
+
     //      if rope collided with wall
 //      A - wall, B - ball
     else if (fixtureA->GetFilterData().groupIndex == TILE &&
