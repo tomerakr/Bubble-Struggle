@@ -1,11 +1,13 @@
 #include "Ball.h"
 #include "Board.h"
 
-Ball::Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, int index)
+Ball::Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, int index, bool special)
 	:Ball(pos, index, (initialForce.x > 0 ? 1 : -1), (initialForce.x > 0 ? 1 : -1))
 {
     m_index = index;
     m_board = board;
+
+    m_special = special;
 
     setBall2D(initialForce);
 }
@@ -52,7 +54,7 @@ void Ball::setBall2D(const b2Vec2& initialForce)
 
 void Ball::split()
 {
-    if (m_index < numOfBalls)
+    if (m_index < numOfBalls && m_splittable)
     {
         m_board->addBalls(m_ball.getPosition(), m_index + 1);
     }
@@ -76,8 +78,26 @@ void Ball::update()
     m_ball.setPosition(pos.x, pos.y);
     if (m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER || m_ball.getRadius() < 10)
     {
-        m_popped = true;
+        if (m_splittable)
+        {
+            m_popped = true;
+        }
+
+        resetFilter();
     }
+
+    else if (m_body->GetFixtureList()->GetFilterData().groupIndex == TILE && m_special)
+    {
+        m_splittable = !m_splittable;
+        resetFilter();
+    }
+}
+
+void Ball::resetFilter()
+{
+    b2Filter ballFilter;
+    ballFilter.groupIndex = BALL_FILTER;
+    m_body->GetFixtureList()->SetFilterData(ballFilter);
 }
 
 //Ball::~Ball()
