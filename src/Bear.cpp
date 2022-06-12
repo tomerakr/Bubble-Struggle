@@ -131,6 +131,7 @@ void Bear::resetFilter()
 
 void Bear::setPos(const sf::Vector2f& pos)
 {
+	m_icon.setPosition(pos);
 	auto size = m_icon.getSize();
 	m_box2DBear->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2 - 1), 0);
 }

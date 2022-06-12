@@ -34,6 +34,7 @@ void OnlineInput::server(gameInput input, sf::Packet& info)
 	info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
 	socket.send(info);
 	info = temp;
+	listenr.close();
 }
 
 void OnlineInput::client(gameInput input, sf::Packet& info)

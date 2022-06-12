@@ -19,7 +19,7 @@ private:
 	void client(gameInput input, sf::Packet& info);
 
 	//unsigned short m_port = 55001;
-	unsigned short m_remotePort = 55018;
+	unsigned short m_remotePort = 54007;
 	//sf::IpAddress m_myAddress = sf::IpAddress::getLocalAddress();
 	sf::IpAddress m_remoteAddress = sf::IpAddress("10.100.102.4");
 };
