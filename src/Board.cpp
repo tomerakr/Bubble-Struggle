@@ -115,7 +115,7 @@ void Board::update()
 	}
 
 	std::erase_if(m_balls, [](auto& ball) { return ball.popped() || ball.destroied(); });
-	//std::erase_if(m_gifts, [](auto& gift) { return gift.getIsDone(); });
+	std::erase_if(m_gifts, [](auto& gift) { return gift.getIsDone(); });
 }
 
 void Board::reset()
@@ -138,6 +138,22 @@ void Board::reset()
 	m_tiles.clear();
 }
 
+void Board::resetLevel()
+{
+	for (auto& tile : m_tiles)
+	{
+		tile.destroyBody();
+	}
+	for (auto& ball : m_balls)
+	{
+		ball.destroyBody();
+	}
+
+	m_balls.clear();
+	m_tiles.clear();
+	setLevel();
+}
+
 void Board::addBalls(const sf::Vector2f& pos, const int index)
 {
 	const auto pos2 = pos;
@@ -147,7 +163,7 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 
 void Board::addGift(const sf::Vector2f position)
 {
-	auto addGift = rand() % 14; //chances to get gift is 1 to 14
+	auto addGift = rand() % 1; //chances to get gift is 1 to 14
 
 	auto giftType = rand() % static_cast<int>(giftTypes::MAX);
 	if (!addGift)

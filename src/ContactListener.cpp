@@ -33,58 +33,60 @@ void ContactListener::BeginContact(b2Contact* contact)
     }
 
 //      if bear collided with freeze gift
-//      A - gift, B - bear
-    else if (fixtureA->GetFilterData().groupIndex == GIFT_FREEZE_FILTER &&
-            fixtureB->GetFilterData().groupIndex == BEAR_FILTER)
+//      A - bear, B - bear
+    else if (fixtureA->GetFilterData().groupIndex == FREEZE_FILTER &&
+            fixtureB->GetFilterData().groupIndex == BEAR_FILTER ||
+        fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
+        fixtureB->GetFilterData().groupIndex == FREEZE_FILTER)
     {
         b2Filter freezeGift;
-        freezeGift.groupIndex = GIFT_FREEZE_FILTER;
-        fixtureB->SetFilterData(freezeGift);
+        freezeGift.groupIndex = FREEZE_FILTER;
+        fixtureA->SetFilterData(freezeGift);
 
         freezeGift.groupIndex = TOUCH_BEAR;
-        fixtureA->SetFilterData(freezeGift);
+        fixtureB->SetFilterData(freezeGift);
     }
 
 //      if bear collided with double-shot gift
-//      A - gift, B - bear
-    else if (fixtureA->GetFilterData().groupIndex == GIFT_DOUBLE_SHOT_FILTER &&
-            fixtureB->GetFilterData().groupIndex == BEAR_FILTER)
+//      A - bear, B - bear
+    else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
+        fixtureB->GetFilterData().groupIndex == DOUBLE_SHOT_FILTER)
     {
         b2Filter doubleRopeGift;
 
-        doubleRopeGift.groupIndex = GIFT_DOUBLE_SHOT_FILTER;
-        fixtureB->SetFilterData(doubleRopeGift);
+        doubleRopeGift.groupIndex = DOUBLE_SHOT_FILTER;
+        fixtureA->SetFilterData(doubleRopeGift);
 
         doubleRopeGift.groupIndex = TOUCH_BEAR;
-        fixtureA->SetFilterData(doubleRopeGift);
+        fixtureB->SetFilterData(doubleRopeGift);
     }
 
 //      if bear collided with life gift
 //      A - gift, B - bear
-    else if (fixtureA->GetFilterData().groupIndex == GIFT_LIFE_FILTER &&
-        fixtureB->GetFilterData().groupIndex == BEAR_FILTER)
+    else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
+        fixtureB->GetFilterData().groupIndex == LIFE_FILTER)
     {
         b2Filter lifeGift;
 
-        lifeGift.groupIndex = GIFT_LIFE_FILTER;
-        fixtureB->SetFilterData(lifeGift);
+        lifeGift.groupIndex = LIFE_FILTER;
+        fixtureA->SetFilterData(lifeGift);
 
         lifeGift.groupIndex = TOUCH_BEAR;
-        fixtureA->SetFilterData(lifeGift);
+        fixtureB->SetFilterData(lifeGift);
     }
 
 //      if bear collided with shield gift
 //      A - gift, B - bear
-    else if (fixtureA->GetFilterData().groupIndex == GIFT_SHIELD_FILTER &&
-        fixtureB->GetFilterData().groupIndex == BEAR_FILTER)
+    else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
+        fixtureB->GetFilterData().groupIndex == SHIELD_FILTER) 
     {
         b2Filter shieldGift;
 
-        shieldGift.groupIndex = GIFT_SHIELD_FILTER;
-        fixtureB->SetFilterData(shieldGift);
+        shieldGift.groupIndex = SHIELD_FILTER;
+        fixtureA->SetFilterData(shieldGift);
 
         shieldGift.groupIndex = TOUCH_BEAR;
-        fixtureA->SetFilterData(shieldGift);
+        fixtureB->SetFilterData(shieldGift);
     }
 
 //      if rope collided with wall

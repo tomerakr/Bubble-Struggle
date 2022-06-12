@@ -65,29 +65,29 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 			{
 				m_lives = START_LIFE;
 			}
-			m_board->reset();
+			m_board->resetLevel();
 		}
 		else
 		{
 			m_shield = false;
 		}
 	}
-	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_FREEZE_FILTER)
+	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == FREEZE_FILTER)
 	{
 		m_gun.freeze();
 	}
-	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_DOUBLE_SHOT_FILTER)
+	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == DOUBLE_SHOT_FILTER)
 	{
 		m_gun.incMaxRopes();
 	}
-	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_LIFE_FILTER)
+	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == LIFE_FILTER)
 	{
 		if (m_lives < MAX_LIFE)
 		{
 			++m_lives;
 		}
 	}
-	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == GIFT_SHIELD_FILTER)
+	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == SHIELD_FILTER)
 	{
 		m_shield = true;
 	}

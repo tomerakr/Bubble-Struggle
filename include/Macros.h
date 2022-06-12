@@ -20,17 +20,16 @@ constexpr int RIGHT = 1;
 constexpr int LEFT = -1;
 
 constexpr int BALL_FILTER = -1;
-constexpr int ROPE_FILTER = -4;
-constexpr int POPPED_BALL_FILTER = -5;
-constexpr int BEAR_FILTER = -6;
-constexpr int TILE = -7;
-//constexpr int CEILING = -14;
-//constexpr int TOUCH_WALL = -8;
-constexpr int TOUCH_BEAR = -9;
-constexpr int GIFT_FREEZE_FILTER = -10;
-constexpr int GIFT_DOUBLE_SHOT_FILTER = -11;
-constexpr int GIFT_LIFE_FILTER = -12;
-constexpr int GIFT_SHIELD_FILTER = -13;
+constexpr int ROPE_FILTER = -2;
+constexpr int POPPED_BALL_FILTER = -3;
+constexpr int BEAR_FILTER = -4;
+constexpr int TILE = -5;
+constexpr int TOUCH_BEAR = -6;
+constexpr int FREEZE_FILTER = -7;
+constexpr int DOUBLE_SHOT_FILTER = -8;
+constexpr int LIFE_FILTER = -9;
+constexpr int SHIELD_FILTER = -10;
+constexpr int TIME_FILTER = -11;
 
 //---------------------------------------------------------
 enum class Objects

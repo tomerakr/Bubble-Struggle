@@ -47,7 +47,7 @@ void Rope::update()
 	{
 		if (!m_freeze)
 		{
-			destroy();
+			//destroy();
 		}
 	}
 

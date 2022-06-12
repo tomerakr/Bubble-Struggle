@@ -25,7 +25,7 @@ public:
 	void createNormal();
 	void createSurvival();
 	b2World* getWorld() { return m_world.get(); }
-
+	void resetLevel();
 	//=======================================
 	void SetDebugDraw(DebugDraw* d)
 	{

@@ -4,7 +4,7 @@
 
 constexpr int giftSideSize = 50;
 
-Gift::Gift(const sf::Vector2f position, Board* board, const int giftFilter)
+Gift::Gift(const sf::Vector2f position, Board* board, int giftFilter)
 	:MovingObject(position, sf::Vector2f(giftSideSize, giftSideSize), Objects::Gifts), m_board(board)
 {
     auto textureSize = m_icon.getTexture()->getSize();
@@ -23,7 +23,7 @@ Gift::Gift(const sf::Vector2f position, Board* board, const int giftFilter)
     b2FixtureDef fixtureDef;
     fixtureDef.density = 1;
     fixtureDef.shape = &m_rect2D;
-    fixtureDef.filter.groupIndex = giftFilter;
+    fixtureDef.filter.groupIndex = m_filters[giftFilter];
 
     m_body->CreateFixture(&fixtureDef);
 }
@@ -40,7 +40,6 @@ void Gift::update()
     if (m_body->GetFixtureList()->GetFilterData().groupIndex == TOUCH_BEAR)
     {
         m_board->getWorld()->DestroyBody(m_body);   //temp solution
-        m_icon.setSize(sf::Vector2f(0, 0));
         m_isDone = true;
     }
     else

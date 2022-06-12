@@ -1,8 +1,5 @@
 #include "Controller.h"
 
-#include <iostream>
-#include <filesystem>
-
 int main()
 {
 	Controller gameController;
