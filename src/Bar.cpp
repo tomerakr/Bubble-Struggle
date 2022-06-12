@@ -12,7 +12,7 @@ Bar::Bar()
 	:m_level(1)
 {
 	setText(m_levelText, textBarSize, sf::Vector2f(windowWidth / 2.f - 70, windowHeight - barHeight / 2.f));
-	setText(m_scoreText, textBarSize - 7, sf::Vector2f(200,200));
+	setText(m_scoreText, textBarSize - 7);
 	setBackgroud();
 }
 
@@ -41,7 +41,7 @@ void Bar::setBar(float time, const gameInfo& info)
 	}
 	else
 	{
-		m_levelText.setString("level:" + std::to_string(m_level));
+		m_levelText.setString("level: " + std::to_string(m_level));
 		m_timer = Timer{ time };
 	}
 	m_numOfBears = info._numOfPlayers;
@@ -84,24 +84,28 @@ void Bar::draw(sf::RenderWindow& window, std::vector<Bear> &bears)
 	m_timer.draw(window);
 	window.draw(m_levelText);
 
+	//time white strip
 	drawBackgroundText(window, sf::Vector2f(10, windowHeight - barHeight + 15), sf::Vector2f(windowWidth - 20, 18));
 
 	for (int j = 0; j < m_numOfBears; ++j)
 	{
-		drawBackgroundText(window, sf::Vector2f((j * (windowWidth - (40 + 15) * 4 + 5)) + pow(-1, j) * 25, windowHeight - barHeight / 2 + 10), sf::Vector2f((40 + 15) * 4, 55)); // bears 
+		//drawBackgroundText(window, sf::Vector2f((j * (windowWidth - (40 + 15) * 4 + 5)) + pow(-1, j) * 25,
+		//	windowHeight - barHeight / 2 + 10), sf::Vector2f((40 + 15) * 4, 55)); // bears 
 
-	
 		for (int i = 0; i < bears[j].getNumOfLives(); ++i)
 		{
-			m_lifeIcons[((j + 1) % m_numOfBears)].setPosition(sf::Vector2f((j * windowWidth) + pow(-1,j) * (50 + i * 55), windowHeight - barHeight / 2 + 10));
-			window.draw(m_lifeIcons[((j + 1) % m_numOfBears)]);
+			m_lifeIcons[j].setPosition(
+				sf::Vector2f((((j + 1) % m_numOfBears) * windowWidth) - pow(-1, j) * (50 + i * 55), windowHeight - barHeight / 2 + 10));
+			window.draw(m_lifeIcons[j]);
 		}
 
-		m_ropes[((j + 1) % m_numOfBears)].setPosition(sf::Vector2f((j * windowWidth) + pow(-1, j) * (420), windowHeight - barHeight / 2 + 10));
-		window.draw(m_ropes[((j + 1) % m_numOfBears)]);
+		//m_ropes[j].setPosition(
+		//	sf::Vector2f(((j + 1) % m_numOfBears * windowWidth) - pow(-1, j) * (420), windowHeight - barHeight / 2 + 10));
+		//window.draw(m_ropes[j]);
 
-		m_scoreText.setPosition(sf::Vector2f((j * (windowWidth - 80)) + pow(-1, j) * 270, windowHeight - barHeight / 2.f + 10));
-		window.draw(m_scoreText);
+		//m_scoreText.setPosition(
+		//	sf::Vector2f(((j + 1) % m_numOfBears * (windowWidth - 80)) - pow(-1, j) * 270, windowHeight - barHeight / 2.f + 10));
+		//window.draw(m_scoreText);
 	}
 }
 

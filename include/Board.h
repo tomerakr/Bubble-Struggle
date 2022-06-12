@@ -21,11 +21,14 @@ public:
 	void draw(sf::RenderWindow& window);
 	void addBalls(const sf::Vector2f& pos, const int index);
 	void update();
-	void reset();
+	void clear();
 	void createNormal();
 	void createSurvival();
 	b2World* getWorld() { return m_world.get(); }
-
+	int getNumBalls() const { return m_balls.size(); }
+	void nextLevel();
+	void reset();
+	void resetLevel();
 	//=======================================
 	void SetDebugDraw(DebugDraw* d)
 	{
