@@ -14,6 +14,8 @@ void ContactListener::BeginContact(b2Contact* contact)
 
 //      if rope collided with ball
     if (fixtureA->GetFilterData().groupIndex == ROPE_FILTER &&
+        fixtureB->GetFilterData().groupIndex == BALL_FILTER ||
+        fixtureA->GetFilterData().groupIndex == ROPE_TOUCH_WALL &&
         fixtureB->GetFilterData().groupIndex == BALL_FILTER)
     {
         b2Filter destroyObjects;
@@ -90,16 +92,24 @@ void ContactListener::BeginContact(b2Contact* contact)
     }
 
 //      if rope collided with wall
+//      A - wall, B - rope
     else if (fixtureA->GetFilterData().groupIndex == TILE &&
-        fixtureB->GetFilterData().groupIndex == ROPE_FILTER ||
-        fixtureA->GetFilterData().groupIndex == ROPE_FILTER &&
-        fixtureB->GetFilterData().groupIndex == TILE)
+        fixtureB->GetFilterData().groupIndex == ROPE_FILTER)
     {
         b2Filter destroyObjects;
-        destroyObjects.groupIndex = TILE;
+        destroyObjects.groupIndex = ROPE_TOUCH_WALL;
       //  fixtureA->SetFilterData(destroyObjects);
         fixtureB->SetFilterData(destroyObjects);
+    }
 
-
+    //      if rope collided with wall
+//      A - wall, B - ball
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+            fixtureB->GetFilterData().groupIndex == BALL_FILTER)
+    {
+        b2Filter tileFilter;
+        tileFilter.groupIndex = TILE;
+        //  fixtureA->SetFilterData(destroyObjects);
+        fixtureB->SetFilterData(tileFilter);
     }
 }

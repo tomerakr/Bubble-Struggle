@@ -13,7 +13,7 @@ class Board;
 class Ball
 {
 public:
-	Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, int index = 0);
+	Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, int index = 0, bool special = false);
 	Ball(const sf::Vector2f& pos, int index = 0, int direction = 1, int indentaion = 0);
 	//Ball(const Ball&) = delete;
 	//void operator=(const Ball&) = delete;
@@ -66,11 +66,15 @@ private:
 	bool m_popped = false;
 	bool m_destroy = false;
 	bool m_hadChild = false;
+	bool m_splittable = true;			// if the ball currently splittable
+	bool m_special = false;				// if the ball can be unsplittable
 	int m_index;
 	int m_direction;
 	Board* m_board;
 
 	b2CircleShape m_ball2D;
 	b2Body* m_body;
+
+	void resetFilter();
 };
 
