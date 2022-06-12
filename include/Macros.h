@@ -119,6 +119,7 @@ struct gameInfo
 	receiveInfo _receive;
 	bool _newGame;
 	int _skinIndex;
+	bool _host;
 };
 
 struct gameInput

@@ -124,7 +124,7 @@ void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Help)].isPressed(mousePos))
 	{
-		
+		m_info._host = true;
 	}
 	if (clickSound)
 	{

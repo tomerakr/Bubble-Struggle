@@ -33,7 +33,7 @@ void GameScreen::game(const gameInfo& info)
 
 	m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex });
 	m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
-	m_bears.back().setHost();
+	if (info._host) m_bears.back().setHost();
 	//
 	//m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 	//m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
