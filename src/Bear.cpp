@@ -3,7 +3,7 @@
 #include "PcInput.h"
 #include "OnlineInput.h"
 
-constexpr int NUM_OF_BEARS_IN_ROW = 6;
+constexpr int NUM_OF_BEARS_IN_ROW = 10;
 
 Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHeight), Objects::Bears),
