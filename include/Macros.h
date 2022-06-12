@@ -20,17 +20,17 @@ constexpr int RIGHT = 1;
 constexpr int LEFT = -1;
 
 constexpr int BALL_FILTER = -1;
-constexpr int ROPE_FILTER = -4;
+constexpr int ROPE_FILTER = -4;					// filter for regular rope
 constexpr int POPPED_BALL_FILTER = -5;
 constexpr int BEAR_FILTER = -6;
 constexpr int TILE = -7;
 //constexpr int CEILING = -14;
-//constexpr int TOUCH_WALL = -8;
 constexpr int TOUCH_BEAR = -9;
 constexpr int GIFT_FREEZE_FILTER = -10;
 constexpr int GIFT_DOUBLE_SHOT_FILTER = -11;
 constexpr int GIFT_LIFE_FILTER = -12;
 constexpr int GIFT_SHIELD_FILTER = -13;
+constexpr int ROPE_TOUCH_WALL = -14;			// filter for frozen rope
 
 //---------------------------------------------------------
 enum class Objects

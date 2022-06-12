@@ -25,6 +25,8 @@ public:
 	void createNormal();
 	void createSurvival();
 	b2World* getWorld() { return m_world.get(); }
+	int getNumBalls() const { return m_balls.size(); }
+	void incLevel();
 
 	//=======================================
 	void SetDebugDraw(DebugDraw* d)

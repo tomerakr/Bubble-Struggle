@@ -105,6 +105,7 @@ Screen GameScreen::playNormal()
 		}
 	}
 	update(deltaTime.asSeconds());
+
 	return screen;
 }
 
@@ -173,6 +174,12 @@ void GameScreen::update(float deltaTime)
 	}
 	m_bar.update(m_bears);
 	m_board.update();
+
+//		if no balls left, proceed to next level
+	if (m_board.getNumBalls() < 1)
+	{
+		m_board.incLevel();
+	}
 }
 
 void GameScreen::updateSurvival(float deltaTime)

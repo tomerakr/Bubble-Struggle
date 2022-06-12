@@ -155,3 +155,12 @@ void Board::addGift(const sf::Vector2f position)
 		m_gifts.emplace_back(Gift(position, this, giftType));
 	}
 }
+
+void Board::incLevel()
+{
+	++m_currLevel;
+
+	reset();
+
+	setLevel();
+}

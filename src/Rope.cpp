@@ -44,11 +44,15 @@ void Rope::update()
 		m_board->addGift(sf::Vector2f(m_pos.x, m_pos.y + m_icon.getSize().y));
 		destroy();
 	}
-	else if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == TILE)   
+	else if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == ROPE_TOUCH_WALL)
 	{
 		if (!m_freeze)
 		{
 			destroy();
+		}
+		else 
+		{
+			m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0);
 		}
 	}
 
