@@ -1,10 +1,12 @@
 #include "Board.h"
 #include "Controller.h"
+#include <time.h>
 
 Board::Board()
 	:m_currLevel(1)
 {
 	setWorld();
+	srand(time(NULL));
 }
 
 void Board::setWorld()
@@ -85,12 +87,11 @@ void Board::draw(sf::RenderWindow& window)
 	}
 
 	//------- BOX2D VIEWER -------
-	
-	DebugDraw d(window);
-	uint32 flags = b2Draw::e_shapeBit;
-	d.SetFlags(flags);
-	m_world->SetDebugDraw(&d);
-	m_world->DebugDraw();
+	//DebugDraw d(window);
+	//uint32 flags = b2Draw::e_shapeBit;
+	//d.SetFlags(flags);
+	//m_world->SetDebugDraw(&d);
+	//m_world->DebugDraw();
 }
 
 void Board::update()
@@ -118,39 +119,39 @@ void Board::update()
 	std::erase_if(m_gifts, [](auto& gift) { return gift.getIsDone(); });
 }
 
+void Board::clear()
+{
+	for (auto& tile : m_baseTiles)
+	{
+		tile.destroyBody();
+	}
+	m_baseTiles.clear();
+	reset();
+}
+
 void Board::reset()
 {
 	for (auto& tile : m_tiles)
 	{
 		tile.destroyBody();
 	}
-	for (auto& tile : m_baseTiles)
-	{
-		tile.destroyBody();
-	}
 	for (auto& ball : m_balls)
 	{
 		ball.destroyBody();
 	}
+	for (auto& gift : m_gifts)
+	{
+		gift.destroyBody();
+	}
 
+	m_gifts.clear();
 	m_balls.clear();
-	m_baseTiles.clear();
 	m_tiles.clear();
 }
 
 void Board::resetLevel()
 {
-	for (auto& tile : m_tiles)
-	{
-		tile.destroyBody();
-	}
-	for (auto& ball : m_balls)
-	{
-		ball.destroyBody();
-	}
-
-	m_balls.clear();
-	m_tiles.clear();
+	reset();
 	setLevel();
 }
 
@@ -163,7 +164,7 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 
 void Board::addGift(const sf::Vector2f position)
 {
-	auto addGift = rand() % 1; //chances to get gift is 1 to 14
+	auto addGift = rand() % 1;// CHANCE_OF_GIFT; //chances to get gift is 1 to 14
 
 	auto giftType = rand() % static_cast<int>(giftTypes::MAX);
 	if (!addGift)
@@ -172,11 +173,9 @@ void Board::addGift(const sf::Vector2f position)
 	}
 }
 
-void Board::incLevel()
+void Board::nextLevel()
 {
 	++m_currLevel;
-
-	reset();
-
+	resetLevel();
 	setLevel();
 }

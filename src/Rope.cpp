@@ -33,7 +33,6 @@ void Rope::setFixture(const b2Vec2& size)
 	fixtureDef.filter.groupIndex = ROPE_FILTER; 
 
 	m_box2DRope->CreateFixture(&fixtureDef);
-
 }
 
 void Rope::update()
@@ -46,29 +45,35 @@ void Rope::update()
 	}
 	else if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == ROPE_TOUCH_WALL)
 	{
-		if (!m_freeze)
-		{
-			//destroy();
-		}
-		else 
-		{
-			m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0);
-		}
-	}
+		(!m_freeze ? destroy() : m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0));
 
+		//if (!m_freeze)
+		//{
+		//	destroy();
+		//}
+		//else 
+		//{
+		//	m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0);
+		//}
+	}
 	else
 	{
-		m_icon.setSize(sf::Vector2f(m_icon.getSize().x, m_icon.getSize().y - ropeHeightChange)); // make rope longer
-		m_box2DRope->DestroyFixture(m_box2DRope->GetFixtureList());
-		m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0);
-		setFixture(b2Vec2(m_icon.getSize().x / 2, -m_icon.getSize().y / 2));
-
-		auto textureSize = m_icon.getTexture()->getSize();
-		auto reletiveSize = (m_icon.getSize().y / maxRopeHeight) * textureSize.y;
-		//texture index range: 0 - 3
-		m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * m_ropeIndex, 0, 
-			textureSize.x / static_cast<int>(bearTypes::MAX), reletiveSize));
+		growRope();
 	}
+}
+
+void Rope::growRope()
+{
+	m_icon.setSize(sf::Vector2f(m_icon.getSize().x, m_icon.getSize().y - ropeHeightChange)); // make rope longer
+	m_box2DRope->DestroyFixture(m_box2DRope->GetFixtureList());
+	m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0);
+	setFixture(b2Vec2(m_icon.getSize().x / 2, -m_icon.getSize().y / 2));
+
+	auto textureSize = m_icon.getTexture()->getSize();
+	auto reletiveSize = (m_icon.getSize().y / maxRopeHeight) * textureSize.y;
+	//texture index range: 0 - 3
+	m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * m_ropeIndex, 0,
+		textureSize.x / static_cast<int>(bearTypes::MAX), reletiveSize));
 }
 
 void Rope::destroy()

@@ -54,10 +54,7 @@ bool Gift::getIsDone() const
     return m_isDone;
 }
 
-//Gift::~Gift()
-//{
-//    if (m_body != nullptr)
-//    {
-//        m_board->getWorld()->DestroyBody(m_body);
-//    }
-//}
+void Gift::destroyBody()
+{
+    m_board->getWorld()->DestroyBody(m_body);
+}

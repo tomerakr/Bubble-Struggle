@@ -25,7 +25,7 @@ void ContactListener::BeginContact(b2Contact* contact)
     }
 
 //      if ball collided with bear
-//      A - bear, B - rope
+//      A - bear, B - ball
     else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
             fixtureB->GetFilterData().groupIndex == BALL_FILTER)
     {
@@ -36,9 +36,7 @@ void ContactListener::BeginContact(b2Contact* contact)
 
 //      if bear collided with freeze gift
 //      A - bear, B - bear
-    else if (fixtureA->GetFilterData().groupIndex == FREEZE_FILTER &&
-            fixtureB->GetFilterData().groupIndex == BEAR_FILTER ||
-        fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
+    else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
         fixtureB->GetFilterData().groupIndex == FREEZE_FILTER)
     {
         b2Filter freezeGift;
@@ -64,7 +62,7 @@ void ContactListener::BeginContact(b2Contact* contact)
     }
 
 //      if bear collided with life gift
-//      A - gift, B - bear
+//      A - bear, B - bear
     else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
         fixtureB->GetFilterData().groupIndex == LIFE_FILTER)
     {
@@ -78,7 +76,7 @@ void ContactListener::BeginContact(b2Contact* contact)
     }
 
 //      if bear collided with shield gift
-//      A - gift, B - bear
+//      A - bear, B - bear
     else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
         fixtureB->GetFilterData().groupIndex == SHIELD_FILTER) 
     {
@@ -98,7 +96,6 @@ void ContactListener::BeginContact(b2Contact* contact)
     {
         b2Filter destroyObjects;
         destroyObjects.groupIndex = ROPE_TOUCH_WALL;
-      //  fixtureA->SetFilterData(destroyObjects);
         fixtureB->SetFilterData(destroyObjects);
     }
 
@@ -107,9 +104,9 @@ void ContactListener::BeginContact(b2Contact* contact)
     else if (fixtureA->GetFilterData().groupIndex == TILE &&
             fixtureB->GetFilterData().groupIndex == BALL_FILTER)
     {
-        b2Filter tileFilter;
-        tileFilter.groupIndex = TILE;
-        //  fixtureA->SetFilterData(destroyObjects);
-        fixtureB->SetFilterData(tileFilter);
+        //b2Filter tileFilter;
+        //tileFilter.groupIndex = TILE;
+        ////  fixtureA->SetFilterData(destroyObjects);
+        //fixtureB->SetFilterData(tileFilter);
     }
 }

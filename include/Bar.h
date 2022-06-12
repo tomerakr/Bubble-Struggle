@@ -10,7 +10,7 @@ class Bar
 {
 public:
 	Bar();
-	void setText(sf::Text &text, unsigned size, sf::Vector2f pos);
+	void setText(sf::Text &text, unsigned size, sf::Vector2f pos = sf::Vector2f(0, 0));
 	void setBackgroud();
 	void setBar(float time, const gameInfo& info);
 	void setBearInfo(const gameInfo& info, Objects texture, sf::RectangleShape &elements, sf::Vector2f size, int index);

@@ -16,7 +16,7 @@ public:
 	//~Gift();
 
 	void update();
-
+	void destroyBody();
 	bool getIsDone() const;
 
 protected:
@@ -26,5 +26,5 @@ protected:
 	Timer m_timer = Timer(giftTimer);
 
 	bool m_isDone = false;
-	int m_filters[static_cast<int>(giftTypes::MAX)] = { FREEZE_FILTER, DOUBLE_SHOT_FILTER, LIFE_FILTER, SHIELD_FILTER, TIME_FILTER };
+	int m_filters[static_cast<int>(giftTypes::MAX)] = { FREEZE_FILTER, SHIELD_FILTER, TIME_FILTER, LIFE_FILTER, DOUBLE_SHOT_FILTER };
 };

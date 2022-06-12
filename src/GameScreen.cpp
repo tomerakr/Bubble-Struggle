@@ -178,7 +178,7 @@ void GameScreen::update(float deltaTime)
 //		if no balls left, proceed to next level
 	if (m_board.getNumBalls() < 1)
 	{
-		m_board.incLevel();
+		m_board.nextLevel();
 	}
 }
 
@@ -338,13 +338,9 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 	auto bearRight = bearX - m_points.second;
 
 	auto leftViewSize = sf::Vector2f(windowWidth - (bearLeft > 0 ? bearLeft : 0), windowHeight - barHeight);
-	//if (bearX <= -windowWidth / 2 + bearWitdh / 2) 
-	//	leftViewSize.x = 0;
 	auto leftViewPos = sf::Vector2f(((bearLeft > 0 || bearRight > 0 ? 0 : bearX - m_points.first)), 0);
 
 	auto rightViewSize = sf::Vector2f((bearLeft > 0 ? windowWidth - leftViewSize.x : windowWidth - (bearRight > 0 ? bearRight : 0)), windowHeight - barHeight);
-	//if (bearX >= SurvivalWidth + windowWidth / 2 - bearWitdh / 2)
-	//	rightViewSize.x = 0;
 	auto rightViewPos = sf::Vector2f(bearX + (bearLeft > 0 ? m_points.second : -m_points.first), 0);
 
 	if (bearRight > 0) leftViewSize.x = windowWidth - rightViewSize.x;
@@ -360,16 +356,6 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 	rightView.setViewport({ 0.f, 0.f, firstSizeX / windowWidth,  windowPortion });
 	leftView.setViewport({ firstSizeX / windowWidth, 0.f, secondSizeX / windowWidth, windowPortion });
 
-	//if (bearLeft > 0 || bearRight > 0)
-	//{
-	//	rightView.setViewport({ 0.f, 0.f, rightViewSize.x / windowWidth,  windowPortion });
-	//	leftView.setViewport({ rightViewSize.x / windowWidth, 0.f, leftViewSize.x / windowWidth, windowPortion });
-	//}
-	//else
-	//{
-	//	leftView.setViewport({ 0.f, 0.f, leftViewSize.x / windowWidth, windowPortion });
-	//	rightView.setViewport({ leftViewSize.x / windowWidth, 0.f, rightViewSize.x / windowWidth, windowPortion });
-	//}
 }
 
 void GameScreen::clear()
@@ -384,5 +370,5 @@ void GameScreen::clear()
 	}
 	m_bears.clear();
 	m_dummyBears.clear();
-	m_board.reset();
+	m_board.clear();
 }

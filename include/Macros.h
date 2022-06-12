@@ -18,6 +18,7 @@ constexpr int giftTimer = 3;
 constexpr int EPSILON = 5;
 constexpr int RIGHT = 1;
 constexpr int LEFT = -1;
+constexpr int CHANCE_OF_GIFT = 14;
 
 constexpr int BALL_FILTER = -1;
 constexpr int ROPE_FILTER = -2;
@@ -26,10 +27,11 @@ constexpr int BEAR_FILTER = -4;
 constexpr int TILE = -5;
 constexpr int TOUCH_BEAR = -6;
 constexpr int FREEZE_FILTER = -7;
-constexpr int DOUBLE_SHOT_FILTER = -8;
-constexpr int LIFE_FILTER = -9;
-constexpr int SHIELD_FILTER = -10;
-constexpr int TIME_FILTER = -11;
+constexpr int SHIELD_FILTER = -8;
+constexpr int TIME_FILTER = -9;
+constexpr int LIFE_FILTER = -10;
+constexpr int DOUBLE_SHOT_FILTER = -11;
+constexpr int ROPE_TOUCH_WALL = -12;
 
 //---------------------------------------------------------
 enum class Objects

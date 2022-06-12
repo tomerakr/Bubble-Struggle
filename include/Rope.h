@@ -16,6 +16,7 @@ public:
 private:
 	void setFixture(const b2Vec2& size);
 	void destroy();
+	void growRope();
 
 	bool m_freeze = false;
 	bool m_done = false;
