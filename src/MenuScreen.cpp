@@ -14,6 +14,7 @@ MenuScreen::MenuScreen(Controller* ctrl, int numOfLevels)
 	//texture index range: 0 - 3
 	m_background.setTextureRect(sf::IntRect(0, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 	m_info._skinIndex = 0;
+	m_info._host = false;
 }
 
 void MenuScreen::createButton()
@@ -194,9 +195,9 @@ void MenuScreen::connectionPress(const sf::Vector2f& mousePos)
 	else if (m_buttons[m_wantedMenu][int(buttonNames::Online)].isPressed(mousePos))
 	{
 		m_info._receive = receiveInfo::Online;
-		//m_info._screen = Screen::game;
-		//m_info._newGame = true;
-		m_wantedMenu = static_cast<int>(menuNames::connectionType);
+		m_info._screen = Screen::game;
+		m_info._newGame = true;
+		//m_wantedMenu = static_cast<int>(menuNames::connectionType);
 		clickSound = true;
 	}
 	if (clickSound)
