@@ -59,7 +59,6 @@ void GameScreen::game(const gameInfo& info)
 
 	m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex });
 	m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
-	if (info._host) m_bears.back().setHost();
 	
 	m_board.pickLevel(info._level);
 	
@@ -68,6 +67,7 @@ void GameScreen::game(const gameInfo& info)
 		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 		m_bears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
 	}
+	if (info._host) m_bears.back().setHost();
 	textureIndex = info._skinIndex;
 
 	auto textureSize = sf::Vector2u();
