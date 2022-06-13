@@ -23,6 +23,32 @@ GameScreen::GameScreen(Controller* ctrl)
 	m_points.second = SurvivalWidth - m_points.first;
 }
 
+Screen GameScreen::gamePlay(gameInfo& info)
+{
+	if (info._newGame)
+	{
+		game(info);
+		m_bar.setBar(40, info); //getLevel Time
+		info._newGame = false;
+	}
+	auto screen = Screen::game;
+	switch (info._mode)
+	{
+	case gameMode::Normal:
+		screen = playNormal();
+		break;
+
+	case gameMode::Survival:
+		screen = playSurvival();
+		break;
+
+	default:
+		break;
+	}
+
+	return screen;
+}
+
 void GameScreen::game(const gameInfo& info)
 {
 	clear();
@@ -34,10 +60,10 @@ void GameScreen::game(const gameInfo& info)
 	m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex });
 	m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
 	if (info._host) m_bears.back().setHost();
-	//
-	//m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex++ % static_cast<int>(bearTypes::MAX) });
+	
+	//m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers + SurvivalWidth, yPos), &m_board, receiveInfo::Solo, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 	//m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
-
+	
 	for (int i = info._numOfPlayers - 1; i > 0; --i)
 	{
 		m_bears.emplace_back(Bear{sf::Vector2f(xPos * i, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
@@ -109,6 +135,39 @@ Screen GameScreen::playNormal()
 	return screen;
 }
 
+void GameScreen::update(float deltaTime)
+{
+	auto otherBear = std::make_pair(sf::Vector2f(), false);
+	for (auto& bear : m_bears)
+	{
+		otherBear = bear.update(deltaTime, otherBear);
+	}
+	m_bar.update(m_bears);
+	m_board.update();
+
+	//if no balls left, proceed to next level
+	if (m_board.getNumBalls() == 0)
+	{
+		m_board.nextLevel();
+	}
+}
+
+void GameScreen::drawNormal()
+{
+	auto& window = m_controller->getWindow();
+	window.clear(sf::Color::White);
+
+	for (auto& bear : m_bears)
+	{
+		bear.drawRopes(window);
+		bear.draw(window);
+	}
+	m_board.draw(window);
+	m_bar.draw(window, m_bears);
+
+	window.display();
+}
+
 Screen GameScreen::playSurvival()
 {
 	auto screen = Screen::game;
@@ -139,49 +198,6 @@ Screen GameScreen::playSurvival()
 	return screen;
 }
 
-Screen GameScreen::gamePlay(gameInfo& info)
-{
-	if (info._newGame)
-	{
-		game(info);
-		m_bar.setBar(40, info); //getLevel Time
-		info._newGame = false;
-	}
-	auto screen = Screen::game;
-	switch (info._mode)
-	{
-	case gameMode::Normal:
-		screen = playNormal();
-		break;
-
-	case gameMode::Survival:
-		screen = playSurvival();
-		break;
-
-	default:
-		break;
-	}
-
-	return screen;
-}
-
-void GameScreen::update(float deltaTime)
-{
-	auto otherBear = std::make_pair(sf::Vector2f(), false);
-	for (auto& bear : m_bears)
-	{
-		otherBear = bear.update(deltaTime, otherBear);
-	}
-	m_bar.update(m_bears);
-	m_board.update();
-
-	//if no balls left, proceed to next level
-	if (m_board.getNumBalls() == 0)
-	{
-		m_board.nextLevel();
-	}
-}
-
 void GameScreen::updateSurvival(float deltaTime)
 {
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
@@ -196,12 +212,12 @@ void GameScreen::updateSurvival(float deltaTime)
 
 	updateBearSurvivalPosition();
 	updateBallSurvivalPosition();
-	addBalls(deltaTime);
+	addBallsSurvival(deltaTime);
 	m_bar.update(m_bears);
 	m_board.update();
 }
 
-void GameScreen::addBalls(float deltaTime)
+void GameScreen::addBallsSurvival(float deltaTime)
 {
 	m_totalTime += deltaTime;
 
@@ -270,22 +286,6 @@ Screen GameScreen::handleKeyboard()
 	return Screen::game;
 }
 
-void GameScreen::drawNormal()
-{
-	auto& window = m_controller->getWindow();
-	window.clear(sf::Color::White);
-
-	for (auto& bear : m_bears)
-	{
-		bear.drawRopes(window);
-		bear.draw(window);
-	}
-	m_board.draw(window);
-	m_bar.draw(window, m_bears);
-
-	window.display();
-}
-
 void GameScreen::drawSurvival()
 {
 	auto& window = m_controller->getWindow();
@@ -304,30 +304,13 @@ void GameScreen::drawSurvival()
 	m_bar.draw(window, m_bears);
 
 	//================ M I N I - M A P ================
-	//auto miniMapView = sf::View(sf::FloatRect(0, 0, windowWidth * 4, windowHeight - barHeight));
-	//miniMapView.setViewport({ 0.4f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
+	//auto miniMapView = sf::View(sf::FloatRect(-SurvivalWidth, 0, SurvivalWidth * 3, windowHeight - barHeight));
+	//miniMapView.setViewport({ 0.2f, barHeight / static_cast<float>(windowHeight), 0.6, 0.3 });
 	//draw(window, miniMapView);
 	//=================================================
 
 	window.setView(sf::View(sf::FloatRect(0.f, 0.f, windowWidth, windowHeight)));
 	window.display();
-}
-
-void GameScreen::draw(sf::RenderWindow& window, sf::View& view)
-{
-	window.setView(view);
-	for (auto& bear : m_bears)
-	{
-		bear.drawRopes(window);
-		bear.draw(window);
-	}
-	for (auto& bear : m_dummyBears)
-	{
-		bear.drawRopes(window);
-		bear.draw(window);
-	}
-	m_board.draw(window);
-	m_bar.draw(window, m_bears);
 }
 
 void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
@@ -356,6 +339,23 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 	rightView.setViewport({ 0.f, 0.f, firstSizeX / windowWidth,  windowPortion });
 	leftView.setViewport({ firstSizeX / windowWidth, 0.f, secondSizeX / windowWidth, windowPortion });
 
+}
+
+void GameScreen::draw(sf::RenderWindow& window, sf::View& view)
+{
+	window.setView(view);
+	for (auto& bear : m_bears)
+	{
+		bear.drawRopes(window);
+		bear.draw(window);
+	}
+	for (auto& bear : m_dummyBears)
+	{
+		bear.drawRopes(window);
+		bear.draw(window);
+	}
+	m_board.draw(window);
+	m_bar.draw(window, m_bears);
 }
 
 void GameScreen::clear()

@@ -30,7 +30,7 @@ private:
 	void drawNormal();
 
 	void updateSurvival(float deltaTime);
-	void addBalls(float deltaTime);
+	void addBallsSurvival(float deltaTime);
 	void drawSurvival();
 	void updateBearSurvivalPosition();
 	void updateBallSurvivalPosition();
