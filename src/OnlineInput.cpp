@@ -1,9 +1,9 @@
 #include "OnlineInput.h"
 #include <iostream>
 
-sf::TcpSocket socket;
-sf::TcpListener listener;
-sf::SocketSelector m_socketSelector;
+//sf::TcpSocket socket;
+//sf::TcpListener listener;
+//sf::SocketSelector m_socketSelector;
 
 OnlineInput::OnlineInput()
 {}
@@ -12,7 +12,7 @@ std::pair<sf::Vector2f, bool> OnlineInput::getInput(gameInput input)
 {
 	sf::Packet info;
 
-	(input._host ? client(input, info) : server(input, info));
+	(input._host ? server(input, info) : client(input, info));
 
 	//if (input._host)
 	//{
@@ -29,7 +29,6 @@ std::pair<sf::Vector2f, bool> OnlineInput::getInput(gameInput input)
 	//		server(input, info);
 	//}
 
-	
 	auto xDir = 0.f, yDir = 0.f;
 	auto shoot = false;
 	info >> xDir >> yDir >> shoot;
@@ -45,16 +44,15 @@ void OnlineInput::server(gameInput input, sf::Packet& info)
 		sf::TcpListener listenr;
 		listenr.listen(m_remotePort);
 		std::cout << "found a client\n";
-		sf::TcpSocket socket;
-		listenr.accept(socket);
+		listenr.accept(m_socket);
 		m_connected = true;
 	}
 	
-	socket.receive(info);
+	m_socket.receive(info);
 	auto temp = info;
 	info.clear();
 	info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
-	socket.send(info);
+	m_socket.send(info);
 	info = temp;
 
 	//sf::TcpListener listener;
@@ -82,9 +80,9 @@ void OnlineInput::client(gameInput input, sf::Packet& info)
 		m_connected = true;
 	}
 	info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
-	socket.send(info);
+	m_socket.send(info);
 	info.clear();
-	socket.receive(info);
+	m_socket.receive(info);
 
 	////sf::TcpSocket socket;
 	//socket.connect(sf::IpAddress::getLocalAddress(), 44008);
