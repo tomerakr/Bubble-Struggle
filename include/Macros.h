@@ -120,6 +120,7 @@ struct gameInfo
 	bool _newGame;
 	int _skinIndex;
 	bool _host;
+	int _level;
 };
 
 struct gameInput

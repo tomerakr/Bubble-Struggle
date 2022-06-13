@@ -26,6 +26,7 @@ public:
 	void createSurvival();
 	b2World* getWorld() { return m_world.get(); }
 	int getNumBalls() const { return m_balls.size(); }
+	void pickLevel(int level) { m_currLevel = level; }
 	void nextLevel();
 	void reset();
 	void resetLevel();

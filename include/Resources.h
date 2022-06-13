@@ -12,9 +12,9 @@ public:
 
 	sf::Texture* getObjectTexture(const Objects texture);
 	
-	sf::Color& getColor(const int index) { return m_colors[index]; }
-	sf::Font* getFont() { return &m_font; }
-
+	sf::Color& getColor(const int index){ return m_colors[index]; }
+	sf::Font* getFont()					{ return &m_font; }
+	int getNumOfLevels()				{ return m_levels.size(); }
 	std::string getLevelName(int index);
 
 	void playSound(const Sound& sound);

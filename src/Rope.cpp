@@ -35,13 +35,14 @@ void Rope::setFixture(const b2Vec2& size)
 	m_box2DRope->CreateFixture(&fixtureDef);
 }
 
-void Rope::update()
+bool Rope::update()
 {
 //		if rope collided with ball destroy rope 
 	if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)		
 	{
 		m_board->addGift(sf::Vector2f(m_pos.x, m_pos.y + m_icon.getSize().y));
 		destroy();
+		return true;
 	}
 	else if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == ROPE_TOUCH_WALL)
 	{
@@ -49,7 +50,7 @@ void Rope::update()
 
 		//if (!m_freeze)
 		//{
-		//	destroy();
+		//	//destroy();
 		//}
 		//else 
 		//{
@@ -60,6 +61,7 @@ void Rope::update()
 	{
 		growRope();
 	}
+	return false;
 }
 
 void Rope::growRope()
