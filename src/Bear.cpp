@@ -3,7 +3,7 @@
 #include "PcInput.h"
 #include "OnlineInput.h"
 
-constexpr int NUM_OF_BEARS_IN_ROW = 6;
+constexpr int NUM_OF_BEARS_IN_ROW = 9;
 constexpr int maxPoints = 80;
 constexpr int minPoints = 30 ;
 

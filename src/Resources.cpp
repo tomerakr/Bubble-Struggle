@@ -81,7 +81,7 @@ void Resources::readLevelsNames()
 
 std::string Resources::getLevelName(int index)
 {
-	return m_levels[static_cast<std::vector<std::string, std::allocator<std::string>>::size_type>(index) - 1];
+	return m_levels[static_cast<std::vector<std::string, std::allocator<std::string>>::size_type>(index)];
 }
 
 void Resources::playSound(const Sound& sound)

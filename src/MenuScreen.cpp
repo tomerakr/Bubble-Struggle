@@ -1,11 +1,12 @@
 #include "MenuScreen.h"
 #include "Controller.h"
 
-constexpr int maxButtonInMenu = 5; //change to function
+constexpr int maxButtonInMenu = 6;
 
-MenuScreen::MenuScreen(Controller* ctrl)
+MenuScreen::MenuScreen(Controller* ctrl, int numOfLevels)
 	:m_controller(ctrl)
 {
+	createLevels(numOfLevels);
 	createButton();
 	m_background.setSize(sf::Vector2f(windowWidth, windowHeight));
 	m_background.setTexture(Resources::instance().getObjectTexture(Objects::Backgrounds));
@@ -34,10 +35,11 @@ void MenuScreen::createButton()
 }
 
 //============ O R D E R  FOR  M E N U ============
-// Normal		->	Solo
-// Survival		->	Duo		->	Online || Same PC
+// Normal		->	chooseLevel	->	(Solo || Duo)	->	(Online -> Host || Connect) || Same PC
+// Survival
 // Create Level
 // Help
+// Settings		->	sound || music || size
 // Exit
 
 gameInfo MenuScreen::menu()
@@ -82,6 +84,10 @@ gameInfo MenuScreen::handlePress(const sf::Vector2f& mousePos)
 		mainMenuPress(mousePos);
 		break;
 
+	case static_cast<int>(levels):
+		chooseLevel(mousePos);
+		break;
+
 	case static_cast<int>(numOfPlayers):
 		numOfPlayersPress(mousePos);
 		break;
@@ -108,13 +114,16 @@ void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
 	if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Normal)].isPressed(mousePos))
 	{
 		m_info._mode = gameMode::Normal;
-		m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
+		m_wantedMenu = static_cast<int>(menuNames::levels);
+		m_chooseLevel = true;
 		clickSound = true;
 	}
 	else if(m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Survival)].isPressed(mousePos))
 	{
 		m_info._mode = gameMode::Survival;
-		m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
+		m_info._numOfPlayers = 1;
+		m_info._receive = receiveInfo::Solo;
+		m_info._screen = Screen::game;
 		clickSound = true;
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::CreateLevel)].isPressed(mousePos))
@@ -129,6 +138,20 @@ void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
 	if (clickSound)
 	{
 		Resources::instance().playSound(Sound::click);
+	}
+}
+
+void MenuScreen::chooseLevel(const sf::Vector2f& mousePos)
+{
+	for (int i = 0; i < m_levels.size(); ++i)
+	{
+		if (m_levels[i].isPressed(mousePos))
+		{
+			m_info._level = i;
+			m_chooseLevel = false;
+			m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
+			break;
+		}
 	}
 }
 
@@ -147,6 +170,7 @@ void MenuScreen::numOfPlayersPress(const sf::Vector2f& mousePos)
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Duo)].isPressed(mousePos))
 	{
 		m_info._numOfPlayers = 2;
+		m_info._newGame = true;
 		m_wantedMenu = static_cast<int>(menuNames::connection);
 		clickSound = true;
 	}
@@ -170,9 +194,9 @@ void MenuScreen::connectionPress(const sf::Vector2f& mousePos)
 	else if (m_buttons[m_wantedMenu][int(buttonNames::Online)].isPressed(mousePos))
 	{
 		m_info._receive = receiveInfo::Online;
-		m_info._screen = Screen::game;
-		m_info._newGame = true;
-		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
+		//m_info._screen = Screen::game;
+		//m_info._newGame = true;
+		m_wantedMenu = static_cast<int>(menuNames::connectionType);
 		clickSound = true;
 	}
 	if (clickSound)
@@ -213,6 +237,11 @@ void MenuScreen::handleKeyboard()
 		//texture index range: 0 - 3
 		m_background.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * m_info._skinIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
+		m_chooseLevel = false;
+	}
 }
 
 void MenuScreen::draw()
@@ -220,9 +249,41 @@ void MenuScreen::draw()
 	auto& window = m_controller->getWindow();
 	window.draw(m_background);
 
-	for (auto& button : m_buttons[m_wantedMenu])
+	if (m_chooseLevel)
 	{
-		button.draw(window);
+		for (auto& levelButton : m_levels)
+		{
+			levelButton.draw(window);
+		}
 	}
+	else
+	{
+		for (auto& button : m_buttons[m_wantedMenu])
+		{
+			button.draw(window);
+		}
+	}
+	
 	window.display();
+}
+
+constexpr int NUM_OF_LEVELS_IN_ROW = 5;
+constexpr int buttonLevelSize = 100;
+
+void MenuScreen::createLevels(int numOfLevels)
+{
+	auto row = 0;
+	auto col = 1;
+	m_levels.reserve(numOfLevels);
+	for (int i = 0; i < numOfLevels; ++i, ++col)
+	{
+		const auto& pos = sf::Vector2f((windowWidth / ((13 / 8.f) * NUM_OF_LEVELS_IN_ROW)) * col,
+			windowHeight / 3 + row * (5 / 4.f) * buttonLevelSize);
+		m_levels.emplace_back(pos, sf::Vector2f(buttonLevelSize, buttonLevelSize), Objects::Button, std::to_string(i + 1));
+		if (i % NUM_OF_LEVELS_IN_ROW == 0 && i > 0)
+		{
+			++row;
+			col = 0;
+		}
+	}
 }

@@ -2,7 +2,7 @@
 #include "Resources.h"
 
 Controller::Controller()
-	: m_menu(this), m_game(this),
+	: m_menu(this, Resources::instance().getNumOfLevels()), m_game(this),
 	m_window(sf::VideoMode(windowWidth, windowHeight), "Bubble Trouble", sf::Style::Close | sf::Style::Titlebar)
 {
 	m_window.setFramerateLimit(maxFPS);

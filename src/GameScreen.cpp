@@ -61,8 +61,7 @@ void GameScreen::game(const gameInfo& info)
 	m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
 	if (info._host) m_bears.back().setHost();
 	
-	//m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers + SurvivalWidth, yPos), &m_board, receiveInfo::Solo, textureIndex++ % static_cast<int>(bearTypes::MAX) });
-	//m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
+	m_board.pickLevel(info._level);
 	
 	for (int i = info._numOfPlayers - 1; i > 0; --i)
 	{
