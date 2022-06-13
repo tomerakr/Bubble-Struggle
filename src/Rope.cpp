@@ -34,7 +34,7 @@ void Rope::setFixture(const b2Vec2& size)
 	//fixtureDef.userData.pointer(this);
 
 	m_box2DRope->CreateFixture(&fixtureDef);
-	m_box2DRope->SetUserData(this);
+	//m_box2DRope->SetUserData(this);
 }
 
 bool Rope::update()

@@ -7,5 +7,5 @@
 class GameObject
 {
 public:
-	virtual void draw() = 0;
+	virtual void draw(sf::RenderWindow& window) = 0;
 };

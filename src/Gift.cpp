@@ -5,7 +5,7 @@
 constexpr int giftSideSize = 50;
 
 Gift::Gift(const sf::Vector2f position, Board* board, int giftFilter)
-	:MovingObject(position, sf::Vector2f(giftSideSize, giftSideSize), Objects::Gifts), m_board(board)
+	:StaticObject(position, sf::Vector2f(giftSideSize, giftSideSize), Objects::Gifts), m_board(board)
 {
     auto textureSize = m_icon.getTexture()->getSize();
     //texture index range: 0 - 4

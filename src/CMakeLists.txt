@@ -1,6 +1,6 @@
 ﻿target_sources (${CMAKE_PROJECT_NAME} PRIVATE "main.cpp"
                                               "Animation.cpp"
-                                              "GameObject.cpp"
+                                              "RectangleObjects.cpp"
                                               "MovingObject.cpp"
                                               "Controller.cpp"
                                               "Bar.cpp"

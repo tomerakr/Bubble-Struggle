@@ -49,7 +49,7 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	fixtureDef.filter.groupIndex = BEAR_FILTER;
 	m_box2DBear->SetFixedRotation(true);
 	m_box2DBear->CreateFixture(&fixtureDef);
-	m_box2DBear->SetUserData(this);
+	//m_box2DBear->SetUserData(this);
 
 }
 

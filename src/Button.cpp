@@ -2,10 +2,9 @@
 #include "Resources.h"
 
 Button::Button(const sf::Vector2f& pos, const sf::Vector2f& size, Objects texture, const std::string& text)
-	:GameObject(pos, size, texture)
+	:RectangleObjects(pos, size, texture)
 {
-	auto iconSize = m_icon.getSize();
-	m_icon.setOrigin(iconSize.x / 2, iconSize.y / 2);
+	m_icon.setOrigin(size.x / 2, size.y / 2);
 	if (text.size() > 0)
 	{
 		setText(text);
