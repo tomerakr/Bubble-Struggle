@@ -4,6 +4,8 @@
 #include "OnlineInput.h"
 
 constexpr int NUM_OF_BEARS_IN_ROW = 6;
+constexpr int maxPoints = 80;
+constexpr int minPoints = 30 ;
 
 Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHeight), Objects::Bears),
@@ -107,7 +109,10 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 	auto pos = m_icon.getPosition();
 	auto size = m_icon.getSize();
 	m_box2DBear->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2), 0);
-	m_gun.update();
+	if (m_gun.update())
+	{
+		m_score += rand() % maxPoints + minPoints;
+	}
 
 	return std::make_pair(direction, shoot);
 }
