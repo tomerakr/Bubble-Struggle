@@ -1,11 +1,11 @@
 #pragma once
 
 #include <string>
-#include "GameObject.h"
+#include "RectangleObjects.h"
 
 constexpr int textSize = 25;
 
-class Button : public GameObject
+class Button : public RectangleObjects
 {
 public:
 	Button(const sf::Vector2f& pos, const sf::Vector2f& size, Objects texture = Objects::Button, const std::string& text = "");

@@ -10,6 +10,7 @@ clear.png
 save.png
 backgrounds.png
 bearHeads.png
+gameBackgrounds.png
 gifts.png
 survivalBackground.png
 barBackground.png

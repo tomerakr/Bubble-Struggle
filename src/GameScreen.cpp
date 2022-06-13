@@ -70,9 +70,18 @@ void GameScreen::game(const gameInfo& info)
 	}
 	textureIndex = info._skinIndex;
 
+	auto textureSize = sf::Vector2u();
+
 	switch (info._mode)
 	{
 	case gameMode::Normal:
+
+		m_background.setTexture(Resources::instance().getObjectTexture(Objects::GameBackground));
+		m_background.setSize(sf::Vector2f(windowWidth, windowHeight));
+		textureSize = m_background.getTexture()->getSize();
+		m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * rand() % numOfGameBackgrounds, 0,
+			textureSize.x / numOfGameBackgrounds, textureSize.y));
+
 		m_board.createNormal();
 		m_board.setLevel();
 		break;
@@ -148,6 +157,9 @@ void GameScreen::update(float deltaTime)
 	if (m_board.getNumBalls() == 0)
 	{
 		m_board.nextLevel();
+		auto textureSize = m_background.getTexture()->getSize();
+		m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * rand() % numOfGameBackgrounds, 0,
+			textureSize.x / numOfGameBackgrounds, textureSize.y));
 	}
 }
 
@@ -155,6 +167,7 @@ void GameScreen::drawNormal()
 {
 	auto& window = m_controller->getWindow();
 	window.clear(sf::Color::White);
+	window.draw(m_background);
 
 	for (auto& bear : m_bears)
 	{

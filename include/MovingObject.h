@@ -1,11 +1,11 @@
 #pragma once
 
-#include "GameObject.h"
+#include "RectangleObjects.h"
 
-class MovingObject : public GameObject
+class MovingObject : public RectangleObjects
 {
 public:
-	using GameObject::GameObject;
+	using RectangleObjects::RectangleObjects;
 	void move(float deltaTime, const sf::Vector2f& direction);
 
 private:

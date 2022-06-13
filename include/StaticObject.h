@@ -1,9 +1,9 @@
 #pragma once
 
-#include "GameObject.h"
+#include "RectangleObjects.h"
 
-class StaticObject : public GameObject
+class StaticObject : public RectangleObjects
 {
 public:
-	using GameObject::GameObject;
+	using RectangleObjects::RectangleObjects;
 };

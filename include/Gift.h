@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MovingObject.h"
+#include "StaticObject.h"
 #include "Macros.h"
 #include "box2d/box2d.h"
 #include "Timer.h"
@@ -8,12 +8,10 @@
 class Board;
 class Bear;
 
-class Gift : public MovingObject
+class Gift : public StaticObject
 {
 public:
 	Gift(const sf::Vector2f position, Board* board, int giftFilter);
-
-	//~Gift();
 
 	void update();
 	void destroyBody();

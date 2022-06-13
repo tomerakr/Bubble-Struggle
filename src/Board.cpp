@@ -87,11 +87,11 @@ void Board::draw(sf::RenderWindow& window)
 	}
 
 	//------- BOX2D VIEWER -------
-	//DebugDraw d(window);
-	//uint32 flags = b2Draw::e_shapeBit;
-	//d.SetFlags(flags);
-	//m_world->SetDebugDraw(&d);
-	//m_world->DebugDraw();
+	DebugDraw d(window);
+	uint32 flags = b2Draw::e_shapeBit;
+	d.SetFlags(flags);
+	m_world->SetDebugDraw(&d);
+	m_world->DebugDraw();
 }
 
 void Board::update()

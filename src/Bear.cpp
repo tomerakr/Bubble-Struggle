@@ -9,7 +9,7 @@ constexpr int minPoints = 30 ;
 
 Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHeight), Objects::Bears),
-	m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0), m_animation(sf::Vector2u(NUM_OF_BEARS_IN_ROW, static_cast<int>(bearTypes::MAX)), 0.09)
+	m_gun(textureIndex, board), m_board(board), m_lives(START_LIFE), m_score(0), m_animation(sf::Vector2u(NUM_OF_BEARS_IN_ROW, static_cast<int>(bearTypes::MAX)), 0.09)
 {
 	m_pos = pos;
 	m_animation.changeTexture(m_icon.getTexture(), textureIndex);
@@ -39,7 +39,6 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2);
-
 	m_box2DBear = m_board->getWorld()->CreateBody(&bodyDef);
 	b2PolygonShape bearRectangle;
 	bearRectangle.SetAsBox(m_icon.getSize().x / 2, m_icon.getSize().y / 2);
@@ -48,7 +47,10 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	fixtureDef.shape = &bearRectangle;
 	fixtureDef.density = 1;
 	fixtureDef.filter.groupIndex = BEAR_FILTER;
+	m_box2DBear->SetFixedRotation(true);
 	m_box2DBear->CreateFixture(&fixtureDef);
+	m_box2DBear->SetUserData(this);
+
 }
 
 std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
@@ -137,7 +139,7 @@ void Bear::setPos(const sf::Vector2f& pos)
 {
 	m_icon.setPosition(pos);
 	auto size = m_icon.getSize();
-	m_box2DBear->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2 - 1), 0);
+	m_box2DBear->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2), 0);
 }
 
 void Bear::destroyBody()

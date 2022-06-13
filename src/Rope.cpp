@@ -31,8 +31,10 @@ void Rope::setFixture(const b2Vec2& size)
 	fixtureDef.density = 1;
 	fixtureDef.friction = 0;
 	fixtureDef.filter.groupIndex = ROPE_FILTER; 
+	//fixtureDef.userData.pointer(this);
 
 	m_box2DRope->CreateFixture(&fixtureDef);
+	m_box2DRope->SetUserData(this);
 }
 
 bool Rope::update()

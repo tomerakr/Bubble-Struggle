@@ -18,6 +18,7 @@ constexpr int giftTimer = 3;
 constexpr int EPSILON = 5;
 constexpr int RIGHT = 1;
 constexpr int LEFT = -1;
+constexpr int numOfGameBackgrounds = 4;
 constexpr int CHANCE_OF_GIFT = 14;
 
 constexpr int BALL_FILTER = -1;
@@ -49,6 +50,7 @@ enum class Objects
 	SaveButton,
 	Backgrounds,
 	BearsHeads,
+	GameBackground,
 	Gifts,
 	SurvivalBackground,
 	BarBackground,
