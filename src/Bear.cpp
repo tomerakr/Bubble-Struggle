@@ -3,17 +3,16 @@
 #include "PcInput.h"
 #include "OnlineInput.h"
 
-constexpr int NUM_OF_BEARS_IN_ROW = 10;
+constexpr int NUM_OF_BEARS_IN_ROW = 9;
 
 Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHeight), Objects::Bears),
-	m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0), m_animation(sf::Vector2u(NUM_OF_BEARS_IN_ROW, 1/*num of bears*/), 0.09)
+	m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0), m_animation(sf::Vector2u(NUM_OF_BEARS_IN_ROW, 1/*static_cast<int>(bearTypes::MAX)*/), 0.09)
 {
 	m_pos = pos;
-	m_animation.changeTexture(m_icon.getTexture(), 0);
+	m_animation.changeTexture(m_icon.getTexture(), 0/*textureIndex*/);
 	//texture index range: 0 - 3
 	m_icon.setTextureRect(m_animation.getUvRect());
-	//m_icon.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * textureIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 
 	switch (readInput)
 	{
