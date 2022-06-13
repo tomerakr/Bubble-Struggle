@@ -12,7 +12,7 @@ void Animation::changeTexture(const sf::Texture* const texture, int row)
 {
 	m_uvRect.width = texture->getSize().x / float(m_imgaeCount.x);
 	m_uvRect.height = texture->getSize().y / float(m_imgaeCount.y);
-	m_uvRect.top = m_currentImage.y * row;
+	m_uvRect.top = m_uvRect.height * row;
 }
 
 void Animation::update(float deltaTime, bool faceLeft, bool standing)
@@ -36,15 +36,4 @@ void Animation::update(float deltaTime, bool faceLeft, bool standing)
 
 	m_uvRect.left = (m_currentImage.x + (faceLeft ? 1 : 0)) * std::abs(m_uvRect.width);
 	m_uvRect.width = (faceLeft ? -1 : 1) * std::abs(m_uvRect.width);
-
-	//if (faceLeft)
-	//{
-	//	m_uvRect.left = (m_currentImage.x + 1) * std::abs(m_uvRect.width);
-	//	m_uvRect.width = -std::abs(m_uvRect.width);
-	//}
-	//else
-	//{
-	//	m_uvRect.left = m_currentImage.x * std::abs(m_uvRect.width);
-	//	m_uvRect.width = std::abs(m_uvRect.width);
-	//}
 }

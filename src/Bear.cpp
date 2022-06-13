@@ -7,10 +7,10 @@ constexpr int NUM_OF_BEARS_IN_ROW = 9;
 
 Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, int textureIndex)
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHeight), Objects::Bears),
-	m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0), m_animation(sf::Vector2u(NUM_OF_BEARS_IN_ROW, 1/*static_cast<int>(bearTypes::MAX)*/), 0.09)
+	m_gun(textureIndex, board), m_board(board), m_lives(3), m_score(0), m_animation(sf::Vector2u(NUM_OF_BEARS_IN_ROW, static_cast<int>(bearTypes::MAX)), 0.09)
 {
 	m_pos = pos;
-	m_animation.changeTexture(m_icon.getTexture(), 0/*textureIndex*/);
+	m_animation.changeTexture(m_icon.getTexture(), textureIndex);
 	//texture index range: 0 - 3
 	m_icon.setTextureRect(m_animation.getUvRect());
 
