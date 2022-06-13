@@ -46,7 +46,7 @@ void Bar::setBar(float time, const gameInfo& info)
 	}
 	m_numOfBears = info._numOfPlayers;
 	
-	for (int i = 0; i < m_numOfBears; ++i)
+	for (int i = 0 ; i < m_numOfBears; ++i)
 	{
 		m_lifeIcons.emplace_back();
 		setBearInfo(info, Objects::BearsHeads, m_lifeIcons[i], sf::Vector2f(45.f, 40.f), i);
@@ -95,17 +95,17 @@ void Bar::draw(sf::RenderWindow& window, std::vector<Bear> &bears)
 		for (int i = 0; i < bears[j].getNumOfLives(); ++i)
 		{
 			m_lifeIcons[j].setPosition(
-				sf::Vector2f((((j + 1) % m_numOfBears) * windowWidth) - pow(-1, j) * (50 + i * 55), windowHeight - barHeight / 2 + 10));
+				sf::Vector2f((((j + 1) % m_numOfBears) * windowWidth) + pow(-1, (j + 1) % m_numOfBears) * (50 + i * 55), windowHeight - barHeight / 2 + 10));
 			window.draw(m_lifeIcons[j]);
 		}
 
-		//m_ropes[j].setPosition(
-		//	sf::Vector2f(((j + 1) % m_numOfBears * windowWidth) - pow(-1, j) * (420), windowHeight - barHeight / 2 + 10));
-		//window.draw(m_ropes[j]);
+		m_ropes[j].setPosition(
+			sf::Vector2f((((j + 1) % m_numOfBears) * windowWidth) + pow(-1, (j + 1) % m_numOfBears) * (420), windowHeight - barHeight / 2 + 10));
+		window.draw(m_ropes[j]);
 
-		//m_scoreText.setPosition(
-		//	sf::Vector2f(((j + 1) % m_numOfBears * (windowWidth - 80)) - pow(-1, j) * 270, windowHeight - barHeight / 2.f + 10));
-		//window.draw(m_scoreText);
+		m_scoreText.setPosition(
+			sf::Vector2f((((j + 1) % m_numOfBears) * (windowWidth - 80)) + pow(-1, (j + 1) % m_numOfBears) * 270, windowHeight - barHeight / 2.f + 10));
+		window.draw(m_scoreText);
 	}
 }
 
