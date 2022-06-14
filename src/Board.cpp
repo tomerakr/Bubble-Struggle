@@ -15,7 +15,7 @@ void Board::setWorld()
 {
 	b2Vec2 gravity(0.0f, 10.0f);
 	m_world = std::make_unique<b2World>(gravity);
-	m_world->SetContactListener(/*new ContactListener()*/&a);	// need to free
+	m_world->SetContactListener(/*new ContactListener()*/&a);
 }
 
 void Board::createNormal()
@@ -98,10 +98,9 @@ void Board::draw(sf::RenderWindow& window)
 
 void Board::update()
 {
-	m_world->Step(m_timeStep, m_velocityIteration, m_positionIteration);
-
 	for (auto& ball : m_balls)
 	{
+		step();
 		ball.update();
 
 		if (ball.popped())
@@ -114,6 +113,7 @@ void Board::update()
 
 	for (auto& gift : m_gifts)
 	{
+		step();
 		gift.update();
 	}
 
@@ -180,4 +180,9 @@ void Board::nextLevel()
 	++m_currLevel;
 	resetLevel();
 	setLevel();
+}
+
+void Board::step()
+{
+	m_world->Step(m_timeStep, m_velocityIteration, m_positionIteration);
 }

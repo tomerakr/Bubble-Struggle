@@ -154,7 +154,7 @@ void GameScreen::update(float deltaTime)
 	m_board.update();
 
 	//if no balls left, proceed to next level
-	if (m_board.getNumBalls() == 0)
+	if (m_board.getNumBalls() <= 0)
 	{
 		m_board.nextLevel();
 		auto textureSize = m_background.getTexture()->getSize();

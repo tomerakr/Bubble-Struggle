@@ -20,6 +20,7 @@ public:
 	Board();
 	void draw(sf::RenderWindow& window);
 	void addBalls(const sf::Vector2f& pos, const int index);
+	void step();
 	void update();
 	void clear();
 	void createNormal();

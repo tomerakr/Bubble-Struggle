@@ -17,7 +17,6 @@ Gift::Gift(const sf::Vector2f position, Board* board, int giftFilter)
     bodyDef.position.Set(position.x + m_icon.getSize().x / 2, position.y + m_icon.getSize().y / 2);
 
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
-    m_body->SetUserData(this);
 
     m_rect2D.SetAsBox(m_icon.getSize().x / 2, m_icon.getSize().y / 2);
 
@@ -27,6 +26,7 @@ Gift::Gift(const sf::Vector2f position, Board* board, int giftFilter)
     fixtureDef.filter.groupIndex = m_filters[giftFilter];
 
     m_body->CreateFixture(&fixtureDef);
+    m_body->SetUserData(this);
 }
 
 void Gift::update()

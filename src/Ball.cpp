@@ -37,7 +37,6 @@ void Ball::setBall2D(const b2Vec2& initialForce)
 
     bodyDef.linearVelocity = initialForce/* + b2Vec2(0, -100)*/;
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
-    m_body->SetUserData(this);
     
     //add circle fixture
     m_ball2D.m_p.Set(1.f, 1.f);
@@ -50,6 +49,7 @@ void Ball::setBall2D(const b2Vec2& initialForce)
     fixtureDef.restitution = 1;
     fixtureDef.filter.groupIndex = BALL_FILTER;
     m_body->CreateFixture(&fixtureDef);
+    m_body->SetUserData(this);
 }
 
 void Ball::split()

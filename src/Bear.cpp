@@ -50,7 +50,6 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	m_box2DBear->SetFixedRotation(true);
 	m_box2DBear->CreateFixture(&fixtureDef);
 	//m_box2DBear->SetUserData(this);
-
 }
 
 std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)

@@ -1,4 +1,5 @@
 #include "ContactListener.h"
+#include <iostream>
 
 void ContactListener::BeginContact(b2Contact* contact)
 {
@@ -12,6 +13,8 @@ void ContactListener::BeginContact(b2Contact* contact)
     {
         return;
     }
+
+    std::cout << typeid(*objA).name() << ' ' << typeid(*objB).name() << '\n';
 
     CollisionHandler::instance().handleCollision(objA, objB);
 

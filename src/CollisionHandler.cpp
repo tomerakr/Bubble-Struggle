@@ -5,6 +5,7 @@
 #include "Rope.h"
 #include "Tile.h"
 #include "Gift.h"
+#include <iostream>
 
 CollisionHandler::CollisionHandler()
 {
@@ -19,6 +20,7 @@ CollisionHandler& CollisionHandler::instance()
 
 void CollisionHandler::handleCollision(GameObject* a, GameObject* b)
 {
+	
 	auto mapEntry = m_colliderMap.find(key(typeid(*a), typeid(*b)));
 
 	if (mapEntry != m_colliderMap.end())

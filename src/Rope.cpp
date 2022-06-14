@@ -15,12 +15,12 @@ Rope::Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board, bool free
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
-	m_box2DRope->SetUserData(this);
 
 	setFixture(b2Vec2(m_icon.getSize().x / 2, ropeHeight));
 	m_pos = b2Vec2(bearPos.x + m_icon.getSize().x / 2, bearPos.y - 1);
 	m_box2DRope->SetTransform(m_pos, 0);
 	m_box2DRope->SetFixedRotation(true);
+	m_box2DRope->SetUserData(this);
 }
 
 void Rope::setFixture(const b2Vec2& size)

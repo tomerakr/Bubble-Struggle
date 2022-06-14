@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "Board.h"
+#include <iostream>
 
 Tile::Tile(Board* board, const sf::Vector2f& size, const sf::Vector2f& pos)
 	:StaticObject(pos, size, (size.x > size.y ? Objects::Floor : Objects::Wall)), m_board(board)
@@ -8,7 +9,6 @@ Tile::Tile(Board* board, const sf::Vector2f& size, const sf::Vector2f& pos)
 	bodyDef.type = b2_staticBody;
 	bodyDef.position.Set(pos.x + size.x / 2, pos.y + size.y / 2);
 	m_tileBody = board->getWorld()->CreateBody(&bodyDef);
-	//m_tileBody->SetUserData(this);
 	
 	b2PolygonShape groundBox;
 	groundBox.SetAsBox(size.x / 2, size.y / 2);
@@ -18,6 +18,8 @@ Tile::Tile(Board* board, const sf::Vector2f& size, const sf::Vector2f& pos)
 	fixtureDef.density = 1;
 	fixtureDef.filter.groupIndex = TILE;// (pos.y == windowHeight - thickness - barHeight ? TILE : CEILING);
 	m_tileBody->CreateFixture(&fixtureDef);
+	m_tileBody->SetUserData(this);
+	std::cout << typeid(static_cast<GameObject*>(m_tileBody->GetUserData())).name();
 }
 
 Tile::Tile(const sf::Vector2f& size, const sf::Vector2f& pos)
