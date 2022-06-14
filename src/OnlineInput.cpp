@@ -8,9 +8,9 @@ OnlineInput::OnlineInput()
 
 std::pair<sf::Vector2f, bool> OnlineInput::getInput(gameInput input)
 {
-	sf::Packet info;
+	//sf::Packet info;
 
-	(input._host ? server(input, info) : client(input, info));
+	(input._host ? server(input/*, info*/) : client(input/*, info*/));
 
 	//if (input._host)
 	//{
@@ -29,13 +29,16 @@ std::pair<sf::Vector2f, bool> OnlineInput::getInput(gameInput input)
 
 	auto xDir = 0.f, yDir = 0.f;
 	auto shoot = false;
-	info >> xDir >> yDir >> shoot;
+	xDir = m_transferData._dir.x;
+	yDir = m_transferData._dir.y;
+	shoot = m_transferData._shoot;
+	//info >> xDir >> yDir >> shoot;
 	//std::cout << xDir << ' ' << yDir << ' ' << shoot << '\n';
 
 	return std::make_pair(sf::Vector2f(xDir, yDir), shoot);
 }
 
-void OnlineInput::server(gameInput input, sf::Packet& info)
+void OnlineInput::server(gameInput input/*, sf::Packet& info*/)
 {
 	if (!m_connected)
 	{
@@ -44,11 +47,13 @@ void OnlineInput::server(gameInput input, sf::Packet& info)
 		listenr.accept(m_socket);
 		m_connected = true;
 	}
-	
-	info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
-	m_socket.send(info);
-	 info.clear();
-	m_socket.receive(info);
+	auto size = size_t();
+	//info.clear();
+	//info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
+	m_transferData._dir = input._otherBear.first;
+	m_transferData._shoot = input._otherBear.second;
+	m_socket.send(&m_transferData, sizeof(m_transferData));
+	m_socket.receive(&m_transferData, sizeof(m_transferData), size);
 	//auto temp = info;
 	//info = temp;
 
@@ -68,17 +73,22 @@ void OnlineInput::server(gameInput input, sf::Packet& info)
 	//socket.send(message.c_str(), message.size() + 1);
 }
 
-void OnlineInput::client(gameInput input, sf::Packet& info)
+void OnlineInput::client(gameInput input/*, sf::Packet& info*/)
 {
 	if (!m_connected)
 	{
 		m_socket.connect("10.100.102.4", PORT);
 		m_connected = true;
 	}
-	info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
-	m_socket.send(info);
-	info.clear();
-	m_socket.receive(info);
+
+	auto size = size_t();
+	//info.clear();
+	m_transferData._dir = input._otherBear.first;
+	m_transferData._shoot = input._otherBear.second;
+	//info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
+	m_socket.send(&m_transferData, sizeof(m_transferData));
+	//info.clear();
+	m_socket.receive(&m_transferData, sizeof(m_transferData), size);
 
 	////sf::TcpSocket socket;
 	//socket.connect(sf::IpAddress::getLocalAddress(), 44008);
