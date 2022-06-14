@@ -19,6 +19,5 @@ public:
 private:
 	Board* m_board;
 	b2BodyDef m_tileBodyDef;
-	b2Body* m_tileBody;
+	//b2Body* m_tileBody;
 };
-

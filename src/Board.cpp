@@ -1,6 +1,8 @@
 #include "Board.h"
 #include "Controller.h"
 #include <time.h>
+#include <iostream>
+#include <typeinfo>
 
 ContactListener a;
 
@@ -67,6 +69,8 @@ void Board::setLevel()
 		file >> xSize >> ySize >> xPosT >> yPosT;
 		m_tiles.emplace_back(this, sf::Vector2f(xSize, ySize), sf::Vector2f(xPosT, yPosT));
 	}
+	std::cout << typeid(m_baseTiles.back()).name() << '\n';
+
 }
 
 void Board::draw(sf::RenderWindow& window)
@@ -98,9 +102,9 @@ void Board::draw(sf::RenderWindow& window)
 
 void Board::update()
 {
+	m_world->Step(m_timeStep, m_velocityIteration, m_positionIteration);
 	for (auto& ball : m_balls)
 	{
-		step();
 		ball.update();
 
 		if (ball.popped())
@@ -113,7 +117,6 @@ void Board::update()
 
 	for (auto& gift : m_gifts)
 	{
-		step();
 		gift.update();
 	}
 
@@ -182,7 +185,7 @@ void Board::nextLevel()
 	setLevel();
 }
 
-void Board::step()
-{
-	m_world->Step(m_timeStep, m_velocityIteration, m_positionIteration);
-}
+//void Board::step()
+//{
+//	
+//}

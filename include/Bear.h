@@ -41,7 +41,7 @@ private:
 	std::vector<sf::Keyboard::Key> m_keys;
 
 	Gun m_gun;
-	b2Body* m_box2DBear = nullptr;
+	//b2Body* m_box2DBear = nullptr;
 	Board* m_board = nullptr;
 	Animation m_animation;
 	sf::Vector2f m_oldPos;

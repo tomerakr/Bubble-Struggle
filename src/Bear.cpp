@@ -39,7 +39,7 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(pos.x + m_icon.getSize().x / 2, pos.y + m_icon.getSize().y / 2);
-	m_box2DBear = m_board->getWorld()->CreateBody(&bodyDef);
+	m_body = m_board->getWorld()->CreateBody(&bodyDef);
 	b2PolygonShape bearRectangle;
 	bearRectangle.SetAsBox(m_icon.getSize().x / 2, m_icon.getSize().y / 2);
 
@@ -47,9 +47,9 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	fixtureDef.shape = &bearRectangle;
 	fixtureDef.density = 1;
 	//fixtureDef.filter.groupIndex = BEAR_FILTER;
-	m_box2DBear->SetFixedRotation(true);
-	m_box2DBear->CreateFixture(&fixtureDef);
-	//m_box2DBear->SetUserData(this);
+	m_body->SetFixedRotation(true);
+	m_body->CreateFixture(&fixtureDef);
+	//m_body->SetUserData(this);
 }
 
 std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
@@ -108,7 +108,7 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 
 	auto pos = m_icon.getPosition();
 	auto size = m_icon.getSize();
-	m_box2DBear->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2), 0);
+	m_body->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2), 0);
 	m_gun.update();
 	//if ()
 	//{
@@ -132,17 +132,17 @@ void Bear::resetFilter()
 {
 	b2Filter bearFilter;
 	bearFilter.groupIndex = BEAR_FILTER;
-	m_box2DBear->GetFixtureList()->SetFilterData(bearFilter);
+	m_body->GetFixtureList()->SetFilterData(bearFilter);
 }
 
 void Bear::setPos(const sf::Vector2f& pos)
 {
 	m_icon.setPosition(pos);
 	auto size = m_icon.getSize();
-	m_box2DBear->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2), 0);
+	m_body->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2), 0);
 }
 
 void Bear::destroyBody()
 {
-	m_board->getWorld()->DestroyBody(m_box2DBear);
+	m_board->getWorld()->DestroyBody(m_body);
 }

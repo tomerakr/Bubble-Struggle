@@ -50,6 +50,7 @@ void Ball::setBall2D(const b2Vec2& initialForce)
     fixtureDef.filter.groupIndex = BALL_FILTER;
     m_body->CreateFixture(&fixtureDef);
     m_body->SetUserData(this);
+    //std::cout << typeid(static_cast<GameObject*>(m_body->GetUserData())).name() << '\n';
 }
 
 void Ball::split()

@@ -21,7 +21,7 @@ public:
 
 protected:
 	Board* m_board;
-	b2Body* m_body;
+	//b2Body* m_body;
 	b2PolygonShape m_rect2D;
 	Timer m_timer = Timer(giftTimer);
 
