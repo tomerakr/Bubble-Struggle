@@ -47,7 +47,7 @@ void OnlineInput::server(gameInput input, sf::Packet& info)
 		listenr.accept(m_socket);
 		m_connected = true;
 	}
-
+	
 	m_socket.receive(info);
 	auto temp = info;
 	info.clear();
