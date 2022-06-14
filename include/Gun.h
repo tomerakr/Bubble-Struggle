@@ -9,7 +9,7 @@ class Gun
 public:
 	Gun(int ropeTexture, Board* board);
 	void shoot(const sf::Vector2f& bearPos);
-	bool update();
+	void update();
 	void freeze() { m_freeze = true; }
 	void drawRopes(sf::RenderWindow& window);
 	void incMaxRopes() { ++m_maxRopes; }

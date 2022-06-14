@@ -37,6 +37,7 @@ void Ball::setBall2D(const b2Vec2& initialForce)
 
     bodyDef.linearVelocity = initialForce/* + b2Vec2(0, -100)*/;
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
+    m_body->SetUserData(this);
     
     //add circle fixture
     m_ball2D.m_p.Set(1.f, 1.f);
@@ -48,10 +49,7 @@ void Ball::setBall2D(const b2Vec2& initialForce)
     fixtureDef.friction = 0.f;
     fixtureDef.restitution = 1;
     fixtureDef.filter.groupIndex = BALL_FILTER;
-
     m_body->CreateFixture(&fixtureDef);
-    //m_body->SetUserData(this);
-
 }
 
 void Ball::split()
@@ -78,14 +76,15 @@ void Ball::update()
     }
     auto pos = m_body->GetPosition();
     m_ball.setPosition(pos.x, pos.y);
-    if (m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER || m_ball.getRadius() < 10)
+    if (/*m_popped m_body->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER || */m_ball.getRadius() < 10)
     {
-        if (m_splittable)
-        {
-            m_popped = true;
-        }
-
-        resetFilter();
+        m_popped = true;
+        //if (m_splittable)
+        //{
+        //    m_popped = true;
+        //}
+        //
+        //resetFilter();
     }
 
     else if (m_body->GetFixtureList()->GetFilterData().groupIndex == TILE && m_special)

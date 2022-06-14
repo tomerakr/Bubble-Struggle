@@ -10,12 +10,15 @@ class Rope : public MovingObject
 {
 public:
 	Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board, bool freezeRope);
-	bool update();	//true if popped a ball
+	void update();	//true if popped a ball
 	bool isDone() { return m_done; }
+	void destroy();
+
+	void poppedABall() { m_done = true; }
+	void hitAWall() { m_done = true; }
 
 private:
 	void setFixture(const b2Vec2& size);
-	void destroy();
 	void growRope();
 
 	bool m_freeze = false;

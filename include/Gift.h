@@ -17,12 +17,14 @@ public:
 	void destroyBody();
 	bool getIsDone() const;
 
+	void taken();
+
 protected:
 	Board* m_board;
 	b2Body* m_body;
 	b2PolygonShape m_rect2D;
 	Timer m_timer = Timer(giftTimer);
 
-	bool m_isDone = false;
+	bool m_done = false;
 	int m_filters[static_cast<int>(giftTypes::MAX)] = { FREEZE_FILTER, SHIELD_FILTER, TIME_FILTER, LIFE_FILTER, DOUBLE_SHOT_FILTER };
 };

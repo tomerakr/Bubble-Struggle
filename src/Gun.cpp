@@ -20,15 +20,17 @@ void Gun::shoot(const sf::Vector2f& bearPos)
 	}
 }
 
-bool Gun::update()
+void Gun::update()
 {
-	auto poppedBall = false;
 	for (auto& rope : m_ropes)
 	{
-		poppedBall = rope.update();
+		rope.update();
+		if (rope.isDone())
+		{
+			rope.destroy(); //destroys only the rigid body
+		}
 	}
 	std::erase_if(m_ropes, [](auto& rope) { return rope.isDone(); });
-	return poppedBall;
 }
 
 void Gun::drawRopes(sf::RenderWindow& window)

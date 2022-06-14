@@ -17,6 +17,8 @@ public:
 	Ball(Board* board, const sf::Vector2f& pos, const b2Vec2& initialForce, int index = 0, bool special = false);
 	Ball(const sf::Vector2f& pos, int index = 0, int direction = 1, int indentaion = 0);
 
+	void pop() { m_popped = true; }
+
 	void destroyBody();
 	void update();
 	void split();

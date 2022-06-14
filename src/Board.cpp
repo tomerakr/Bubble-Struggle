@@ -2,6 +2,8 @@
 #include "Controller.h"
 #include <time.h>
 
+ContactListener a;
+
 Board::Board()
 	:m_currLevel(1)
 {
@@ -13,7 +15,7 @@ void Board::setWorld()
 {
 	b2Vec2 gravity(0.0f, 10.0f);
 	m_world = std::make_unique<b2World>(gravity);
-	m_world->SetContactListener(new ContactListener());	// need to free
+	m_world->SetContactListener(/*new ContactListener()*/&a);	// need to free
 }
 
 void Board::createNormal()
@@ -87,11 +89,11 @@ void Board::draw(sf::RenderWindow& window)
 	}
 
 	//------- BOX2D VIEWER -------
-	DebugDraw d(window);
-	uint32 flags = b2Draw::e_shapeBit;
-	d.SetFlags(flags);
-	m_world->SetDebugDraw(&d);
-	m_world->DebugDraw();
+	//DebugDraw d(window);
+	//uint32 flags = b2Draw::e_shapeBit;
+	//d.SetFlags(flags);
+	//m_world->SetDebugDraw(&d);
+	//m_world->DebugDraw();
 }
 
 void Board::update()

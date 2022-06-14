@@ -15,6 +15,8 @@ Rope::Rope(const sf::Vector2f& bearPos, int ropeTexture, Board* board, bool free
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	m_box2DRope = m_board->getWorld()->CreateBody(&bodyDef);
+	m_box2DRope->SetUserData(this);
+
 	setFixture(b2Vec2(m_icon.getSize().x / 2, ropeHeight));
 	m_pos = b2Vec2(bearPos.x + m_icon.getSize().x / 2, bearPos.y - 1);
 	m_box2DRope->SetTransform(m_pos, 0);
@@ -31,39 +33,38 @@ void Rope::setFixture(const b2Vec2& size)
 	fixtureDef.density = 1;
 	fixtureDef.friction = 0;
 	fixtureDef.filter.groupIndex = ROPE_FILTER; 
-	//fixtureDef.userData.pointer(this);
 
 	m_box2DRope->CreateFixture(&fixtureDef);
-	//m_box2DRope->SetUserData(this);
 }
 
-bool Rope::update()
+void Rope::update()
 {
 //		if rope collided with ball destroy rope 
-	if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)		
-	{
-		m_board->addGift(sf::Vector2f(m_pos.x, m_pos.y + m_icon.getSize().y));
-		destroy();
-		return true;
-	}
-	else if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == ROPE_TOUCH_WALL)
-	{
-		(!m_freeze ? destroy() : m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0));
-
-		//if (!m_freeze)
-		//{
-		//	//destroy();
-		//}
-		//else 
-		//{
-		//	m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0);
-		//}
-	}
-	else
-	{
-		growRope();
-	}
-	return false;
+	//if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)		
+	//{
+	//	m_board->addGift(sf::Vector2f(m_pos.x, m_pos.y + m_icon.getSize().y));
+	//	destroy();
+	//	return true;
+	//}
+	//else if (m_box2DRope->GetFixtureList()->GetFilterData().groupIndex == ROPE_TOUCH_WALL)
+	//{
+	//	(!m_freeze ? destroy() : m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0));
+	//
+	//	//if (!m_freeze)
+	//	//{
+	//	//	//destroy();
+	//	//}
+	//	//else 
+	//	//{
+	//	//	m_box2DRope->SetTransform(b2Vec2(m_pos.x, m_pos.y + m_icon.getSize().y / 2), 0);
+	//	//}
+	//}
+	//else
+	//{
+	//	growRope();
+	//}
+	growRope();
+	//return false;
 }
 
 void Rope::growRope()
@@ -82,6 +83,6 @@ void Rope::growRope()
 
 void Rope::destroy()
 {
-	m_done = true;
+	//m_done = true;
 	m_board->getWorld()->DestroyBody(m_box2DRope);
 }

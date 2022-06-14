@@ -17,6 +17,7 @@ Gift::Gift(const sf::Vector2f position, Board* board, int giftFilter)
     bodyDef.position.Set(position.x + m_icon.getSize().x / 2, position.y + m_icon.getSize().y / 2);
 
     m_body = m_board->getWorld()->CreateBody(&bodyDef);
+    m_body->SetUserData(this);
 
     m_rect2D.SetAsBox(m_icon.getSize().x / 2, m_icon.getSize().y / 2);
 
@@ -37,24 +38,28 @@ void Gift::update()
     //    m_isDone = true;
     //}
 
-    if (m_body->GetFixtureList()->GetFilterData().groupIndex == TOUCH_BEAR)
-    {
-        m_board->getWorld()->DestroyBody(m_body);   //temp solution
-        m_isDone = true;
-    }
-    else
-    {
-        m_icon.setPosition(sf::Vector2f(m_body->GetPosition().x - m_icon.getSize().x / 2,
-            m_body->GetPosition().y - m_icon.getSize().y / 2));
-    }
+    //if (m_body->GetFixtureList()->GetFilterData().groupIndex == TOUCH_BEAR)
+    //{
+    //    m_board->getWorld()->DestroyBody(m_body);   //temp solution
+    //    m_done = true;
+    //}
+    //else
+    m_icon.setPosition(sf::Vector2f(m_body->GetPosition().x - m_icon.getSize().x / 2,
+        m_body->GetPosition().y - m_icon.getSize().y / 2));
 }
 
 bool Gift::getIsDone() const
 {
-    return m_isDone;
+    return m_done;
 }
 
 void Gift::destroyBody()
 {
     m_board->getWorld()->DestroyBody(m_body);
+}
+
+void Gift::taken()
+{
+    m_done = true;
+    destroyBody();
 }

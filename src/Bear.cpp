@@ -11,7 +11,7 @@ Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, 
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHeight), Objects::Bears),
 	m_gun(textureIndex, board), m_board(board), m_lives(START_LIFE), m_score(0), m_animation(sf::Vector2u(NUM_OF_BEARS_IN_ROW, static_cast<int>(bearTypes::MAX)), 0.09)
 {
-	m_pos = pos;
+	m_oldPos = pos;
 	m_animation.changeTexture(m_icon.getTexture(), textureIndex);
 	//texture index range: 0 - 3
 	m_icon.setTextureRect(m_animation.getUvRect());
@@ -46,7 +46,7 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &bearRectangle;
 	fixtureDef.density = 1;
-	fixtureDef.filter.groupIndex = BEAR_FILTER;
+	//fixtureDef.filter.groupIndex = BEAR_FILTER;
 	m_box2DBear->SetFixedRotation(true);
 	m_box2DBear->CreateFixture(&fixtureDef);
 	//m_box2DBear->SetUserData(this);
@@ -56,51 +56,51 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
 {
 	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear, m_host });
-	auto lastPos = m_icon.getPosition();
+	m_oldPos = m_icon.getPosition();
 	m_icon.move(deltaTime * m_speedPerSecond * direction);
 	m_animation.update(deltaTime, direction.x == LEFT, direction.x == 0);
 	m_icon.setTextureRect(m_animation.getUvRect());
 
-	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == BEAR_HIT_WALL)
-	{
-		m_icon.setPosition(lastPos);
-	}
-	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
-	{
-		if (!m_shield)
-		{
-			--m_lives;
-			if (0 == m_lives)
-			{
-				m_lives = START_LIFE;
-			}
-			m_board->resetLevel();
-		}
-		else
-		{
-			m_shield = false;
-		}
-	}
-	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == FREEZE_FILTER)
-	{
-		m_gun.freeze();
-	}
-	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == DOUBLE_SHOT_FILTER)
-	{
-		m_gun.incMaxRopes();
-	}
-	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == LIFE_FILTER)
-	{
-		if (m_lives < MAX_LIFE)
-		{
-			++m_lives;
-		}
-	}
-	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == SHIELD_FILTER)
-	{
-		m_shield = true;
-	}
-	resetFilter();
+	//if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == BEAR_HIT_WALL)
+	//{
+	//	m_icon.setPosition(lastPos);
+	//}
+	//if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
+	//{
+	//	if (!m_shield)
+	//	{
+	//		--m_lives;
+	//		if (0 == m_lives)
+	//		{
+	//			m_lives = START_LIFE;
+	//		}
+	//		m_board->resetLevel();
+	//	}
+	//	else
+	//	{
+	//		m_shield = false;
+	//	}
+	//}
+	//else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == FREEZE_FILTER)
+	//{
+	//	m_gun.freeze();
+	//}
+	//else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == DOUBLE_SHOT_FILTER)
+	//{
+	//	m_gun.incMaxRopes();
+	//}
+	//else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == LIFE_FILTER)
+	//{
+	//	if (m_lives < MAX_LIFE)
+	//	{
+	//		++m_lives;
+	//	}
+	//}
+	//else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == SHIELD_FILTER)
+	//{
+	//	m_shield = true;
+	//}
+	//resetFilter();
 
 	if (shoot)
 	{
@@ -110,10 +110,11 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 	auto pos = m_icon.getPosition();
 	auto size = m_icon.getSize();
 	m_box2DBear->SetTransform(b2Vec2(pos.x + size.x / 2, pos.y + size.y / 2), 0);
-	if (m_gun.update())
-	{
-		m_score += rand() % maxPoints + minPoints;
-	}
+	m_gun.update();
+	//if ()
+	//{
+	//	m_score += rand() % maxPoints + minPoints;
+	//}
 
 	return std::make_pair(direction, shoot);
 }

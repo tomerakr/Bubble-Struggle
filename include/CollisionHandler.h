@@ -1,31 +1,31 @@
 #pragma once
 
 #include "GameObject.h"
-#include <unorderd_map>
+#include "HashHandler.h"
 #include <utility>
 #include <typeinfo>
 #include <typeindex>
+#include <unordered_map>
 
 class CollisionHandler
 {
 public:
-
 	using colliderFunc = void (CollisionHandler::*)(GameObject*, GameObject*);
 	using key = std::pair<std::type_index, std::type_index>;
-	using colliderFuncMap = std::unorderd_map<key, colliderFunc, keyEqual>;
+	using colliderFuncMap = std::unordered_map<key, colliderFunc, PairKeysHash, KeyEqual>;
 
 	static CollisionHandler& instance();
-	~CollisionHandler() = default;
+	~CollisionHandler() { }
 	void handleCollision(GameObject*, GameObject*);
 
 private:
-	std::unorderd_map<key, colliderFunc, keyEqual> m_colliderMap;
+	colliderFuncMap m_colliderMap;
 
-	CollisionHandler() = default;
+	CollisionHandler();
 	CollisionHandler(const CollisionHandler&) = default;
 	CollisionHandler& operator=(const CollisionHandler&) = default;
 
-	initializeMap();
+	void initializeMap();
 
 	void ballHitBear(GameObject*, GameObject*);
 	void bearHitBall(GameObject* A, GameObject* B) { ballHitBear(B, A); }

@@ -29,6 +29,10 @@ public:
 	unsigned int getScore()		{ return m_score; }
 	void setHost()				{ m_host = true; }
 
+	void reduceLife() { --m_lives; }
+	void addLife() { ++m_lives; }
+	void hitedAWall() { m_icon.setPosition(m_oldPos); }
+
 private:
 	void defineBear2d(const sf::Vector2f&);
 	void resetFilter();
@@ -40,7 +44,7 @@ private:
 	b2Body* m_box2DBear = nullptr;
 	Board* m_board = nullptr;
 	Animation m_animation;
-	sf::Vector2f m_pos;
+	sf::Vector2f m_oldPos;
 
 	unsigned int m_score;
 	unsigned int m_lives;
