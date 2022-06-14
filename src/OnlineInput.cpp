@@ -1,9 +1,7 @@
 #include "OnlineInput.h"
 #include <iostream>
 
-//sf::TcpSocket socket;
-//sf::TcpListener listener;
-//sf::SocketSelector m_socketSelector;
+constexpr short PORT = 54013;
 
 OnlineInput::OnlineInput()
 {}
@@ -42,18 +40,17 @@ void OnlineInput::server(gameInput input, sf::Packet& info)
 	if (!m_connected)
 	{
 		sf::TcpListener listenr;
-		listenr.listen(m_remotePort);
-		std::cout << "found a client\n";
+		listenr.listen(PORT);
 		listenr.accept(m_socket);
 		m_connected = true;
 	}
 	
-	m_socket.receive(info);
-	auto temp = info;
-	info.clear();
 	info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
 	m_socket.send(info);
-	info = temp;
+	 info.clear();
+	m_socket.receive(info);
+	//auto temp = info;
+	//info = temp;
 
 	//sf::TcpListener listener;
 	//
@@ -75,8 +72,7 @@ void OnlineInput::client(gameInput input, sf::Packet& info)
 {
 	if (!m_connected)
 	{
-		m_socket.connect(m_remoteAddress, m_remotePort);
-		std::cout << "connected to a server\n";
+		m_socket.connect("10.100.102.4", PORT);
 		m_connected = true;
 	}
 	info << input._otherBear.first.x << input._otherBear.first.y << input._otherBear.second;
