@@ -34,6 +34,7 @@ private:
 	sf::Font m_font;
 	sf::SoundBuffer m_soundBuffer[static_cast<int>(Sound::MAX)];
 	sf::Sound m_sound[static_cast<int>(Sound::MAX)];
+	std::string m_soundsNames[static_cast<int>(Sound::MAX)] = { "theme.wav", "click.wav" };
 
 	sf::Color m_colors[numOfBalls] = {sf::Color(82, 194, 236),  sf::Color(1, 111, 255), sf::Color(198, 111, 239), 
 									  sf::Color(248, 135, 230), sf::Color(233, 74, 90), sf::Color(252, 139, 18),

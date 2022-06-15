@@ -1,5 +1,7 @@
 #include "MenuScreen.h"
 #include "Controller.h"
+#include "SFML/Network.hpp"
+#include "OnlineInput.h"
 
 constexpr int maxButtonInMenu = 6;
 constexpr int maxVolume = 6;
@@ -23,8 +25,6 @@ MenuScreen::MenuScreen(Controller* ctrl, int numOfLevels)
 	m_output.setFont(*Resources::instance().getFont());
 	m_output.setPosition(500, 500);
 	m_output.setString("Enter your IP:");
-
-
 }
 
 void MenuScreen::createButton()
@@ -60,6 +60,14 @@ void MenuScreen::createButton()
 	{
 		m_volume.emplace_back(Button{sf::Vector2f(xPos + (i * 15), yPos), sf::Vector2f(xSize, ySize), Objects::Button, " "});
 	}
+
+	m_output.setColor(sf::Color(164, 164, 164));
+	m_output.setCharacterSize(25);
+	m_output.setFont(*Resources::instance().getFont());
+	m_output.setPosition(windowWidth / 2, yPos + (ySize + 10) * 2.2);
+	m_output.setOrigin(m_output.getLocalBounds().width / 2, m_output.getLocalBounds().height / 2);
+	m_output.setString("Enter your IP:");
+}
 
 	ySize = 40;
 	xSize = 100;
@@ -101,8 +109,30 @@ gameInfo MenuScreen::menu()
 			break;
 
 		case sf::Event::KeyPressed:
-			handleKeyboard(event);
+			handleKeyboard();
+			if (m_connectPressed)
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter))
+				{
+					auto connectToHost = OnlineInput();
+					connectToHost.connect(m_input);
+				}
+			}
 			break;
+
+		case sf::Event::TextEntered:
+			if (m_connectPressed)
+			{
+				if (event.type == sf::Event::TextEntered)
+				{
+					if (event.text.unicode < 128)
+					{
+						m_input += static_cast<char>(event.text.unicode);
+						m_output.setString(m_input);
+					}
+				}
+				
+			}
 
 		default:
 			break;
@@ -113,39 +143,43 @@ gameInfo MenuScreen::menu()
 
 gameInfo MenuScreen::handlePress(const sf::Vector2f& mousePos)
 {
+	auto clickSound = false;
 	m_info._screen = Screen::menu;
 	switch (m_wantedMenu)
 	{
 		using enum menuNames;
 	case static_cast<int>(mainMenu):
-		mainMenuPress(mousePos);
+		mainMenuPress(mousePos, clickSound);
 		break;
 
 	case static_cast<int>(levels):
-		chooseLevel(mousePos);
+		chooseLevel(mousePos, clickSound);
 		break;
 
 	case static_cast<int>(numOfPlayers):
-		numOfPlayersPress(mousePos);
+		numOfPlayersPress(mousePos, clickSound);
 		break;
 
 	case static_cast<int>(connection):
-		connectionPress(mousePos);
+		connectionPress(mousePos, clickSound);
 		break;
 
 	case static_cast<int>(connectionType):
-		connectType(mousePos);
+		connectType(mousePos, clickSound);
 		break;
 	default:
 		break;
+	}
+	if (clickSound)
+	{
+		Resources::instance().playSound(Sound::click);
 	}
 	
 	return m_info;
 }
 
-void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
+void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos, bool& clickSound)
 {
-	auto clickSound = false;
 	auto mainMenu = static_cast<int>(menuNames::mainMenu);
 	if (m_buttons[mainMenu][int(buttonNames::Exit)].isPressed(mousePos) && m_wantedMenu == mainMenu)
 	{
@@ -179,15 +213,10 @@ void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Help)].isPressed(mousePos))
 	{
-		//m_info._host = true;
-	}
-	if (clickSound)
-	{
-		Resources::instance().playSound(Sound::click);
 	}
 }
 
-void MenuScreen::chooseLevel(const sf::Vector2f& mousePos)
+void MenuScreen::chooseLevel(const sf::Vector2f& mousePos, bool& clickSound)
 {
 	for (int i = 0; i < m_levels.size(); ++i)
 	{
@@ -196,14 +225,14 @@ void MenuScreen::chooseLevel(const sf::Vector2f& mousePos)
 			m_info._level = i;
 			m_chooseLevel = false;
 			m_wantedMenu = static_cast<int>(menuNames::numOfPlayers);
+			clickSound = true;
 			break;
 		}
 	}
 }
 
-void MenuScreen::numOfPlayersPress(const sf::Vector2f& mousePos)
+void MenuScreen::numOfPlayersPress(const sf::Vector2f& mousePos, bool& clickSound)
 {
-	auto clickSound = false;
 	if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Solo)].isPressed(mousePos))
 	{
 		m_info._numOfPlayers = 1;
@@ -220,15 +249,10 @@ void MenuScreen::numOfPlayersPress(const sf::Vector2f& mousePos)
 		m_wantedMenu = static_cast<int>(menuNames::connection);
 		clickSound = true;
 	}
-	if (clickSound)
-	{
-		Resources::instance().playSound(Sound::click);
-	}
 }
 
-void MenuScreen::connectionPress(const sf::Vector2f& mousePos)
+void MenuScreen::connectionPress(const sf::Vector2f& mousePos, bool& clickSound)
 {
-	auto clickSound = false;
 	if (m_buttons[m_wantedMenu][int(buttonNames::SamePC)].isPressed(mousePos))
 	{
 		m_info._receive = receiveInfo::SamePc;
@@ -246,29 +270,24 @@ void MenuScreen::connectionPress(const sf::Vector2f& mousePos)
 		m_onlineConnection = true;
 		clickSound = true;
 	}
-	if (clickSound)
-	{
-		Resources::instance().playSound(Sound::click);
-	}
+	
 }
 
-void MenuScreen::connectType(const sf::Vector2f& mousePos)
+void MenuScreen::connectType(const sf::Vector2f& mousePos, bool& clickSound)
 {
 	if (m_buttons[m_wantedMenu][int(buttonNames::Host)].isPressed(mousePos))
 	{
-		//m_info._receive = receiveInfo::SamePc;
-		//m_info._screen = Screen::game;
-		//m_info._newGame = true;
-		//m_wantedMenu = static_cast<int>(menuNames::mainMenu);
-		//clickSound = true;
-		//m_connectionText.setString("Sdfc");
+		m_output.setString(sf::IpAddress::getLocalAddress().toString());
+		draw();
+		auto host = OnlineInput();
+		Resources::instance().playSound(Sound::click);
+		host.host();
 		m_info._host = true;
-		//m_onlineConnection = false;
 	}
-
 	else if (m_buttons[m_wantedMenu][int(buttonNames::Connect)].isPressed(mousePos))
 	{
 		m_connectPressed = true;
+		clickSound = true;
 	}
 }
 
@@ -297,18 +316,19 @@ void MenuScreen::settings(const sf::Vector2f& mousePos)
 
 void MenuScreen::handleHover(const sf::Vector2f& mousePos)
 {
-	m_buttons[m_wantedMenu][m_lastHovered].resetTilt(); //reset in last wanted menu and not in current
+	m_buttons[m_lastWantedMenu][m_lastHovered].resetTilt(); //reset in last wanted menu and not in current
 	for (int i = 0; i < m_buttons[m_wantedMenu].size(); ++i)
 	{
 		if (m_buttons[m_wantedMenu][i].hover(mousePos))
 		{
 			m_lastHovered = i;
+			m_lastWantedMenu = m_wantedMenu;
 			break;
 		}
 	}
 }
 
-void MenuScreen::handleKeyboard(sf::Event event)
+void MenuScreen::handleKeyboard()
 {
 	auto right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))

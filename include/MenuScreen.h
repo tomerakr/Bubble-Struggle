@@ -18,15 +18,14 @@ private:
 	void createLevels(int numOfLevels);
 	void createButton();
 	gameInfo handlePress	(const sf::Vector2f& mousePos);
-	void mainMenuPress		(const sf::Vector2f& mousePos);
-	void numOfPlayersPress	(const sf::Vector2f& mousePos);
-	void connectionPress	(const sf::Vector2f& mousePos);
-	void connectType(const sf::Vector2f& mousePos);
-	void settings(const sf::Vector2f& mousePos);
+	void mainMenuPress		(const sf::Vector2f& mousePos, bool& clickSound);
+	void numOfPlayersPress	(const sf::Vector2f& mousePos, bool& clickSound);
+	void connectionPress	(const sf::Vector2f& mousePos, bool& clickSound);
+	void connectType		(const sf::Vector2f& mousePos, bool& clickSound);
 	void handleHover		(const sf::Vector2f& mousePos);
-	void handleKeyboard(sf::Event event);
+	void handleKeyboard();
 	void draw();
-	void chooseLevel(const sf::Vector2f& mousePos);
+	void chooseLevel		(const sf::Vector2f& mousePos, bool& clickSound);
 
 	Controller* m_controller;
 	bool m_chooseLevel = false;
@@ -34,6 +33,7 @@ private:
 	bool m_connectPressed = false;
 	bool m_settingPressed = false;
 	int m_lastHovered = 0;
+	int m_lastWantedMenu = 0;
 	int m_wantedMenu = 0;
 	std::vector <Button> m_volume;
 	sf::RectangleShape m_volumeRectangle;
