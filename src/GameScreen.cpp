@@ -44,7 +44,7 @@ Screen GameScreen::gamePlay(gameInfo& info)
 		break;
 
 	case gameMode::Survival:
-		screen = playSurvival();
+		screen = playSurvival(info);
 		break;
 
 	default:
@@ -174,6 +174,8 @@ void GameScreen::update(float deltaTime, gameInfo& info)
 			bear.decLives();
 		}
 	}
+
+
 	if (allBearsDead())
 	{
 		clear();
@@ -226,7 +228,7 @@ void GameScreen::drawNormal()
 	window.display();
 }
 
-Screen GameScreen::playSurvival()
+Screen GameScreen::playSurvival(gameInfo& info)
 {
 	auto screen = Screen::game;
 	auto& window = m_controller->getWindow();
@@ -251,12 +253,12 @@ Screen GameScreen::playSurvival()
 			break;
 		}
 	}
-	updateSurvival(deltaTime);
+	updateSurvival(deltaTime, info);
 
 	return screen;
 }
 
-void GameScreen::updateSurvival(float deltaTime)
+void GameScreen::updateSurvival(float deltaTime, gameInfo& info)
 {
 	auto scores = std::vector<int>();
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
@@ -275,6 +277,17 @@ void GameScreen::updateSurvival(float deltaTime)
 	addBallsSurvival(deltaTime);
 	m_bar.update(scores);
 	m_board.update();
+
+	if (allBearsDead())
+	{
+		clear();
+		info._newGame = true;
+		m_isLost = true;
+		auto textureSize = m_winLoseScreen.getTexture()->getSize();
+		m_winLoseScreen.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(backgrounds::MAX)) * 2, 0,
+			textureSize.x / static_cast<int>(backgrounds::MAX), textureSize.y));
+	}
+
 }
 
 void GameScreen::addBallsSurvival(float deltaTime)
