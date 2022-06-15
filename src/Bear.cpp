@@ -33,6 +33,8 @@ Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, 
 	}
 
 	defineBear2d(pos);
+	m_maxPoints.first = 0;
+	m_maxPoints.second = windowWidth - bearWitdh;
 }
 
 void Bear::resetPowers()
@@ -57,32 +59,25 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	fixtureDef.filter.groupIndex = BEAR_FILTER;
 	m_box2DBear->SetFixedRotation(true);
 	m_box2DBear->CreateFixture(&fixtureDef);
-	//m_box2DBear->SetUserData(this);
 }
 
 std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, const std::pair<const sf::Vector2f&, bool>& otherBear, 
 													GameScreen* gameScreen)
 {
 	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear, m_host });
-	auto lastPos = m_icon.getPosition();
-	m_icon.move(deltaTime * m_speedPerSecond * direction);
-	m_animation.update(deltaTime, direction.x == LEFT, direction.x == 0);
-	m_icon.setTextureRect(m_animation.getUvRect());
-
-	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == BEAR_HIT_WALL)
+	if (m_board->isNormalMode() && (direction.x == RIGHT && m_icon.getPosition().x < m_maxPoints.second) ||
+		(direction.x == LEFT && m_icon.getPosition().x > m_maxPoints.first))
 	{
-		//std::cout << "last pos: " << lastPos.x << ' ' << lastPos.y << " currPos: " << m_icon.getPosition().x << ' ' << m_icon.getPosition().y << '\n';
-		m_icon.setPosition(lastPos);
+		m_icon.move(deltaTime * m_speedPerSecond * direction);
+		m_animation.update(deltaTime, direction.x == LEFT, direction.x == 0);
+		m_icon.setTextureRect(m_animation.getUvRect());
 	}
+
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)
 	{
 		if (!m_shield)
 		{
 			decLives();
-			//if (0 == m_lives)
-			//{
-			//	//m_lives = START_LIFE;
-			//}
 		}
 		else
 		{
