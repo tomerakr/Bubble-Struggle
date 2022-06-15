@@ -180,6 +180,7 @@ bool GameScreen::allBearsDead()
 			return false;
 		}
 	}
+
 	return true;
 }
 

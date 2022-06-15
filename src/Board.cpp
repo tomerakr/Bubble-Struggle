@@ -175,7 +175,7 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 
 void Board::addGift(const sf::Vector2f& position)
 {
-	auto addGift = rand() % CHANCE_OF_GIFT; //chances to get gift is 1 to 14
+	auto addGift = rand() % 10000000;//CHANCE_OF_GIFT; //chances to get gift is 1 to 14
 
 	auto giftType = rand() % static_cast<int>(giftTypes::MAX);
 	if (!addGift)
