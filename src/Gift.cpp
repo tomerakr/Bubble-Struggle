@@ -48,9 +48,9 @@ bool Gift::getIsDone() const
 
 void Gift::destroyBody()
 {
-    if (m_body)
-    {
         m_board->getWorld()->DestroyBody(m_body);
-    }
-    m_body = nullptr;
+    //if (m_body)
+    //{
+    //}
+    //m_body = nullptr;
 }
