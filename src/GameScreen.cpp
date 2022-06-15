@@ -23,6 +23,9 @@ GameScreen::GameScreen(Controller* ctrl)
 
 	m_points.first = windowWidth / 2.f;
 	m_points.second = SurvivalWidth - m_points.first;
+
+	m_winLoseScreen.setSize(sf::Vector2f(windowWidth, windowHeight));
+	m_winLoseScreen.setTexture(Resources::instance().getObjectTexture(Objects::General));
 }
 
 Screen GameScreen::gamePlay(gameInfo& info)
@@ -136,12 +139,12 @@ Screen GameScreen::playNormal(gameInfo& info)
 			break;
 		}
 	}
-	screen = update(deltaTime.asSeconds(), info);
+	update(deltaTime.asSeconds(), info);
 
 	return screen;
 }
 
-Screen GameScreen::update(float deltaTime, gameInfo& info)
+void GameScreen::update(float deltaTime, gameInfo& info)
 {
 	auto scores = std::vector<int>();
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
@@ -157,6 +160,10 @@ Screen GameScreen::update(float deltaTime, gameInfo& info)
 	if (m_board.getNumBalls() == 0)
 	{
 		m_isWon = true;
+		auto textureSize = m_winLoseScreen.getTexture()->getSize();
+		//texture index range: 0 - 3
+		m_winLoseScreen.setTextureRect(sf::IntRect(textureSize.x / static_cast<int>(backgrounds::MAX), 0,
+			textureSize.x / static_cast<int>(backgrounds::MAX), textureSize.y));
 	}
 	if (m_bar.timeEnded())
 	{
@@ -171,9 +178,10 @@ Screen GameScreen::update(float deltaTime, gameInfo& info)
 		clear();
 		info._newGame = true;
 		m_isLost = true;
-		return Screen::menu;
+		auto textureSize = m_winLoseScreen.getTexture()->getSize();
+		m_winLoseScreen.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(backgrounds::MAX)) * 2, 0,
+			textureSize.x / static_cast<int>(backgrounds::MAX), textureSize.y));
 	}
-	return Screen::game;
 }
 
 bool GameScreen::allBearsDead()
@@ -194,17 +202,26 @@ void GameScreen::drawNormal()
 	auto lives = std::vector<int>();
 	auto& window = m_controller->getWindow();
 	window.clear(sf::Color::White);
-	window.draw(m_background);
-
-	for (auto& bear : m_bears)
+	if (m_isWon)
 	{
-		bear.drawRopes(window);
-		bear.draw(window);
-		lives.push_back(bear.getNumOfLives());
+		window.draw(m_winLoseScreen);
 	}
-	m_board.draw(window);
-	m_bar.draw(window, lives);
-
+	else if (m_isLost)
+	{
+		window.draw(m_winLoseScreen);
+	}
+	else
+	{
+		window.draw(m_background);
+		for (auto& bear : m_bears)
+		{
+			bear.drawRopes(window);
+			bear.draw(window);
+			lives.push_back(bear.getNumOfLives());
+		}
+		m_board.draw(window);
+		m_bar.draw(window, lives);
+	}
 	window.display();
 }
 
@@ -332,16 +349,12 @@ Screen GameScreen::handleKeyboard()
 		if (m_isWon)
 		{
 			m_board.nextLevel();
-			auto textureSize = m_background.getTexture()->getSize();
-			m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * rand() % numOfGameBackgrounds, 0,
-				textureSize.x / numOfGameBackgrounds, textureSize.y));
 			m_isWon = false;
 		}
-
 		if (m_isLost)
 		{
 			m_board.pickLevel(1);
-			//	how to return to the menu?
+			m_isLost = false;
 			return Screen::menu;
 		}
 	}

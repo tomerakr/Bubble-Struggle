@@ -25,7 +25,7 @@ private:
 
 	void setViews(sf::View& leftView, sf::View& rightView);
 	void clear();
-	Screen update(float deltaTime, gameInfo& info);
+	void update(float deltaTime, gameInfo& info);
 	bool allBearsDead();
 	Screen handleKeyboard();
 	void drawNormal();
@@ -43,6 +43,7 @@ private:
 	float m_totalTime = 0;
 
 	sf::RectangleShape m_background;
+	sf::RectangleShape m_winLoseScreen;
 	Controller* m_controller;
 	std::vector<Bear> m_bears;
 	Board m_board;
