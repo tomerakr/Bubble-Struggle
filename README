@@ -134,10 +134,45 @@ Timer.cpp -
 ============================= C O N T A I N E R S =============================
 
 
-============================= A L G O R I T H M S =============================
 
+
+============================= A L G O R I T H M S =============================
+Endless level: So the level can be "endless", the program calculate the position
+	of the player, and swiches between two viwes, and resize them acorrdin to the player position.
 
 ============================== K N O W N - B U G ==============================
+ 
 
 
 =============================== C O M M E N T S ===============================
+Survival mode: we created a endles level - you can go right or left forever and 
+	always go back to the same place (the level created in a circular mode).
+	Bubbles are randomly formed in different places every 7 seconds.
+
+Level creator: every one can create levels easily.
+	the level creator have the option to select the ball size, and his initia direction.
+	also, the player can set the time limit to the level.
+
+Multiplayer: The player can choose if to play alone or with friend.
+	if he decide to play with his friends, he also can choose if to play with two PCs 
+	(in the same network) or with the same PS.
+	 
+Internet connction: If two players wants to play, first, they need to decide who is the host and who is the gust.
+	the gust need to enter the IP address of the host.
+	the host IP will apeer automaticly after clicking on "HOST" button.
+	affter both are connected the game will start.
+
+Graphics: all the graphics created by us, including the spritesheet.
+
+
+
+
+
+
+
+
+
+
+
+
+

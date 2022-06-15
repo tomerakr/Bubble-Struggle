@@ -120,4 +120,35 @@ void ContactListener::BeginContact(b2Contact* contact)
         ////  fixtureA->SetFilterData(destroyObjects);
         //fixtureB->SetFilterData(tileFilter);
     }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    fixtureB->GetFilterData().groupIndex == LIFE_FILTER)
+    {
+
+    }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    fixtureB->GetFilterData().groupIndex == FREEZE_FILTER)
+    {
+
+    }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    fixtureB->GetFilterData().groupIndex == SHIELD_FILTER)
+    {
+
+    }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    fixtureB->GetFilterData().groupIndex == TIME_FILTER)
+    {
+
+    }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    fixtureB->GetFilterData().groupIndex == DOUBLE_SHOT_FILTER)
+    {
+
+    }
+
 }
