@@ -88,3 +88,8 @@ void Resources::playSound(const Sound& sound)
 {
 	m_sound[static_cast<int>(sound)].play();
 }
+
+void Resources::setVolume(int volume)
+{
+	m_sound[static_cast<int>(Sound::theme)].setVolume(volume * 5);
+}

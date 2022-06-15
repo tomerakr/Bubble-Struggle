@@ -19,6 +19,8 @@ public:
 
 	void playSound(const Sound& sound);
 
+	void setVolume(int volume);
+
 private:
 	Resources();
 	Resources(const Resources&) = delete;

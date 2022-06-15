@@ -1,5 +1,7 @@
 #include "Board.h"
 #include "Controller.h"
+#include <filesystem>
+#include <iostream>
 #include <time.h>
 
 Board::Board()
@@ -37,10 +39,10 @@ void Board::createSurvival()
 void Board::setLevel()
 {
 	auto file = std::ifstream(Resources::instance().getLevelName(m_currLevel));
-	if (!file.is_open())
-	{
-		exit(EXIT_FAILURE);
-	}
+	//if (!file.is_open())
+	//{
+	//	exit(EXIT_FAILURE);
+	//}
 
 	// ---- BALLS ----
 	auto ballsNum = 0, index = 0, direction = 0; // direction will get 1 or -1
@@ -152,7 +154,15 @@ void Board::reset()
 void Board::resetLevel()
 {
 	reset();
-	setLevel();
+	try
+	{
+		setLevel();
+	}
+	catch (std::filesystem::filesystem_error const& ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
+	
 }
 
 void Board::addBalls(const sf::Vector2f& pos, const int index)

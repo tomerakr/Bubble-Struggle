@@ -213,7 +213,14 @@ void LevelCreator::handleMouse(const sf::Vector2f& mousePos)
 	else if (m_buttons[static_cast<int>(buttonNames::SAVE)].isPressed(mousePos))
 	{
 		unfollow();
-		save();
+		try
+		{
+			save();
+		}
+		catch (std::filesystem::filesystem_error const& ex) 
+		{
+			std::cout << ex.what() << std::endl;
+		}
 	}
 	else if (m_buttons[static_cast<int>(buttonNames::DIR)].isPressed(mousePos))
 	{

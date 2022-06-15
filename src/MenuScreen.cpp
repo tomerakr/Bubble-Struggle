@@ -2,6 +2,7 @@
 #include "Controller.h"
 
 constexpr int maxButtonInMenu = 6;
+constexpr int maxVolume = 6;
 
 MenuScreen::MenuScreen(Controller* ctrl, int numOfLevels)
 	:m_controller(ctrl)
@@ -21,6 +22,8 @@ MenuScreen::MenuScreen(Controller* ctrl, int numOfLevels)
 	m_output.setFont(*Resources::instance().getFont());
 	m_output.setPosition(500, 500);
 	m_output.setString("Enter your IP:");
+
+
 }
 
 void MenuScreen::createButton()
@@ -43,6 +46,19 @@ void MenuScreen::createButton()
 	m_textRectangle.setFillColor(sf::Color(255, 255, 255, 150));
 	m_textRectangle.setSize(sf::Vector2f(300, 70));
 	m_textRectangle.setPosition(windowWidth / 2 - m_textRectangle.getSize().x / 2, yPos + (ySize + 10) * 2);
+
+	m_volumeRectangle.setFillColor(sf::Color::Blue);
+	m_volumeRectangle.setSize(sf::Vector2f(10, 15));
+
+	ySize = 15;
+	xSize = 10;
+	xPos = 300;
+	yPos = windowHeight - 200;
+
+	for (int i = 0; i < maxVolume; ++i)
+	{
+		m_volume.emplace_back(Button{sf::Vector2f(xPos + (i * 15), yPos), sf::Vector2f(xSize, ySize), Objects::Button, " "});
+	}
 }
 
 //============ O R D E R  FOR  M E N U ============
@@ -146,6 +162,11 @@ void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
 		m_info._screen = Screen::levelCreator;
 		clickSound = true;
 	}
+	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Settings)].isPressed(mousePos))
+	{
+		//////////////*****************
+		clickSound = true;
+	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Help)].isPressed(mousePos))
 	{
 		//m_info._host = true;
@@ -238,6 +259,17 @@ void MenuScreen::connectType(const sf::Vector2f& mousePos)
 	else if (m_buttons[m_wantedMenu][int(buttonNames::Connect)].isPressed(mousePos))
 	{
 		m_connectPressed = true;
+	}
+}
+
+void MenuScreen::settings(const sf::Vector2f& mousePos)
+{
+	for (int i = 0; i < m_volume.size(); ++i)
+	{
+		if (m_levels[i].isPressed(mousePos))
+		{
+			; // set volume (i * volume scale) ; 
+		}
 	}
 }
 
