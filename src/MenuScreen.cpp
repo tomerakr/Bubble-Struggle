@@ -60,6 +60,20 @@ void MenuScreen::createButton()
 	m_volumeRectangle.setSize(sf::Vector2f(10, 15));
 
 
+	m_screenSizeText.setColor(sf::Color::Black);
+	m_screenSizeText.setCharacterSize(30);
+	m_screenSizeText.setFont(*Resources::instance().getFont());
+	m_screenSizeText.setPosition(windowWidth / 2 - 350, 300);
+	m_screenSizeText.setOrigin(m_output.getLocalBounds().width / 2, m_output.getLocalBounds().height / 2);
+	m_screenSizeText.setString("CHOOSE YOUR SCREEN SIZE");
+
+	m_volumeText.setColor(sf::Color::Black);
+	m_volumeText.setCharacterSize(30);
+	m_volumeText.setFont(*Resources::instance().getFont());
+	m_volumeText.setPosition(windowWidth / 2 - 250, yPos + (ySize + 10) * 3);
+	m_volumeText.setOrigin(m_output.getLocalBounds().width / 2, m_output.getLocalBounds().height / 2);
+	m_volumeText.setString("SET THE VOLUME");
+
 	m_output.setColor(sf::Color(164, 164, 164));
 	m_output.setCharacterSize(25);
 	m_output.setFont(*Resources::instance().getFont());
@@ -400,6 +414,8 @@ void MenuScreen::draw()
 		for (auto& button : m_settingsButtons)
 		{
 			button.draw(window);
+			window.draw(m_volumeText);
+			window.draw(m_screenSizeText);
 		}
 	}
 	else

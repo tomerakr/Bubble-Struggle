@@ -30,7 +30,7 @@ Screen GameScreen::gamePlay(gameInfo& info)
 	if (info._newGame)
 	{
 		game(info);
-		m_bar.setBar(40, info); //getLevel Time
+		m_bar.setBar(90, info); //getLevel Time
 		info._newGame = false;
 	}
 	auto screen = Screen::game;

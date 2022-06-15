@@ -38,8 +38,9 @@ void Bar::setBar(float time, const gameInfo& info)
 	if (info._mode == gameMode::Survival)
 	{
 		m_levelText.setString("Survival");
+		m_timer = Timer{ 0 };
 	}
-	else
+	if (info._mode == gameMode::Normal)
 	{
 		m_levelText.setString("level: " + std::to_string(m_level));
 		m_timer = Timer{ time };

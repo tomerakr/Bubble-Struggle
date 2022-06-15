@@ -41,6 +41,8 @@ private:
 	sf::RectangleShape m_volumeRectangle;
 	sf::RectangleShape m_help;
 	sf::Text m_connectionText;
+	sf::Text m_volumeText;
+	sf::Text m_screenSizeText;
 	sf::RectangleShape m_background;
 	gameInfo m_info;
 	
