@@ -14,18 +14,18 @@ class GameScreen
 {
 public:
 	GameScreen(Controller* ctrl);
-	void game(const gameInfo& info);
 	Screen gamePlay(gameInfo& info);
 
 private:
+	void game(const gameInfo& info);
 	std::vector<std::vector<sf::Keyboard::Key>> m_keys;
 
-	Screen playNormal();
+	Screen playNormal(gameInfo& info);
 	Screen playSurvival();
 
 	void setViews(sf::View& leftView, sf::View& rightView);
 	void clear();
-	void update(float deltaTime);
+	Screen update(float deltaTime, gameInfo& info);
 	bool allBearsDead();
 	Screen handleKeyboard();
 	void drawNormal();

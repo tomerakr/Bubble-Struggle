@@ -37,7 +37,7 @@ Screen GameScreen::gamePlay(gameInfo& info)
 	switch (info._mode)
 	{
 	case gameMode::Normal:
-		screen = playNormal();
+		screen = playNormal(info);
 		break;
 
 	case gameMode::Survival:
@@ -111,7 +111,7 @@ void GameScreen::game(const gameInfo& info)
 	}
 }
 
-Screen GameScreen::playNormal()
+Screen GameScreen::playNormal(gameInfo& info)
 {
 	auto screen = Screen::game;
 	sf::Clock clock;
@@ -136,12 +136,12 @@ Screen GameScreen::playNormal()
 			break;
 		}
 	}
-	update(deltaTime.asSeconds());
+	screen = update(deltaTime.asSeconds(), info);
 
 	return screen;
 }
 
-void GameScreen::update(float deltaTime)
+Screen GameScreen::update(float deltaTime, gameInfo& info)
 {
 	auto scores = std::vector<int>();
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
@@ -169,8 +169,11 @@ void GameScreen::update(float deltaTime)
 	if (allBearsDead())
 	{
 		clear();
+		info._newGame = true;
 		m_isLost = true;
+		return Screen::menu;
 	}
+	return Screen::game;
 }
 
 bool GameScreen::allBearsDead()
