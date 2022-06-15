@@ -59,27 +59,9 @@ void MenuScreen::createButton()
 	m_volumeRectangle.setFillColor(sf::Color::Blue);
 	m_volumeRectangle.setSize(sf::Vector2f(10, 15));
 
-
-	m_screenSizeText.setColor(sf::Color::Black);
-	m_screenSizeText.setCharacterSize(30);
-	m_screenSizeText.setFont(*Resources::instance().getFont());
-	m_screenSizeText.setPosition(windowWidth / 2 - 350, 300);
-	m_screenSizeText.setOrigin(m_output.getLocalBounds().width / 2, m_output.getLocalBounds().height / 2);
-	m_screenSizeText.setString("CHOOSE YOUR SCREEN SIZE");
-
-	m_volumeText.setColor(sf::Color::Black);
-	m_volumeText.setCharacterSize(30);
-	m_volumeText.setFont(*Resources::instance().getFont());
-	m_volumeText.setPosition(windowWidth / 2 - 250, yPos + (ySize + 10) * 3);
-	m_volumeText.setOrigin(m_output.getLocalBounds().width / 2, m_output.getLocalBounds().height / 2);
-	m_volumeText.setString("SET THE VOLUME");
-
-	m_output.setColor(sf::Color(164, 164, 164));
-	m_output.setCharacterSize(25);
-	m_output.setFont(*Resources::instance().getFont());
-	m_output.setPosition(windowWidth / 2, yPos + (ySize + 10) * 2.2);
-	m_output.setOrigin(m_output.getLocalBounds().width / 2, m_output.getLocalBounds().height / 2);
-	m_output.setString("Enter your IP:");
+	setText(m_screenSizeText, "CHOOSE YOUR SCREEN SIZE", 30, sf::Vector2f(windowWidth / 2 - 350, 300), sf::Color::Black);
+	setText(m_volumeText, "SET THE VOLUME", 30, sf::Vector2f(windowWidth / 2 - 250, yPos + (ySize + 10) * 3), sf::Color::Black);
+	setText(m_output, "Enter your IP:", 25, sf::Vector2f(windowWidth / 2, yPos + (ySize + 10) * 2.2), sf::Color(164, 164, 164));
 
 	ySize = 50;
 	xSize = 20;
@@ -385,6 +367,16 @@ void MenuScreen::handleKeyboard()
 		//texture index range: 0 - 3
 		m_background.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * m_info._skinIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 	}
+}
+
+void MenuScreen::setText(sf::Text &text, std::string str, int size, sf::Vector2f pos, sf::Color color)
+{
+	text.setColor(color);
+	text.setCharacterSize(size);
+	text.setFont(*Resources::instance().getFont());
+	text.setPosition(pos);
+	text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
+	text.setString(str);
 }
 
 void MenuScreen::draw()
