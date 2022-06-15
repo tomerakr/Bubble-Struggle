@@ -24,12 +24,24 @@ Level Creator: you can create your own levels and play them, just click save and
 	they'll go, choose to add walls or floors.
 
 ================================ O B J E C T S ================================
-Ball	- 
-Bear	- 
-Rope	- 
-Tile	- 
-Button	- 
-Gift	-
+Ball	- The player needs to shoot ropes at the ball to make it split into 2 smaller balls. 
+				The ball disappears if small enough when hit.
+				If hits the player the lives decrease. If hit there is a chance for a gift to appear.
+
+Bear	- The object which represents the player. The player can control it, shoot from it and avoid the balls.
+				If collided with a ball the lives decrease or transfers back to the menu if 0 lives reached.
+				Can collide with gifts which will give the player more lives, power-ups etc.
+
+Rope	- The object the player shoots the balls with. Disappears once hit a ball or tile. Can be frozen in place until
+				collided with ball if player acquired the freeze gift.
+
+Tile	- The walls, defines the borders. Balls can't move through them.
+
+Button	- The player will see buttons when in the menu. Will need to press some of them to reach the level creator
+				or the survival/normal game-modes. Required to be pressed if one wishes to start the game.
+
+Gift	- Will appear at random when the player hits balls. There are gifts of freeze rope, add time, add additional rope to be shot
+				simultaneously by the same player, add lives.
 
 ======================= F I L E - D E S C R I P T I O N =======================
 ---------------------------------- .h files -----------------------------------
