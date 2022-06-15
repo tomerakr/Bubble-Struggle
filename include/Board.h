@@ -34,6 +34,7 @@ public:
 	void reset();
 	void resetLevel();
 	int getLevelIndex() const	{ return m_currLevel; }
+	bool isNormalMode() const	{ return m_normal; }
 	//=======================================
 	void SetDebugDraw(DebugDraw* d) { m_world->SetDebugDraw(d); }
 	//=======================================

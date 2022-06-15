@@ -23,7 +23,7 @@ private:
 	std::vector<std::vector<sf::Keyboard::Key>> m_keys;
 
 	Screen playNormal(gameInfo& info);
-	Screen playSurvival();
+	Screen playSurvival(gameInfo& info);
 
 	void setViews(sf::View& leftView, sf::View& rightView);
 	void clear();
@@ -32,7 +32,7 @@ private:
 	Screen handleKeyboard();
 	void drawNormal();
 
-	void updateSurvival(float deltaTime);
+	void updateSurvival(float deltaTime, gameInfo& info);
 	void addBallsSurvival(float deltaTime);
 	void drawSurvival();
 	void updateBearSurvivalPosition();
