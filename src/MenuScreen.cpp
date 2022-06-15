@@ -3,6 +3,7 @@
 
 constexpr int maxButtonInMenu = 6;
 constexpr int maxVolume = 6;
+constexpr int screenSizes = 2;
 
 MenuScreen::MenuScreen(Controller* ctrl, int numOfLevels)
 	:m_controller(ctrl)
@@ -55,9 +56,18 @@ void MenuScreen::createButton()
 	xPos = 300;
 	yPos = windowHeight - 200;
 
-	for (int i = 0; i < maxVolume; ++i)
+	for (int i = 0 ; i < maxVolume; ++i)
 	{
 		m_volume.emplace_back(Button{sf::Vector2f(xPos + (i * 15), yPos), sf::Vector2f(xSize, ySize), Objects::Button, " "});
+	}
+
+	ySize = 40;
+	xSize = 100;
+	xPos = 400;
+	yPos = 400;
+	for (int i = 0; i < screenSizes; ++i)
+	{
+		m_settingsButtons.emplace_back(Button{ sf::Vector2f(xPos + (i * 130), yPos), sf::Vector2f(xSize, ySize), Objects::Button, m_settingsButtonsText[i]});
 	}
 }
 
@@ -264,12 +274,24 @@ void MenuScreen::connectType(const sf::Vector2f& mousePos)
 
 void MenuScreen::settings(const sf::Vector2f& mousePos)
 {
+	m_settingPressed = true;
+
+	// music volume choosing
 	for (int i = 0; i < m_volume.size(); ++i)
 	{
-		if (m_levels[i].isPressed(mousePos))
+		if (m_volume[i].isPressed(mousePos))
 		{
-			; // set volume (i * volume scale) ; 
+			Resources::instance().setVolume(i);
 		}
+	}
+
+	if (m_settingsButtons[0].isPressed(mousePos)) // LARGE
+	{
+		;
+	}
+	if (m_settingsButtons[1].isPressed(mousePos))  // NORMAL
+	{
+		;
 	}
 }
 
@@ -310,6 +332,7 @@ void MenuScreen::handleKeyboard(sf::Event event)
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 		m_chooseLevel = false;
 	}
+
 	else if (m_connectPressed)
 	{
 		if (event.type == sf::Event::KeyPressed) {
@@ -335,7 +358,18 @@ void MenuScreen::draw()
 			levelButton.draw(window);
 		}
 	}
+	else if (m_settingPressed)
+	{
+		for (auto& vol : m_volume)
+		{
+			vol.draw(window);
+		}
 
+		for (auto& button : m_settingsButtons)
+		{
+			button.draw(window);
+		}
+	}
 	else
 	{
 		for (auto& button : m_buttons[m_wantedMenu])

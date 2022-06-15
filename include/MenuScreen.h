@@ -47,10 +47,12 @@ private:
 
 	std::vector<Button> m_levels;
 	std::vector<std::vector<Button>> m_buttons;
+	std::vector <Button> m_settingsButtons;
 	std::vector< std::vector<std::string>> m_buttonNames = 
 	{ { "Normal", "Survival", "Create Level", "Help", "Settings", "Exit" }, { "Choose Level" },
 	  {"Solo", "Duo"}, {"Online", "Same PC"}, { "Host", "Connect" } };
 
+	std::vector<std::string> m_settingsButtonsText = {"Large", "Normal"};
 	enum class buttonNames
 	{
 		Normal = 0,
