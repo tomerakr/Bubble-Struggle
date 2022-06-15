@@ -1,7 +1,7 @@
 #include "Controller.h"
 #include "Resources.h"
 
-Controller::Controller()
+Controller::Controller() 
 	: m_menu(this, Resources::instance().getNumOfLevels()), m_game(this),
 	m_window(sf::VideoMode(windowWidth, windowHeight), "Bubble Trouble", sf::Style::Close | sf::Style::Titlebar)
 {
