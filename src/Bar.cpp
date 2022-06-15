@@ -78,6 +78,11 @@ void Bar::update(std::vector<Bear> &bears)
 	m_timer.update();
 }
 
+bool Bar::isTimeEnd() const
+{
+	return m_timer.timeEnd();
+}
+
 void Bar::draw(sf::RenderWindow& window, std::vector<Bear> &bears)
 {
 	window.draw(m_background);

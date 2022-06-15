@@ -15,6 +15,7 @@ public:
 	void setBar(float time, const gameInfo& info);
 	void setBearInfo(const gameInfo& info, Objects texture, sf::RectangleShape &elements, sf::Vector2f size, int index);
 	void update(std::vector<Bear> &bear);
+	bool isTimeEnd() const;
 	void draw(sf::RenderWindow &window, std::vector<Bear> &bears); //why not pointer to bear
 	void drawBackgroundText(sf::RenderWindow& window, sf::Vector2f pos, sf::Vector2f size);
 

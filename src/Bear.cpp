@@ -72,7 +72,7 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 			--m_lives;
 			if (0 == m_lives)
 			{
-				m_lives = START_LIFE;
+				//m_lives = START_LIFE;
 			}
 			m_board->resetLevel();
 		}
