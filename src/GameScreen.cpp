@@ -410,6 +410,11 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 
 }
 
+void GameScreen::addTime()
+{
+	m_bar.addTime();
+}
+
 void GameScreen::draw(sf::RenderWindow& window, sf::View& view)
 {
 	auto lives = std::vector<int>();
