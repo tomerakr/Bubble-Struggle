@@ -16,9 +16,7 @@ public:
 	sf::Font* getFont()					{ return &m_font; }
 	int getNumOfLevels()				{ return m_levels.size(); }
 	std::string getLevelName(int index);
-
 	void playSound(const Sound& sound);
-
 	void setVolume(int volume);
 
 private:

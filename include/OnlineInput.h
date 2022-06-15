@@ -6,7 +6,7 @@
 #include "Macros.h"
 #include <vector>
 
-struct bilbal
+struct onlineInfo
 {
 	sf::Vector2f _dir;
 	bool _shoot;
@@ -24,10 +24,10 @@ public:
 
 
 private:
-	void server(gameInput input/*, sf::Packet& info*/);
-	void client(gameInput input/*, sf::Packet& info*/);
+	void server(gameInput input);
+	void client(gameInput input);
 	bool m_connected = false;
 
-	bilbal m_transferData;
+	onlineInfo m_transferData;
 };
 

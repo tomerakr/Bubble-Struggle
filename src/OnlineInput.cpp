@@ -8,20 +8,18 @@ OnlineInput::OnlineInput()
 
 std::pair<sf::Vector2f, bool> OnlineInput::getInput(gameInput input)
 {
-	(input._host ? server(input/*, info*/) : client(input/*, info*/));
+	(input._host ? server(input) : client(input));
 
 	auto xDir = 0.f, yDir = 0.f;
 	auto shoot = false;
 	xDir = m_transferData._dir.x;
 	yDir = m_transferData._dir.y;
 	shoot = m_transferData._shoot;
-	//info >> xDir >> yDir >> shoot;
-	//std::cout << xDir << ' ' << yDir << ' ' << shoot << '\n';
 
 	return std::make_pair(sf::Vector2f(xDir, yDir), shoot);
 }
 
-void OnlineInput::server(gameInput input/*, sf::Packet& info*/)
+void OnlineInput::server(gameInput input)
 {
 	auto size = size_t();
 	m_transferData._dir = input._otherBear.first;
@@ -30,7 +28,7 @@ void OnlineInput::server(gameInput input/*, sf::Packet& info*/)
 	m_socket.receive(&m_transferData, sizeof(m_transferData), size);
 }
 
-void OnlineInput::client(gameInput input/*, sf::Packet& info*/)
+void OnlineInput::client(gameInput input)
 {
 	auto size = size_t();
 	m_transferData._dir = input._otherBear.first;
