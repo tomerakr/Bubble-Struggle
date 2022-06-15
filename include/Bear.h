@@ -49,4 +49,6 @@ private:
 	bool m_shield = false;
 	bool m_freezeRope = false;
 	bool m_host = false;
+	float m_speedPerSecond = 200.f;
+
 };

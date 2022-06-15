@@ -89,7 +89,7 @@ void MenuScreen::createButton()
 	for (int i = 0 ; i < maxVolume; ++i)
 	{
 		m_volume.emplace_back(Button{sf::Vector2f(xPos + (i * xSize * 2), yPos), sf::Vector2f(xSize, ySize), Objects::Button, std::to_string(i)});
-		m_volume.back().textSize(15);
+		m_volume.back().textSize(20);
 	}
 
 	ySize = 70;
@@ -99,7 +99,7 @@ void MenuScreen::createButton()
 	for (int i = 0; i < screenSizes; ++i)
 	{
 		m_settingsButtons.emplace_back(Button{ sf::Vector2f(xPos + (i * xSize * 2), yPos), sf::Vector2f(xSize, ySize), Objects::Button, m_settingsButtonsText[i]});
-		m_volume.back().textSize(20);
+		m_settingsButtons.back().textSize(23);
 	}
 }
 
@@ -155,7 +155,6 @@ gameInfo MenuScreen::menu()
 						m_output.setString(m_input);
 					}
 				}
-				
 			}
 			break;
 
