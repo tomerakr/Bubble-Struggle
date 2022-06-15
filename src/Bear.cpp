@@ -12,7 +12,6 @@ Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, 
 	:MovingObject(pos, sf::Vector2f(bearWitdh, bearHeight), Objects::Bears),
 	m_gun(textureIndex, board), m_board(board), m_lives(START_LIFE), m_score(0), m_animation(sf::Vector2u(NUM_OF_BEARS_IN_ROW, static_cast<int>(bearTypes::MAX)), 0.09)
 {
-	m_pos = pos;
 	m_animation.changeTexture(m_icon.getTexture(), textureIndex);
 	//texture index range: 0 - 3
 	m_icon.setTextureRect(m_animation.getUvRect());
@@ -60,7 +59,7 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	//m_box2DBear->SetUserData(this);
 }
 
-std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
+std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, const std::pair<const sf::Vector2f&, bool>& otherBear)
 {
 	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear, m_host });
 	auto lastPos = m_icon.getPosition();
@@ -70,7 +69,7 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == BEAR_HIT_WALL)
 	{
-		std::cout << "last pos: " << lastPos.x << ' ' << lastPos.y << " currPos: " << m_icon.getPosition().x << ' ' << m_icon.getPosition().y << '\n';
+		//std::cout << "last pos: " << lastPos.x << ' ' << lastPos.y << " currPos: " << m_icon.getPosition().x << ' ' << m_icon.getPosition().y << '\n';
 		m_icon.setPosition(lastPos);
 	}
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)

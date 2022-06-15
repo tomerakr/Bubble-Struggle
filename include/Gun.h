@@ -1,7 +1,9 @@
+#pragma once
+
 #include "Rope.h"
 #include <SFML/Graphics.hpp>
-
 #include <vector>
+
 class Board;
 
 class Gun

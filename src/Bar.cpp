@@ -16,7 +16,7 @@ Bar::Bar()
 	setBackgroud();
 }
 
-void Bar::setText(sf::Text &text, unsigned size, sf::Vector2f pos)
+void Bar::setText(sf::Text &text, unsigned size, const sf::Vector2f& pos)
 {
 	text.setCharacterSize(size);
 	text.setFont(*Resources::instance().getFont());
@@ -56,7 +56,7 @@ void Bar::setBar(float time, const gameInfo& info)
 	}
 }
 
-void Bar::setBearInfo(const gameInfo& info, Objects texture, sf::RectangleShape &element, sf::Vector2f size, int index)
+void Bar::setBearInfo(const gameInfo& info, const Objects& texture, sf::RectangleShape &element, const sf::Vector2f& size, int index)
 {
 	element.setSize(size);
 	element.setOrigin(sf::Vector2f(size.x / 2, size.y / 2));
@@ -78,7 +78,7 @@ void Bar::update(std::vector<Bear> &bears)
 	m_timer.update();
 }
 
-bool Bar::isTimeEnd() const
+bool Bar::timeEnded() const
 {
 	return m_timer.timeEnd();
 }
@@ -114,7 +114,7 @@ void Bar::draw(sf::RenderWindow& window, std::vector<Bear> &bears)
 	}
 }
 
-void Bar::drawBackgroundText(sf::RenderWindow& window, sf::Vector2f pos, sf::Vector2f size)
+void Bar::drawBackgroundText(sf::RenderWindow& window, const sf::Vector2f& pos, const sf::Vector2f& size)
 {
 	m_objectsBackground.setSize(size);
 	m_objectsBackground.setOrigin(0, size.y / 2);

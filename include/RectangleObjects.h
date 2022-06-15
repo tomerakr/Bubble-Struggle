@@ -1,6 +1,8 @@
 #pragma once
 
 #include "GameObject.h"
+#include "SFML/Graphics.hpp"
+#include "Macros.h"
 
 class RectangleObjects : public GameObject
 {

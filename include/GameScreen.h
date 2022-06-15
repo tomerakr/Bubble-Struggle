@@ -2,10 +2,10 @@
 
 #include "Macros.h"
 #include "Bar.h"
+#include "board.h"
 #include "SFML/Graphics.hpp"
 #include <utility>
 #include <vector>
-#include "board.h"
 
 class Controller;
 class Bear;

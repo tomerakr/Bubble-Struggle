@@ -1,7 +1,7 @@
 #include "Button.h"
 #include "Resources.h"
 
-Button::Button(const sf::Vector2f& pos, const sf::Vector2f& size, Objects texture, const std::string& text)
+Button::Button(const sf::Vector2f& pos, const sf::Vector2f& size, const Objects& texture, const std::string& text)
 	:RectangleObjects(pos, size, texture)
 {
 	m_icon.setOrigin(size.x / 2, size.y / 2);
@@ -31,7 +31,7 @@ const bool Button::hover(const sf::Vector2f& mousePos)
 {
 	if (m_icon.getGlobalBounds().contains(mousePos))
 	{
-		m_icon.setRotation(5);
+		m_icon.setRotation(5); //ADD CONSTS
 		m_text.setRotation(5);
 		return true;
 	}

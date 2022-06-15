@@ -1,3 +1,2 @@
 Level 1.txt
 Level 2.txt
-Level 3.txt

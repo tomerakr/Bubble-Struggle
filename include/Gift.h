@@ -11,7 +11,7 @@ class Bear;
 class Gift : public StaticObject
 {
 public:
-	Gift(const sf::Vector2f position, Board* board, int giftFilter);
+	Gift(const sf::Vector2f& position, Board* board, int giftFilter);
 
 	void update();
 	void destroyBody();

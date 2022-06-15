@@ -1,6 +1,6 @@
 #include "GameScreen.h"
-#include "Bear.h"
 #include "Controller.h"
+#include "Bear.h"
 #include <time.h>
 
 GameScreen::GameScreen(Controller* ctrl)
@@ -86,7 +86,7 @@ void GameScreen::game(const gameInfo& info)
 			textureSize.x / numOfGameBackgrounds, textureSize.y));
 
 		m_board.createNormal();
-		//m_board.setLevel();
+		m_board.setLevel();
 		break;
 
 	case gameMode::Survival:
@@ -99,7 +99,6 @@ void GameScreen::game(const gameInfo& info)
 		{
 			m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * i + SurvivalWidth, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 			m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
-
 		}
 
 		m_mainBear = &m_bears.front();
@@ -156,10 +155,8 @@ void GameScreen::update(float deltaTime)
 	if (m_board.getNumBalls() == 0)
 	{
 		m_isWon = true;
-
 	}
-
-	if (m_bar.isTimeEnd())
+	if (m_bar.timeEnded())
 	{
 		m_board.resetLevel();
 		for (auto& bear : m_bears)
@@ -167,7 +164,6 @@ void GameScreen::update(float deltaTime)
 			bear.decLives();
 		}
 	}
-
 	if (allBearsDead())
 	{
 		clear();
@@ -177,17 +173,14 @@ void GameScreen::update(float deltaTime)
 
 bool GameScreen::allBearsDead()
 {
-	int numOfDeadBears = 0;
-
 	for (auto& bear : m_bears)
 	{
-		if (bear.getNumOfLives() == 0)
+		if (bear.getNumOfLives() != 0)
 		{
-			++numOfDeadBears;
+			return false;
 		}
 	}
-
-	return numOfDeadBears == m_bears.size();
+	return true;
 }
 
 void GameScreen::drawNormal()

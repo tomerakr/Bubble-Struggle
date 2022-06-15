@@ -1,6 +1,5 @@
 #include "ContactListener.h"
 #include "Macros.h"
-#include <iostream>
 
 void ContactListener::BeginContact(b2Contact* contact)
 {   

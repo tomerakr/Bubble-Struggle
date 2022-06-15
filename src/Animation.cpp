@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-Animation::Animation(sf::Vector2u imageCount, const float swicthTime)
+Animation::Animation(const sf::Vector2u& imageCount, const float swicthTime)
 	: m_imgaeCount(imageCount), m_switchTime(swicthTime)
 {
 	m_totalTime = 0.0f;

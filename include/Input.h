@@ -7,7 +7,6 @@
 class Input
 {
 public:
-	//virtual ~Input() = 0;
 	virtual ~Input() = default;
 	virtual std::pair<sf::Vector2f, bool> getInput(gameInput input) = 0;
 };

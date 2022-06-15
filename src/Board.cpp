@@ -5,7 +5,6 @@
 #include <time.h>
 
 Board::Board()
-	:m_currLevel(1)
 {
 	setWorld();
 	srand(time(NULL));
@@ -104,7 +103,7 @@ void Board::update()
 
 		if (ball.popped())
 		{
-			ball.destroyBody();
+			ball.destroy();
 			ball.split();
 			break;
 		}
@@ -113,6 +112,7 @@ void Board::update()
 	for (auto& gift : m_gifts)
 	{
 		gift.update();
+		gift.destroyBody();
 	}
 
 	std::erase_if(m_balls, [](auto& ball) { return ball.popped() || ball.destroied(); });
@@ -137,7 +137,7 @@ void Board::reset()
 	}
 	for (auto& ball : m_balls)
 	{
-		ball.destroyBody();
+		ball.destroy();
 	}
 	for (auto& gift : m_gifts)
 	{
@@ -173,9 +173,9 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 	m_balls.emplace_back(this, pos2, b2Vec2(20, -30), index);
 }
 
-void Board::addGift(const sf::Vector2f position)
+void Board::addGift(const sf::Vector2f& position)
 {
-	auto addGift = rand() % 1; //chances to get gift is 1 to 14
+	auto addGift = rand() % CHANCE_OF_GIFT; //chances to get gift is 1 to 14
 
 	auto giftType = rand() % static_cast<int>(giftTypes::MAX);
 	if (!addGift)
