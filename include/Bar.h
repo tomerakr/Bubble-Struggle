@@ -18,6 +18,8 @@ public:
 
 	void addTime();
 
+	void setTime(const int seconds);
+
 private:
 	void setBearInfo(const gameInfo& info, const Objects& texture, sf::RectangleShape &elements, const sf::Vector2f& size, int index);
 	void setText(sf::Text &text, unsigned size, const sf::Vector2f& pos = sf::Vector2f(0, 0));
