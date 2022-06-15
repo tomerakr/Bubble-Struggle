@@ -76,11 +76,11 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, const std::pa
 	{
 		if (!m_shield)
 		{
-			--m_lives;
-			if (0 == m_lives)
-			{
-				//m_lives = START_LIFE;
-			}
+			decLives();
+			//if (0 == m_lives)
+			//{
+			//	//m_lives = START_LIFE;
+			//}
 		}
 		else
 		{

@@ -175,13 +175,25 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 
 void Board::addGift(const sf::Vector2f& position)
 {
-	auto addGift = rand() % CHANCE_OF_GIFT; //chances to get gift is 1 to 14
+	auto addGift = rand() % 10000000;//CHANCE_OF_GIFT; //chances to get gift is 1 to 14
 
 	auto giftType = rand() % static_cast<int>(giftTypes::MAX);
 	if (!addGift)
 	{
 		m_gifts.emplace_back(Gift(position, this, giftType));
 	}
+}
+
+void Board::addBall(const sf::Vector2f& pos, const b2Vec2& force, int index)
+{
+	m_balls.emplace_back(this, pos, force, index);
+}
+
+void Board::addBall(Ball& ball, int distance)
+{
+	auto pos = ball.getPos();
+	m_balls.emplace_back(this, sf::Vector2f(pos.x + distance - ball.getCurrDirection() * ball.getRaidus(), pos.y),
+		ball.getForce(), ball.getIndex());
 }
 
 void Board::nextLevel()

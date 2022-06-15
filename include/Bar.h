@@ -11,8 +11,8 @@ class Bar
 public:
 	Bar();
 	void setBar(float time, const gameInfo& info);
-	void update(std::vector<Bear> &bear); //no good needs iterator
-	void draw(sf::RenderWindow &window, std::vector<Bear> &bears);
+	void update(const std::vector<int> scores);
+	void draw(sf::RenderWindow &window, const std::vector<int>& bearsLives);
 	void setLevel(int level) { m_levelText.setString("LEVEL: " + std::to_string(level + 1)); }
 	bool timeEnded() const;
 
