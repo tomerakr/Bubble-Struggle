@@ -1,2 +1,0 @@
-Level 1.txt
-Level 2.txt

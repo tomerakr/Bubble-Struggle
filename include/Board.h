@@ -16,6 +16,8 @@ class Controller;
 
 class Board
 {
+	friend class BallIterator;
+
 public:
 	Board();
 	void draw(sf::RenderWindow& window);
@@ -36,7 +38,37 @@ public:
 	//=======================================
 	void addGift(const sf::Vector2f& position);
 
-	std::vector<Ball>* getBalls() { return &m_balls; } // add iterator ~~~~~~~~~~~!!!!!!!!!!!!!
+
+
+	class BallIterator
+	{
+	public:
+		BallIterator(std::vector<Ball>& balls) :m_balls(balls) {}
+		void next()
+		{
+			if (!isEnd())
+			{
+				++ballIndex;
+			}
+		}
+		bool isEnd() const
+		{
+			return ballIndex == m_balls.size();
+		}
+		Ball& value() const
+		{
+			return m_balls[ballIndex];
+		}
+
+
+	private:
+		std::vector<Ball>& m_balls;
+		int ballIndex = 0;
+	};
+
+	BallIterator getBalls() { return BallIterator(getBallsVector()); }
+
+
 	void addBall(const sf::Vector2f& pos, const b2Vec2& force, int index)
 	{
 		m_balls.emplace_back(this, pos, force, index);
@@ -64,4 +96,8 @@ private:
 	int32 m_velocityIteration = 10;
 	int32 m_positionIteration = 2;
 	int m_currLevel;
+
+	std::vector<Ball>& getBallsVector() { return m_balls; }
+
 };
+

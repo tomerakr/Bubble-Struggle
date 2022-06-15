@@ -29,6 +29,3 @@ configure_file ("Font.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # ================ L E V E L S ================ must be last
 configure_file ("LevelsNames.txt" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("Level 1.txt" ${CMAKE_BINARY_DIR} COPYONLY)
-
-configure_file ("Level 2.txt" ${CMAKE_BINARY_DIR} COPYONLY)
