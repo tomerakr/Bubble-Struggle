@@ -83,7 +83,7 @@ void GameScreen::game(const gameInfo& info)
 			textureSize.x / numOfGameBackgrounds, textureSize.y));
 
 		m_board.createNormal();
-		m_board.setLevel();
+		//m_board.setLevel();
 		break;
 
 	case gameMode::Survival:
@@ -96,6 +96,7 @@ void GameScreen::game(const gameInfo& info)
 		{
 			m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * i + SurvivalWidth, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 			m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
+
 		}
 
 		m_mainBear = &m_bears.front();
@@ -152,6 +153,10 @@ void GameScreen::update(float deltaTime)
 	if (m_board.getNumBalls() == 0)
 	{
 		m_board.nextLevel();
+		for (auto& bear : m_bears)
+		{
+			bear.resetPowers();
+		}
 		auto textureSize = m_background.getTexture()->getSize();
 		m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * rand() % numOfGameBackgrounds, 0,
 			textureSize.x / numOfGameBackgrounds, textureSize.y));

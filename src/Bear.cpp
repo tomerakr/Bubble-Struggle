@@ -34,6 +34,13 @@ Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, 
 	defineBear2d(pos);
 }
 
+void Bear::resetPowers()
+{
+	m_shield = false;
+	m_freezeRope = false;
+	m_gun.resetPowers();
+}
+
 void Bear::defineBear2d(const sf::Vector2f& pos)
 {
 	b2BodyDef bodyDef;

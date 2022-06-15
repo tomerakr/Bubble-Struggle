@@ -13,6 +13,7 @@ public:
 	void freeze() { m_freeze = true; }
 	void drawRopes(sf::RenderWindow& window);
 	void incMaxRopes() { ++m_maxRopes; }
+	void resetPowers();
 
 private:
 	std::vector<Rope> m_ropes;
