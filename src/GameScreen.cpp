@@ -147,7 +147,7 @@ Screen GameScreen::update(float deltaTime, gameInfo& info)
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
 	for (auto& bear : m_bears)
 	{
-		otherBear = bear.update(deltaTime, otherBear);
+		otherBear = bear.update(deltaTime, otherBear, this);
 		scores.push_back(bear.getScore());
 	}
 	m_bar.update(scores);
@@ -244,12 +244,12 @@ void GameScreen::updateSurvival(float deltaTime)
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
 	for (auto& bear : m_bears)
 	{
-		otherBear = bear.update(deltaTime, otherBear);
+		otherBear = bear.update(deltaTime, otherBear, this);
 		scores.push_back(bear.getScore());
 	}
 	for (auto& bear : m_dummyBears)
 	{
-		bear.update(deltaTime, otherBear);
+		bear.update(deltaTime, otherBear, this);
 	}
 
 	updateBearSurvivalPosition();
