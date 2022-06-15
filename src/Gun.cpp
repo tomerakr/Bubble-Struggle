@@ -38,3 +38,9 @@ void Gun::drawRopes(sf::RenderWindow& window)
 		rope.draw(window);
 	}
 }
+
+void Gun::resetPowers()
+{
+	m_maxRopes = 1;
+	m_freeze = false;
+}

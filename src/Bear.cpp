@@ -35,6 +35,13 @@ Bear::Bear(const sf::Vector2f& pos, Board* board, const receiveInfo& readInput, 
 	defineBear2d(pos);
 }
 
+void Bear::resetPowers()
+{
+	m_shield = false;
+	m_freezeRope = false;
+	m_gun.resetPowers();
+}
+
 void Bear::defineBear2d(const sf::Vector2f& pos)
 {
 	b2BodyDef bodyDef;
@@ -73,7 +80,7 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 			--m_lives;
 			if (0 == m_lives)
 			{
-				m_lives = START_LIFE;
+				//m_lives = START_LIFE;
 			}
 		}
 		else

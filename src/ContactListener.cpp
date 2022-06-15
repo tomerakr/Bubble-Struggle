@@ -89,6 +89,18 @@ void ContactListener::BeginContact(b2Contact* contact)
         fixtureB->SetFilterData(shieldGift);
     }
 
+    else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
+        fixtureB->GetFilterData().groupIndex == SHIELD_FILTER)
+    {
+        b2Filter timeGift;
+
+        timeGift.groupIndex = TIME_FILTER;
+        fixtureA->SetFilterData(timeGift);
+
+        timeGift.groupIndex = TOUCH_BEAR;
+        fixtureB->SetFilterData(timeGift); 
+    }
+
 //      if rope collided with wall
 //      A - wall, B - rope
     else if (fixtureA->GetFilterData().groupIndex == TILE &&
@@ -122,4 +134,91 @@ void ContactListener::BeginContact(b2Contact* contact)
         ////  fixtureA->SetFilterData(destroyObjects);
         //fixtureB->SetFilterData(tileFilter);
     }
+
+
+
+
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    fixtureB->GetFilterData().groupIndex == LIFE_FILTER)
+    {
+        b2Filter destroyObjects;
+        destroyObjects.groupIndex = TOUCH_BEAR;
+        fixtureB->SetFilterData(destroyObjects);
+    }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    fixtureB->GetFilterData().groupIndex == FREEZE_FILTER)
+    {
+        b2Filter destroyObjects;
+        destroyObjects.groupIndex = TOUCH_BEAR;
+        fixtureB->SetFilterData(destroyObjects);
+    }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    fixtureB->GetFilterData().groupIndex == SHIELD_FILTER)
+    {
+        b2Filter destroyObjects;
+        destroyObjects.groupIndex = TOUCH_BEAR;
+        fixtureB->SetFilterData(destroyObjects);
+    }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    fixtureB->GetFilterData().groupIndex == TIME_FILTER)
+    {
+        b2Filter destroyObjects;
+        destroyObjects.groupIndex = TOUCH_BEAR;
+        fixtureB->SetFilterData(destroyObjects);
+    }
+
+    else if (fixtureA->GetFilterData().groupIndex == TILE &&
+             fixtureB->GetFilterData().groupIndex == DOUBLE_SHOT_FILTER)
+    {
+        b2Filter destroyObjects;
+        destroyObjects.groupIndex = TOUCH_BEAR;
+        fixtureB->SetFilterData(destroyObjects);
+    }
+
+
+
+    //else if (fixtureA->GetFilterData().groupIndex == TILE &&
+    //fixtureB->GetFilterData().groupIndex == LIFE_FILTER)
+    //{
+    //b2Filter destroyObjects;
+    //destroyObjects.groupIndex = TOUCH_BEAR;
+    //fixtureA->SetFilterData(destroyObjects);
+    //}
+
+    //else if (fixtureB->GetFilterData().groupIndex == TILE &&
+    //fixtureA->GetFilterData().groupIndex == FREEZE_FILTER)
+    //{
+    //b2Filter destroyObjects;
+    //destroyObjects.groupIndex = TOUCH_BEAR;
+    //fixtureA->SetFilterData(destroyObjects);
+    //}
+
+    //else if (fixtureB->GetFilterData().groupIndex == TILE &&
+    //fixtureA->GetFilterData().groupIndex == SHIELD_FILTER)
+    //{
+    //b2Filter destroyObjects;
+    //destroyObjects.groupIndex = TOUCH_BEAR;
+    //fixtureA->SetFilterData(destroyObjects);
+    //}
+
+    //else if (fixtureB->GetFilterData().groupIndex == TILE &&
+    //fixtureA->GetFilterData().groupIndex == TIME_FILTER)
+    //{
+    //b2Filter destroyObjects;
+    //destroyObjects.groupIndex = TOUCH_BEAR;
+    //fixtureA->SetFilterData(destroyObjects);
+    //}
+
+    //else if (fixtureB->GetFilterData().groupIndex == TILE &&
+    //fixtureA->GetFilterData().groupIndex == DOUBLE_SHOT_FILTER)
+    //{
+    //b2Filter destroyObjects;
+    //destroyObjects.groupIndex = TOUCH_BEAR;
+    //fixtureA->SetFilterData(destroyObjects);
+    //}
+
 }

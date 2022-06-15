@@ -86,7 +86,7 @@ void GameScreen::game(const gameInfo& info)
 			textureSize.x / numOfGameBackgrounds, textureSize.y));
 
 		m_board.createNormal();
-		m_board.setLevel();
+		//m_board.setLevel();
 		break;
 
 	case gameMode::Survival:
@@ -99,6 +99,7 @@ void GameScreen::game(const gameInfo& info)
 		{
 			m_dummyBears.emplace_back(Bear{ sf::Vector2f(xPos * i + SurvivalWidth, yPos), &m_board, info._receive, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 			m_dummyBears.back().setKeys(&m_keys[(info._numOfPlayers - i) % m_keys.size()]);
+
 		}
 
 		m_mainBear = &m_bears.front();
@@ -154,12 +155,39 @@ void GameScreen::update(float deltaTime)
 	//if no balls left, proceed to next level
 	if (m_board.getNumBalls() == 0)
 	{
-		m_board.nextLevel();
-		m_bar.setLevel(m_board.getLevelIndex());
-		auto textureSize = m_background.getTexture()->getSize();
-		m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * (rand() % numOfGameBackgrounds), 0,
-			textureSize.x / numOfGameBackgrounds, textureSize.y));
+		m_isWon = true;
+
 	}
+
+	if (m_bar.isTimeEnd())
+	{
+		m_board.resetLevel();
+		for (auto& bear : m_bears)
+		{
+			bear.decLives();
+		}
+	}
+
+	if (allBearsDead())
+	{
+		clear();
+		m_isLost = true;
+	}
+}
+
+bool GameScreen::allBearsDead()
+{
+	int numOfDeadBears = 0;
+
+	for (auto& bear : m_bears)
+	{
+		if (bear.getNumOfLives() == 0)
+		{
+			++numOfDeadBears;
+		}
+	}
+
+	return numOfDeadBears == m_bears.size();
 }
 
 void GameScreen::drawNormal()
@@ -294,6 +322,26 @@ Screen GameScreen::handleKeyboard()
 	{
 		return Screen::menu;
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		if (m_isWon)
+		{
+			m_board.nextLevel();
+			auto textureSize = m_background.getTexture()->getSize();
+			m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * rand() % numOfGameBackgrounds, 0,
+				textureSize.x / numOfGameBackgrounds, textureSize.y));
+			m_isWon = false;
+		}
+
+		if (m_isLost)
+		{
+			m_board.pickLevel(1);
+			//	how to return to the menu?
+			return Screen::menu;
+		}
+	}
+
 	return Screen::game;
 }
 

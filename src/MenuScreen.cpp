@@ -98,7 +98,7 @@ void MenuScreen::createButton()
 // Exit
 
 gameInfo MenuScreen::menu()
-{
+{  
 	m_info._screen = Screen::menu;
 	auto& window = m_controller->getWindow();
 	draw();

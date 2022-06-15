@@ -26,7 +26,7 @@ const int Timer::getTimeLeft()
 	return m_levelTime;
 }
 
-bool Timer::timeEnd()
+bool Timer::timeEnd() const
 {
 	return m_timeLeft <= 0;
 }

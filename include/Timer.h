@@ -10,7 +10,7 @@ public:
 	void update();
 	const int getTimeLeft();
 	void draw(sf::RenderWindow& window) { window.draw(m_timeline); }
-	bool timeEnd();
+	bool timeEnd() const;
 
 private:
 	sf::Clock m_clock;

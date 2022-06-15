@@ -19,7 +19,7 @@ constexpr int EPSILON = 5;
 constexpr int RIGHT = 1;
 constexpr int LEFT = -1;
 constexpr int numOfGameBackgrounds = 4;
-constexpr int CHANCE_OF_GIFT = 14;
+constexpr int CHANCE_OF_GIFT = 2;
 
 constexpr int BALL_FILTER = -1;
 constexpr int ROPE_FILTER = -2;

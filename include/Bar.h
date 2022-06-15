@@ -19,6 +19,8 @@ public:
 	void setLevel(int level) { m_levelText.setString("LEVEL: " + std::to_string(level)); }
 
 private:
+	bool isTimeEnd() const;
+	void draw(sf::RenderWindow &window, std::vector<Bear> &bears); //why not pointer to bear
 	void drawBackgroundText(sf::RenderWindow& window, sf::Vector2f pos, sf::Vector2f size);
 
 	Timer m_timer;
