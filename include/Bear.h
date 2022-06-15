@@ -29,6 +29,7 @@ public:
 	unsigned int getScore()		{ return m_score; }
 	void setHost()				{ m_host = true; }
 	void resetPowers();
+	void decLives()				{ --m_lives; }
 
 private:
 	void defineBear2d(const sf::Vector2f&);

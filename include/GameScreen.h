@@ -26,6 +26,7 @@ private:
 	void setViews(sf::View& leftView, sf::View& rightView);
 	void clear();
 	void update(float deltaTime);
+	bool allBearsDead();
 	Screen handleKeyboard();
 	void drawNormal();
 
@@ -46,5 +47,6 @@ private:
 	std::vector<Bear> m_bears;
 	Board m_board;
 	Bar m_bar;
-	
+	bool m_isWon = false;
+	bool m_isLost = false;
 };
