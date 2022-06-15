@@ -3,6 +3,7 @@
 #include "PcInput.h"
 #include "OnlineInput.h"
 #include <iostream>
+#include "GameScreen.h"
 
 constexpr int NUM_OF_BEARS_IN_ROW = 9;
 constexpr int maxPoints = 80;
@@ -59,7 +60,8 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	//m_box2DBear->SetUserData(this);
 }
 
-std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, const std::pair<const sf::Vector2f&, bool>& otherBear)
+std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, const std::pair<const sf::Vector2f&, bool>& otherBear, 
+													GameScreen* gameScreen)
 {
 	const auto& [direction, shoot] = m_getInput->getInput(gameInput{ m_keys, otherBear, m_host });
 	auto lastPos = m_icon.getPosition();
@@ -106,6 +108,10 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, const std::pa
 	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == SHIELD_FILTER)
 	{
 		m_shield = true;
+	}
+	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == TIME_FILTER)
+	{
+		gameScreen->addTime();
 	}
 	resetFilter();
 

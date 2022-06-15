@@ -84,6 +84,11 @@ bool Bar::timeEnded() const
 	return m_timer.timeEnd();
 }
 
+void Bar::addTime()
+{
+	m_timer.addTime();
+}
+
 void Bar::draw(sf::RenderWindow& window, const std::vector<int> &bearsLives)
 {
 	window.draw(m_background);

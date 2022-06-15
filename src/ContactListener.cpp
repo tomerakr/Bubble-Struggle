@@ -89,7 +89,7 @@ void ContactListener::BeginContact(b2Contact* contact)
     }
 
     else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
-        fixtureB->GetFilterData().groupIndex == SHIELD_FILTER)
+        fixtureB->GetFilterData().groupIndex == TIME_FILTER)
     {
         b2Filter timeGift;
 
