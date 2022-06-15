@@ -15,6 +15,12 @@ MenuScreen::MenuScreen(Controller* ctrl, int numOfLevels)
 	m_background.setTextureRect(sf::IntRect(0, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 	m_info._skinIndex = 0;
 	m_info._host = false;
+
+	m_output.setColor(sf::Color(164, 164, 164));
+	m_output.setCharacterSize(30);
+	m_output.setFont(*Resources::instance().getFont());
+	m_output.setPosition(500, 500);
+	m_output.setString("Enter your IP:");
 }
 
 void MenuScreen::createButton()
@@ -33,6 +39,10 @@ void MenuScreen::createButton()
 		}
 		m_buttons.push_back(line);
 	}
+
+	m_textRectangle.setFillColor(sf::Color(255, 255, 255, 150));
+	m_textRectangle.setSize(sf::Vector2f(300, 70));
+	m_textRectangle.setPosition(windowWidth / 2 - m_textRectangle.getSize().x / 2, yPos + (ySize + 10) * 2);
 }
 
 //============ O R D E R  FOR  M E N U ============
@@ -65,7 +75,7 @@ gameInfo MenuScreen::menu()
 			break;
 
 		case sf::Event::KeyPressed:
-			handleKeyboard();
+			handleKeyboard(event);
 			break;
 
 		default:
@@ -95,6 +105,10 @@ gameInfo MenuScreen::handlePress(const sf::Vector2f& mousePos)
 
 	case static_cast<int>(connection):
 		connectionPress(mousePos);
+		break;
+
+	case static_cast<int>(connectionType):
+		connectType(mousePos);
 		break;
 	default:
 		break;
@@ -134,7 +148,7 @@ void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos)
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Help)].isPressed(mousePos))
 	{
-		m_info._host = true;
+		//m_info._host = true;
 	}
 	if (clickSound)
 	{
@@ -195,14 +209,35 @@ void MenuScreen::connectionPress(const sf::Vector2f& mousePos)
 	else if (m_buttons[m_wantedMenu][int(buttonNames::Online)].isPressed(mousePos))
 	{
 		m_info._receive = receiveInfo::Online;
-		m_info._screen = Screen::game;
-		m_info._newGame = true;
-		//m_wantedMenu = static_cast<int>(menuNames::connectionType);
+		//m_info._screen = Screen::game;
+		//m_info._newGame = true;
+		m_wantedMenu = static_cast<int>(menuNames::connectionType);
+		m_onlineConnection = true;
 		clickSound = true;
 	}
 	if (clickSound)
 	{
 		Resources::instance().playSound(Sound::click);
+	}
+}
+
+void MenuScreen::connectType(const sf::Vector2f& mousePos)
+{
+	if (m_buttons[m_wantedMenu][int(buttonNames::Host)].isPressed(mousePos))
+	{
+		//m_info._receive = receiveInfo::SamePc;
+		//m_info._screen = Screen::game;
+		//m_info._newGame = true;
+		//m_wantedMenu = static_cast<int>(menuNames::mainMenu);
+		//clickSound = true;
+		//m_connectionText.setString("Sdfc");
+		m_info._host = true;
+		//m_onlineConnection = false;
+	}
+
+	else if (m_buttons[m_wantedMenu][int(buttonNames::Connect)].isPressed(mousePos))
+	{
+		m_connectPressed = true;
 	}
 }
 
@@ -219,7 +254,7 @@ void MenuScreen::handleHover(const sf::Vector2f& mousePos)
 	}
 }
 
-void MenuScreen::handleKeyboard()
+void MenuScreen::handleKeyboard(sf::Event event)
 {
 	auto right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -243,6 +278,17 @@ void MenuScreen::handleKeyboard()
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
 		m_chooseLevel = false;
 	}
+	else if (m_connectPressed)
+	{
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.type == sf::Event::TextEntered) {
+				if (event.text.unicode < 128) {
+					m_input += static_cast<char>(event.text.unicode);
+					m_output.setString(m_input);
+				}
+			}
+		}
+	}
 }
 
 void MenuScreen::draw()
@@ -257,11 +303,17 @@ void MenuScreen::draw()
 			levelButton.draw(window);
 		}
 	}
+
 	else
 	{
 		for (auto& button : m_buttons[m_wantedMenu])
 		{
 			button.draw(window);
+		}
+		if (m_onlineConnection)
+		{
+			window.draw(m_textRectangle);
+			window.draw(m_output);
 		}
 	}
 	
