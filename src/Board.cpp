@@ -87,11 +87,11 @@ void Board::draw(sf::RenderWindow& window)
 	}
 
 	//------- BOX2D VIEWER -------
-	DebugDraw d(window);
-	uint32 flags = b2Draw::e_shapeBit;
-	d.SetFlags(flags);
-	m_world->SetDebugDraw(&d);
-	m_world->DebugDraw();
+	//DebugDraw d(window);
+	//uint32 flags = b2Draw::e_shapeBit;
+	//d.SetFlags(flags);
+	//m_world->SetDebugDraw(&d);
+	//m_world->DebugDraw();
 }
 
 void Board::update()
@@ -164,7 +164,7 @@ void Board::addBalls(const sf::Vector2f& pos, const int index)
 
 void Board::addGift(const sf::Vector2f position)
 {
-	auto addGift = rand() % 1;// CHANCE_OF_GIFT; //chances to get gift is 1 to 14
+	auto addGift = rand() % CHANCE_OF_GIFT; //chances to get gift is 1 to 14
 
 	auto giftType = rand() % static_cast<int>(giftTypes::MAX);
 	if (!addGift)

@@ -5,7 +5,7 @@
 GameScreen::GameScreen(Controller* ctrl)
 	: m_controller(ctrl), m_board()
 {
-	//Resources::instance().playSound(Sound::theme);
+	Resources::instance().playSound(Sound::theme);
 
 	auto keys = std::vector<sf::Keyboard::Key>();
 	keys.push_back(sf::Keyboard::Left);
@@ -57,7 +57,7 @@ void GameScreen::game(const gameInfo& info)
 	auto yPos = windowHeight - barHeight - bearHeight - thickness;
 	auto textureIndex = info._skinIndex;
 
-	m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex });
+	m_bears.emplace_back(Bear{ sf::Vector2f(xPos * info._numOfPlayers, yPos), &m_board, receiveInfo::Solo, textureIndex++ % static_cast<int>(bearTypes::MAX) });
 	m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
 	
 	m_board.pickLevel(info._level);
@@ -107,11 +107,6 @@ void GameScreen::game(const gameInfo& info)
 		break;
 	}
 }
-
-//void GameScreen::createSuvival()
-//{
-//
-//}
 
 Screen GameScreen::playNormal()
 {

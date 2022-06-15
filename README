@@ -7,7 +7,21 @@ Netanel Bondar		- 207211848
 Tomer Akrish		- 315224295
 
 ============================= G A M E - R U L E S =============================
+In Bubble Trouble your goal is to pop all the balls in each level without getting
+hit by the balls. In our version we actualized the normal game + survival mode.
+Normal: you can either play SOLO or DUO (same pc or online), play along the levels
+	and win, when you pop a ball you got a chance of getting a gift, each time you 
+	get hit by ball the level will reset and you'll lose 1 life, when the lives
+	end the game will be over.
 
+Survival: 1 endless level without any walls (so you can go in either direction 
+	for ever) and the balls spawn on you infinitely the game is over when you lose
+	all the lives. In this mode you can only play SOLO
+
+Level Creator: you can create your own levels and play them, just click save and
+	reload the game and the level will be waiting for you (last one).
+	you can choose which balls to put (8 - smallest, 0 - biggest) which direction
+	they'll go, choose to add walls or floors.
 
 ================================ O B J E C T S ================================
 Ball	- 
@@ -15,54 +29,57 @@ Bear	-
 Rope	- 
 Tile	- 
 Button	- 
+Gift	-
 
 ======================= F I L E - D E S C R I P T I O N =======================
 ---------------------------------- .h files -----------------------------------
-Animation.h - 
+Animation.h - accountable for the animation properties in the game.
 
-Ball.h - 
+Ball.h - can create a ball with rigid body for the game or just the shape for level
+	creator.
 
-Bar.h - 
+Bar.h - accountable for all the game info, for example: time, lives, score and more.
 
-Bear.h - 
+Bear.h - multiple access functions, inherit from movingObjects.
 
-Board.h - 
+Board.h - world of the game, contains balls, base and added tiles and gifts.
 
-Button.h - 
+Button.h - can rotate, change colors, return if pressed.
 
-ContactListener.h - 
+ContactListener.h - accountable for collision detection.
 
-Controller.h - 
+Controller.h - controls the game, whether will show the game the menu or level creator
+	has window member.
 
-GameObject.h - 
+GameObject.h - has virtual draw function and pointer to b2Body.
 
-GameScreen.h - 
+GameScreen.h - accountable for all the game activities: normal or survival game.
 
-Gun.h - 
+Gun.h - has rope member and knows how many can he fire, which abilities he has.
 
-Input.h - 
+Input.h - virtual class for input in game, either from same Pc or from online.
 
-LevelCreator.h - 
+LevelCreator.h - has members of ball and tile to place on the "board" to create a level.
 
 Macros.h - Including all constants used across the program. For example: window and bear size, filter indexes etc.
 
-MenuScreen.h - 
+MenuScreen.h - accountable for menu show: buttons, help etc.
 
-MovingObject.h - 
+MovingObject.h - a class for moving objects.
 
-OnlineInput.h - 
+OnlineInput.h - reads input from online (lan) and send it to second player.
 
-PcInput.h - 
+PcInput.h - reads input from keyboard.
 
-Resources.h - 
+Resources.h - singleton class thats hold all the resources for the entire game.
 
-Rope.h - 
+Rope.h - rope popper.
 
-StaticObject.h - 
+StaticObject.h - a class for static objects.
 
-Tile.h - 
+Tile.h - using it as a wall, floor, floating floor or any tile in the game.
 
-Timer.h - 
+Timer.h - time in class.
 
 ---------------------------------- .cpp files ---------------------------------
 Animation.cpp - 
