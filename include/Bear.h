@@ -7,6 +7,7 @@
 #include "Gun.h"
 #include "Rope.h"
 #include <vector>
+#include <utility>
 #include "Input.h"
 
 
@@ -39,6 +40,7 @@ private:
 
 	std::unique_ptr<Input> m_getInput = nullptr;
 	std::vector<sf::Keyboard::Key> m_keys;
+	std::pair<int, int> m_maxPoints;
 
 	Gun m_gun;
 	b2Body* m_box2DBear = nullptr;
