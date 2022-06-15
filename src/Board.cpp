@@ -4,7 +4,8 @@
 #include <iostream>
 #include <time.h>
 
-Board::Board()
+Board::Board(GameScreen* gameScreen)
+	:m_gameScreen(gameScreen)
 {
 	setWorld();
 	srand(time(NULL));
@@ -39,6 +40,9 @@ void Board::createSurvival()
 
 void Board::setLevel()
 {
+
+	m_gameScreen->setTime(LEVEL_TIME);
+
 	auto file = std::ifstream(Resources::instance().getLevelName(m_currLevel));
 
 	// ---- BALLS ----

@@ -13,13 +13,14 @@
 #include "DebugDraw.h"
 
 class Controller;
+class GameScreen;
 
 class Board
 {
 	friend class BallIterator;
 
 public:
-	Board();
+	Board(GameScreen* gameScreen);
 	void draw(sf::RenderWindow& window);
 	void addBalls(const sf::Vector2f& pos, const int index);
 	void update();
@@ -85,6 +86,8 @@ private:
 	int32 m_velocityIteration = 10;
 	int32 m_positionIteration = 2;
 	int m_currLevel;
+
+	GameScreen* m_gameScreen = nullptr;
 
 	std::vector<Ball>& getBallsVector() { return m_balls; }
 

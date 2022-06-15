@@ -325,11 +325,11 @@ void MenuScreen::settingsPress(const sf::Vector2f& mousePos, bool& clickSound)
 	auto& window = m_controller->getWindow();
 	if (m_settingsButtons[LARGE].isPressed(mousePos))
 	{
-		;
+		window.setSize(sf::Vector2u(windowWidth + 150, windowHeight + 100));
 	}
 	else if (m_settingsButtons[NORMAL].isPressed(mousePos))
 	{
-		;
+		window.setSize(sf::Vector2u(windowWidth, windowHeight));
 	}
 }
 
