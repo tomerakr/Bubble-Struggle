@@ -6,6 +6,12 @@
 #include "Macros.h"
 #include <vector>
 
+struct bilbal
+{
+	sf::Vector2f _dir;
+	bool _shoot;
+};
+
 class OnlineInput : public Input
 {
 public:
@@ -13,13 +19,15 @@ public:
 	//~OnlineInput() = default;
 	std::pair<sf::Vector2f, bool> getInput(gameInput input);
 	sf::TcpSocket m_socket;
+	void host();
+	void connect(std::string ip);
+
 
 private:
-	void server(gameInput input, sf::Packet& info);
-	void client(gameInput input, sf::Packet& info);
+	void server(gameInput input/*, sf::Packet& info*/);
+	void client(gameInput input/*, sf::Packet& info*/);
 	bool m_connected = false;
-	//unsigned short m_port = 55001;
-	unsigned short m_remotePort = 54012;
-	//sf::IpAddress m_myAddress = sf::IpAddress::getLocalAddress();
-	sf::IpAddress m_remoteAddress = sf::IpAddress("10.33.33.16");
+
+	bilbal m_transferData;
 };
+

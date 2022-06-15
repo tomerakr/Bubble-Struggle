@@ -39,7 +39,7 @@ private:
 	std::pair<int, int> m_points; //left point, right point
 	std::vector<Bear> m_dummyBears;
 	Bear* m_mainBear;
-	float m_addBallSpaceTime = 10; //each 10 seconds add new ball
+	float m_addBallSpaceTime = 7; //each 7 seconds add new ball
 	float m_totalTime = 0;
 
 	sf::RectangleShape m_background;

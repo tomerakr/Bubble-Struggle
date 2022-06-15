@@ -74,12 +74,12 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 			{
 				//m_lives = START_LIFE;
 			}
-			m_board->resetLevel();
 		}
 		else
 		{
 			m_shield = false;
 		}
+		m_board->resetLevel();
 	}
 	else if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == FREEZE_FILTER)
 	{
