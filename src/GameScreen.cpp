@@ -34,6 +34,7 @@ Screen GameScreen::gamePlay(gameInfo& info)
 	{
 		game(info);
 		m_bar.setBar(LEVEL_TIME, info); //getLevel Time
+		m_bar.setLevel(info._level);
 		info._newGame = false;
 	}
 	auto screen = Screen::game;
@@ -183,7 +184,15 @@ void GameScreen::update(float deltaTime, gameInfo& info)
 		m_isLost = true;
 		auto textureSize = m_winLoseScreen.getTexture()->getSize();
 		m_winLoseScreen.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(backgrounds::MAX)) * 2, 0,
-			textureSize.x / static_cast<int>(backgrounds::MAX), textureSize.y));
+		textureSize.x / static_cast<int>(backgrounds::MAX), textureSize.y));
+	}
+
+	if (m_board.getLevelIndex() == Resources::instance().getNumOfLevels())
+	{
+		clear();
+		info._newGame = true;
+		m_isLost = true;
+		auto textureSize = m_winLoseScreen.getTexture()->getSize();
 	}
 }
 
