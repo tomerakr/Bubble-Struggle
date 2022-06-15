@@ -1,20 +1,27 @@
 #include "Resources.h"
 #include <fstream>
 
+constexpr int THEME = 0;
+
 Resources::Resources()
 {
 	if (!m_font.loadFromFile("Font.ttf"))
 	{
 		exit(EXIT_FAILURE);
 	}
-	if (!m_soundBuffer[0].loadFromFile("theme.wav"))
+
+	for (int i = 0; i < static_cast<int>(Sound::MAX); ++i)
 	{
-		exit(EXIT_FAILURE);
+		if (!m_soundBuffer[i].loadFromFile(m_soundsNames[i]))
+		{
+			exit(EXIT_FAILURE);
+		}
+		m_sound[i].setBuffer(m_soundBuffer[i]);
+		m_sound[i].setVolume(50);
 	}
-	m_sound[0].setBuffer(m_soundBuffer[0]);
-	m_sound[0].setVolume(15);
-	m_sound[0].setLoop(true);
-	
+	m_sound[THEME].setVolume(10);
+	m_sound[THEME].setLoop(true); //theme song
+
 	readTextureNames();
 
 	m_objectTextures.reserve(static_cast<int>(Objects::MAX));

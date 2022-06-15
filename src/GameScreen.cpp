@@ -5,7 +5,7 @@
 GameScreen::GameScreen(Controller* ctrl)
 	: m_controller(ctrl), m_board()
 {
-	//Resources::instance().playSound(Sound::theme);
+	Resources::instance().playSound(Sound::theme);
 
 	auto keys = std::vector<sf::Keyboard::Key>();
 	keys.push_back(sf::Keyboard::Left);
@@ -107,11 +107,6 @@ void GameScreen::game(const gameInfo& info)
 		break;
 	}
 }
-
-//void GameScreen::createSuvival()
-//{
-//
-//}
 
 Screen GameScreen::playNormal()
 {

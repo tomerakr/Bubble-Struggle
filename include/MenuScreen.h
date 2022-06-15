@@ -18,20 +18,21 @@ private:
 	void createLevels(int numOfLevels);
 	void createButton();
 	gameInfo handlePress	(const sf::Vector2f& mousePos);
-	void mainMenuPress		(const sf::Vector2f& mousePos);
-	void numOfPlayersPress	(const sf::Vector2f& mousePos);
-	void connectionPress	(const sf::Vector2f& mousePos);
-	void connectType(const sf::Vector2f& mousePos);
+	void mainMenuPress		(const sf::Vector2f& mousePos, bool& clickSound);
+	void numOfPlayersPress	(const sf::Vector2f& mousePos, bool& clickSound);
+	void connectionPress	(const sf::Vector2f& mousePos, bool& clickSound);
+	void connectType		(const sf::Vector2f& mousePos, bool& clickSound);
 	void handleHover		(const sf::Vector2f& mousePos);
-	void handleKeyboard(sf::Event event);
+	void handleKeyboard();
 	void draw();
-	void chooseLevel(const sf::Vector2f& mousePos);
+	void chooseLevel		(const sf::Vector2f& mousePos, bool& clickSound);
 
 	Controller* m_controller;
 	bool m_chooseLevel = false;
 	bool m_onlineConnection = false;
 	bool m_connectPressed = false;
 	int m_lastHovered = 0;
+	int m_lastWantedMenu = 0;
 	int m_wantedMenu = 0;
 	sf::Text m_connectionText;
 	sf::RectangleShape m_background;
@@ -44,7 +45,7 @@ private:
 	std::vector<Button> m_levels;
 	std::vector<std::vector<Button>> m_buttons;
 	std::vector< std::vector<std::string>> m_buttonNames = 
-	{ { "Normal", "Survival", "Create Level", "Help", "Settings", "Exit" }, /*{ "Choose Level" },*/
+	{ { "Normal", "Survival", "Create Level", "Help", "Settings", "Exit" }, { "Choose Level" },
 		{"Solo", "Duo"}, {"Online", "Same PC"}, { "Host", "Connect" } };
 
 	enum class buttonNames
