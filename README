@@ -172,7 +172,16 @@ Endless level: So the level can be "endless", the program calculate the position
 	of the player, and swiches between two viwes, and resize them acorrdin to the player position.
 
 ============================== K N O W N - B U G ==============================
- 
+In the survival mode, if a ball is popped right between the 2 windows (survival move consists of 2 windows right next to each other)
+	there is undefined behavior.
+
+Sometimes when a ball collides with rope, 2 smaller balls appear but the original ball that was supposed to be destroyed remains all the same.
+
+Sometimes no collision is detected between the rope and the ceiling, although most of the time it works fine.
+
+When playing online, from each player's perspective the character is on the right side and the other player on the left.
+
+In the survival mode it takes 2 hits from balls so the lives will start to go down (as if we have 5 lives and not 3).
 
 
 =============================== C O M M E N T S ===============================
@@ -195,9 +204,11 @@ Internet connction: If two players wants to play, first, they need to decide who
 
 Graphics: all the graphics created by us, including the spritesheet.
 
+Because of the way box2D is built, it was not possible for us to create a d-tor for the objects,
+	but were forced to create a brand new function to fulfill these needs.
+	We discussed this problem with the teacher and the advice that was given was to stick with our solution.
 
-
-
+In general, we found that the box2D engine has quite an unpredictable behavior that we couldn't put our finger on it.
 
 
 
