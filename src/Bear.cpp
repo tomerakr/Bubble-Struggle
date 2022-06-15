@@ -2,6 +2,7 @@
 #include "Board.h"
 #include "PcInput.h"
 #include "OnlineInput.h"
+#include <iostream>
 
 constexpr int NUM_OF_BEARS_IN_ROW = 9;
 constexpr int maxPoints = 80;
@@ -50,7 +51,6 @@ void Bear::defineBear2d(const sf::Vector2f& pos)
 	m_box2DBear->SetFixedRotation(true);
 	m_box2DBear->CreateFixture(&fixtureDef);
 	//m_box2DBear->SetUserData(this);
-
 }
 
 std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf::Vector2f, bool> otherBear)
@@ -63,6 +63,7 @@ std::pair<const sf::Vector2f&, bool> Bear::update(float deltaTime, std::pair<sf:
 
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == BEAR_HIT_WALL)
 	{
+		std::cout << "last pos: " << lastPos.x << ' ' << lastPos.y << " currPos: " << m_icon.getPosition().x << ' ' << m_icon.getPosition().y << '\n';
 		m_icon.setPosition(lastPos);
 	}
 	if (m_box2DBear->GetFixtureList()->GetFilterData().groupIndex == POPPED_BALL_FILTER)

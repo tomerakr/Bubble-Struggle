@@ -1,10 +1,12 @@
 #include "GameScreen.h"
 #include "Bear.h"
 #include "Controller.h"
+#include <time.h>
 
 GameScreen::GameScreen(Controller* ctrl)
 	: m_controller(ctrl), m_board()
 {
+	srand(time(NULL));
 	Resources::instance().playSound(Sound::theme);
 
 	auto keys = std::vector<sf::Keyboard::Key>();
@@ -61,6 +63,7 @@ void GameScreen::game(const gameInfo& info)
 	m_bears.back().setKeys(&m_keys[(info._numOfPlayers - info._numOfPlayers) % m_keys.size()]);
 	
 	m_board.pickLevel(info._level);
+	m_bar.setLevel(info._level);
 	
 	for (int i = info._numOfPlayers - 1; i > 0; --i)
 	{
@@ -79,7 +82,7 @@ void GameScreen::game(const gameInfo& info)
 		m_background.setTexture(Resources::instance().getObjectTexture(Objects::GameBackground));
 		m_background.setSize(sf::Vector2f(windowWidth, windowHeight));
 		textureSize = m_background.getTexture()->getSize();
-		m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * rand() % numOfGameBackgrounds, 0,
+		m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * (rand() % numOfGameBackgrounds), 0,
 			textureSize.x / numOfGameBackgrounds, textureSize.y));
 
 		m_board.createNormal();
@@ -152,8 +155,9 @@ void GameScreen::update(float deltaTime)
 	if (m_board.getNumBalls() == 0)
 	{
 		m_board.nextLevel();
+		m_bar.setLevel(m_board.getLevelIndex());
 		auto textureSize = m_background.getTexture()->getSize();
-		m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * rand() % numOfGameBackgrounds, 0,
+		m_background.setTextureRect(sf::IntRect((textureSize.x / numOfGameBackgrounds) * (rand() % numOfGameBackgrounds), 0,
 			textureSize.x / numOfGameBackgrounds, textureSize.y));
 	}
 }

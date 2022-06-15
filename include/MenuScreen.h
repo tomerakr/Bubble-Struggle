@@ -22,6 +22,7 @@ private:
 	void numOfPlayersPress	(const sf::Vector2f& mousePos, bool& clickSound);
 	void connectionPress	(const sf::Vector2f& mousePos, bool& clickSound);
 	void connectType		(const sf::Vector2f& mousePos, bool& clickSound);
+	void settingsPress		(const sf::Vector2f& mousePos, bool& clickSound);
 	void handleHover		(const sf::Vector2f& mousePos);
 	void handleKeyboard();
 	void draw();
@@ -32,11 +33,13 @@ private:
 	bool m_onlineConnection = false;
 	bool m_connectPressed = false;
 	bool m_settingPressed = false;
+	bool m_showHelp = false;
 	int m_lastHovered = 0;
 	int m_lastWantedMenu = 0;
 	int m_wantedMenu = 0;
 	std::vector <Button> m_volume;
 	sf::RectangleShape m_volumeRectangle;
+	sf::RectangleShape m_help;
 	sf::Text m_connectionText;
 	sf::RectangleShape m_background;
 	gameInfo m_info;
@@ -50,7 +53,7 @@ private:
 	std::vector <Button> m_settingsButtons;
 	std::vector< std::vector<std::string>> m_buttonNames = 
 	{ { "Normal", "Survival", "Create Level", "Help", "Settings", "Exit" }, { "Choose Level" },
-	  {"Solo", "Duo"}, {"Online", "Same PC"}, { "Host", "Connect" } };
+	  {"Solo", "Duo"}, {"Online", "Same PC"}, { "Host", "Connect" }, { "Settings"} };
 
 	std::vector<std::string> m_settingsButtonsText = {"Large", "Normal"};
 	enum class buttonNames
@@ -67,7 +70,8 @@ private:
 		Online = 0,
 		SamePC,
 		Host = 0,
-		Connect
+		Connect,
+		SettingsButton = 0
 	};
 
 	enum class menuNames
@@ -76,6 +80,7 @@ private:
 		levels,
 		numOfPlayers,
 		connection,
-		connectionType
+		connectionType,
+		settings
 	};
 };

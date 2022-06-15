@@ -88,7 +88,11 @@ void Resources::readLevelsNames()
 
 std::string Resources::getLevelName(int index)
 {
-	return m_levels[static_cast<std::vector<std::string, std::allocator<std::string>>::size_type>(index)];
+	if (index >= 0 && index < m_levels.size())
+	{
+		return m_levels[index];
+	}
+	return "";
 }
 
 void Resources::playSound(const Sound& sound)

@@ -6,6 +6,8 @@
 constexpr int maxButtonInMenu = 6;
 constexpr int maxVolume = 6;
 constexpr int screenSizes = 2;
+constexpr int LARGE = 0;
+constexpr int NORMAL = 1;
 
 MenuScreen::MenuScreen(Controller* ctrl, int numOfLevels)
 	:m_controller(ctrl)
@@ -20,11 +22,17 @@ MenuScreen::MenuScreen(Controller* ctrl, int numOfLevels)
 	m_info._skinIndex = 0;
 	m_info._host = false;
 
-	m_output.setColor(sf::Color(164, 164, 164));
-	m_output.setCharacterSize(30);
-	m_output.setFont(*Resources::instance().getFont());
-	m_output.setPosition(500, 500);
-	m_output.setString("Enter your IP:");
+	m_help.setSize(sf::Vector2f(windowWidth, windowHeight));
+	m_help.setTexture(Resources::instance().getObjectTexture(Objects::General));
+	textureSize = m_help.getTexture()->getSize();
+	//texture index range: 0 - 3
+	m_help.setTextureRect(sf::IntRect(0, 0, textureSize.x / static_cast<int>(backgrounds::MAX), textureSize.y));
+
+	//m_output.setColor(sf::Color(164, 164, 164));
+	//m_output.setCharacterSize(30);
+	//m_output.setFont(*Resources::instance().getFont());
+	//m_output.setPosition(500, 500);
+	//m_output.setString("Enter your IP:");
 }
 
 void MenuScreen::createButton()
@@ -51,15 +59,6 @@ void MenuScreen::createButton()
 	m_volumeRectangle.setFillColor(sf::Color::Blue);
 	m_volumeRectangle.setSize(sf::Vector2f(10, 15));
 
-	ySize = 15;
-	xSize = 10;
-	xPos = 300;
-	yPos = windowHeight - 200;
-
-	for (int i = 0 ; i < maxVolume; ++i)
-	{
-		m_volume.emplace_back(Button{sf::Vector2f(xPos + (i * 15), yPos), sf::Vector2f(xSize, ySize), Objects::Button, " "});
-	}
 
 	m_output.setColor(sf::Color(164, 164, 164));
 	m_output.setCharacterSize(25);
@@ -67,15 +66,26 @@ void MenuScreen::createButton()
 	m_output.setPosition(windowWidth / 2, yPos + (ySize + 10) * 2.2);
 	m_output.setOrigin(m_output.getLocalBounds().width / 2, m_output.getLocalBounds().height / 2);
 	m_output.setString("Enter your IP:");
-}
 
-	ySize = 40;
-	xSize = 100;
+	ySize = 50;
+	xSize = 20;
+	xPos = 450;
+	yPos = windowHeight - 200;
+
+	for (int i = 0 ; i < maxVolume; ++i)
+	{
+		m_volume.emplace_back(Button{sf::Vector2f(xPos + (i * xSize * 2), yPos), sf::Vector2f(xSize, ySize), Objects::Button, std::to_string(i)});
+		m_volume.back().textSize(15);
+	}
+
+	ySize = 70;
+	xSize = 150;
 	xPos = 400;
 	yPos = 400;
 	for (int i = 0; i < screenSizes; ++i)
 	{
-		m_settingsButtons.emplace_back(Button{ sf::Vector2f(xPos + (i * 130), yPos), sf::Vector2f(xSize, ySize), Objects::Button, m_settingsButtonsText[i]});
+		m_settingsButtons.emplace_back(Button{ sf::Vector2f(xPos + (i * xSize * 2), yPos), sf::Vector2f(xSize, ySize), Objects::Button, m_settingsButtonsText[i]});
+		m_volume.back().textSize(20);
 	}
 }
 
@@ -133,6 +143,7 @@ gameInfo MenuScreen::menu()
 				}
 				
 			}
+			break;
 
 		default:
 			break;
@@ -167,12 +178,23 @@ gameInfo MenuScreen::handlePress(const sf::Vector2f& mousePos)
 	case static_cast<int>(connectionType):
 		connectType(mousePos, clickSound);
 		break;
+
+	case static_cast<int>(settings):
+		settingsPress(mousePos, clickSound);
+		break;
+
+
 	default:
 		break;
 	}
+
 	if (clickSound)
 	{
 		Resources::instance().playSound(Sound::click);
+	}
+	if (m_showHelp)
+	{
+		m_showHelp = false;
 	}
 	
 	return m_info;
@@ -208,11 +230,13 @@ void MenuScreen::mainMenuPress(const sf::Vector2f& mousePos, bool& clickSound)
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Settings)].isPressed(mousePos))
 	{
-		//////////////*****************
+		m_wantedMenu = static_cast<int>(menuNames::settings);
+		m_settingPressed = true;
 		clickSound = true;
 	}
 	else if (m_buttons[m_wantedMenu][static_cast<int>(buttonNames::Help)].isPressed(mousePos))
 	{
+		m_showHelp = true;
 	}
 }
 
@@ -291,10 +315,8 @@ void MenuScreen::connectType(const sf::Vector2f& mousePos, bool& clickSound)
 	}
 }
 
-void MenuScreen::settings(const sf::Vector2f& mousePos)
+void MenuScreen::settingsPress(const sf::Vector2f& mousePos, bool& clickSound)
 {
-	m_settingPressed = true;
-
 	// music volume choosing
 	for (int i = 0; i < m_volume.size(); ++i)
 	{
@@ -303,12 +325,13 @@ void MenuScreen::settings(const sf::Vector2f& mousePos)
 			Resources::instance().setVolume(i);
 		}
 	}
-
-	if (m_settingsButtons[0].isPressed(mousePos)) // LARGE
+	
+	auto& window = m_controller->getWindow();
+	if (m_settingsButtons[LARGE].isPressed(mousePos))
 	{
 		;
 	}
-	if (m_settingsButtons[1].isPressed(mousePos))  // NORMAL
+	else if (m_settingsButtons[NORMAL].isPressed(mousePos))
 	{
 		;
 	}
@@ -334,6 +357,7 @@ void MenuScreen::handleKeyboard()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
+		m_chooseLevel = m_onlineConnection = m_connectPressed = m_settingPressed = m_showHelp = false;
 	}
 	else if (right || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
@@ -346,23 +370,6 @@ void MenuScreen::handleKeyboard()
 		auto textureSize = m_background.getTexture()->getSize();
 		//texture index range: 0 - 3
 		m_background.setTextureRect(sf::IntRect((textureSize.x / static_cast<int>(bearTypes::MAX)) * m_info._skinIndex, 0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	{
-		m_wantedMenu = static_cast<int>(menuNames::mainMenu);
-		m_chooseLevel = false;
-	}
-
-	else if (m_connectPressed)
-	{
-		if (event.type == sf::Event::KeyPressed) {
-			if (event.type == sf::Event::TextEntered) {
-				if (event.text.unicode < 128) {
-					m_input += static_cast<char>(event.text.unicode);
-					m_output.setString(m_input);
-				}
-			}
-		}
 	}
 }
 
@@ -377,6 +384,10 @@ void MenuScreen::draw()
 		{
 			levelButton.draw(window);
 		}
+	}
+	else if (m_showHelp)
+	{
+		window.draw(m_help);
 	}
 	else if (m_settingPressed)
 	{

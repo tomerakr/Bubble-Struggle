@@ -55,6 +55,15 @@ enum class Objects
 	SurvivalBackground,
 	BarBackground,
 	TextBackground,
+	General,
+	MAX
+};
+
+enum class backgrounds
+{
+	HELP,
+	WIN,
+	LOSE,
 	MAX
 };
 

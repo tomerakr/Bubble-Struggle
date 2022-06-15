@@ -12,7 +12,7 @@ public:
 	bool update();
 	void freeze() { m_freeze = true; }
 	void drawRopes(sf::RenderWindow& window);
-	void incMaxRopes() { ++m_maxRopes; }
+	void incMaxRopes() { m_maxRopes = 2; }
 
 private:
 	std::vector<Rope> m_ropes;

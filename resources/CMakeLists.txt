@@ -18,6 +18,7 @@ configure_file ("survivalBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("undo.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("textBackground.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("generalBackgrounds.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # ================== S O U N D ==================
 configure_file ("theme.wav" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -31,4 +32,3 @@ configure_file ("LevelsNames.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Level 1.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Level 2.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Level 3.txt" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("Level 4.txt" ${CMAKE_BINARY_DIR} COPYONLY)

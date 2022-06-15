@@ -17,7 +17,7 @@ void Button::setText(const std::string& text)
 	m_text.setPosition(pos.x, pos.y - 5);
 	m_text.setFillColor(sf::Color::White);
 	m_text.setFont(*Resources::instance().getFont());
-	m_text.setCharacterSize(textSize);
+	m_text.setCharacterSize(TEXT_SIZE);
 	m_text.setString(text);
 	m_text.setOrigin(m_text.getGlobalBounds().width / 2, m_text.getGlobalBounds().height / 2);
 }

@@ -29,6 +29,7 @@ public:
 	void pickLevel(int level) { m_currLevel = level; }
 	void nextLevel();
 	void reset();
+	int getLevelIndex() { return m_currLevel; }
 	void resetLevel();
 	//=======================================
 	void SetDebugDraw(DebugDraw* d)
@@ -62,6 +63,7 @@ private:
 	//world definition
 	std::unique_ptr<b2World> m_world;
 
+	bool m_normal = false;
 	float m_timeStep = 1.f / 60.f;
 	int32 m_velocityIteration = 10;
 	int32 m_positionIteration = 2;

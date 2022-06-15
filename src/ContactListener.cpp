@@ -101,12 +101,14 @@ void ContactListener::BeginContact(b2Contact* contact)
 
 
     else if (fixtureA->GetFilterData().groupIndex == BEAR_FILTER &&
-        fixtureB->GetFilterData().groupIndex == TILE)
+        fixtureB->GetFilterData().groupIndex == TILE ||
+        fixtureA->GetFilterData().groupIndex == TILE &&
+        fixtureB->GetFilterData().groupIndex == BEAR_FILTER)
     {
         b2Filter hitAWall;
 
         hitAWall.groupIndex = BEAR_HIT_WALL;
-        fixtureA->SetFilterData(hitAWall);
+        fixtureB->SetFilterData(hitAWall);
     }
 
 

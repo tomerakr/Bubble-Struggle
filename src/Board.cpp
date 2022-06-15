@@ -20,6 +20,7 @@ void Board::setWorld()
 
 void Board::createNormal()
 {
+	m_normal = true;
 	m_baseTiles.clear();
 	auto height = windowHeight - thickness - barHeight;
 	m_baseTiles.push_back(Tile{this, sf::Vector2f(windowWidth, thickness), sf::Vector2f(0.f, height) });				//floor
@@ -30,6 +31,7 @@ void Board::createNormal()
 
 void Board::createSurvival()
 {
+	m_normal = false;
 	m_baseTiles.clear();
 	auto height = windowHeight - thickness - barHeight;
 	m_baseTiles.push_back(Tile{ this, sf::Vector2f(SurvivalWidth * 3, thickness), sf::Vector2f(-SurvivalWidth, height) });	//floors
@@ -39,10 +41,6 @@ void Board::createSurvival()
 void Board::setLevel()
 {
 	auto file = std::ifstream(Resources::instance().getLevelName(m_currLevel));
-	//if (!file.is_open())
-	//{
-	//	exit(EXIT_FAILURE);
-	//}
 
 	// ---- BALLS ----
 	auto ballsNum = 0, index = 0, direction = 0; // direction will get 1 or -1
@@ -156,7 +154,10 @@ void Board::resetLevel()
 	reset();
 	try
 	{
-		setLevel();
+		if (m_normal)
+		{
+			setLevel();
+		}
 	}
 	catch (std::filesystem::filesystem_error const& ex)
 	{
