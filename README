@@ -163,9 +163,7 @@ Timer.cpp - A class that simulates a timer based on number of seconds given to i
 
 
 ============================= C O N T A I N E R S =============================
-
-
-
+Vectors - holding the game objects: bears, dummy bear (for survival level), balls, gifts
 
 ============================= A L G O R I T H M S =============================
 Endless level: So the level can be "endless", the program calculate the position
@@ -209,12 +207,3 @@ Because of the way box2D is built, it was not possible for us to create a d-tor 
 	We discussed this problem with the teacher and the advice that was given was to stick with our solution.
 
 In general, we found that the box2D engine has quite an unpredictable behavior that we couldn't put our finger on it.
-
-
-
-
-
-
-
-
-

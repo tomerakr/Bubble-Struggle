@@ -34,9 +34,10 @@ Screen GameScreen::gamePlay(gameInfo& info)
 	{
 		game(info);
 		m_bar.setBar(LEVEL_TIME, info); //getLevel Time
-		m_bar.setLevel(info._level);
 		info._newGame = false;
 	}
+	m_bar.setLevel(m_board.getLevelIndex());
+
 	auto screen = Screen::game;
 	switch (info._mode)
 	{
