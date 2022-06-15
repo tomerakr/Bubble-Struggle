@@ -9,9 +9,11 @@
 #include <vector>
 #include "Input.h"
 
+
 constexpr int MAX_LIFE = 4;
 constexpr int START_LIFE = 3;
 
+class GameScreen;
 class Board;
 
 class Bear : public MovingObject
@@ -23,7 +25,7 @@ public:
 	void setKeys(std::vector<sf::Keyboard::Key>* keys) { m_keys = *keys; }
 	const sf::Vector2f& getPos() const;
 	void destroyBody();
-	std::pair<const sf::Vector2f&, bool> update(float deltaTime, const std::pair<const sf::Vector2f&, bool>& otherBear);
+	std::pair<const sf::Vector2f&, bool> update(float deltaTime, const std::pair<const sf::Vector2f&, bool>& otherBear, GameScreen* gameScreen);
 	void drawRopes(sf::RenderWindow& window);
 	unsigned int getNumOfLives() const	{ return m_lives; }
 	unsigned int getScore() const		{ return m_score; }

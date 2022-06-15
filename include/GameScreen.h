@@ -15,6 +15,8 @@ class GameScreen
 public:
 	GameScreen(Controller* ctrl);
 	Screen gamePlay(gameInfo& info);
+	void addTime();
+
 
 private:
 	void game(const gameInfo& info);

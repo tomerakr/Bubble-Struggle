@@ -25,6 +25,7 @@ private:
 	void settingsPress		(const sf::Vector2f& mousePos, bool& clickSound);
 	void handleHover		(const sf::Vector2f& mousePos);
 	void handleKeyboard();
+	void setText			(sf::Text &text, std::string str, int size, sf::Vector2f pos, sf::Color color);
 	void draw();
 	void chooseLevel		(const sf::Vector2f& mousePos, bool& clickSound);
 

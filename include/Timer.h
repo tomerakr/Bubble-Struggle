@@ -11,6 +11,7 @@ public:
 	const int getTimeLeft();
 	void draw(sf::RenderWindow& window) { window.draw(m_timeline); }
 	bool timeEnd() const;
+	void addTime();
 
 private:
 	sf::Clock m_clock;
