@@ -37,7 +37,7 @@ Screen GameScreen::gamePlay(gameInfo& info)
 	switch (info._mode)
 	{
 	case gameMode::Normal:
-		screen = playNormal();
+		screen = playNormal(info);
 		break;
 
 	case gameMode::Survival:
@@ -111,7 +111,7 @@ void GameScreen::game(const gameInfo& info)
 	}
 }
 
-Screen GameScreen::playNormal()
+Screen GameScreen::playNormal(gameInfo& info)
 {
 	auto screen = Screen::game;
 	sf::Clock clock;
@@ -136,12 +136,12 @@ Screen GameScreen::playNormal()
 			break;
 		}
 	}
-	update(deltaTime.asSeconds());
+	screen = update(deltaTime.asSeconds(), info);
 
 	return screen;
 }
 
-void GameScreen::update(float deltaTime)
+Screen GameScreen::update(float deltaTime, gameInfo& info)
 {
 	auto scores = std::vector<int>();
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
@@ -169,8 +169,11 @@ void GameScreen::update(float deltaTime)
 	if (allBearsDead())
 	{
 		clear();
+		info._newGame = true;
 		m_isLost = true;
+		return Screen::menu;
 	}
+	return Screen::game;
 }
 
 bool GameScreen::allBearsDead()
@@ -290,28 +293,29 @@ void GameScreen::updateBearSurvivalPosition()
 void GameScreen::updateBallSurvivalPosition()
 {
 	auto balls = m_board.getBalls();
-	for (int i = 0; i < balls->size(); ++i)
+
+	for (int i = 0; i < balls.isEnd(); balls.next())
 	{
-		auto pos = (* balls)[i].getPos();
-		auto radius = (*balls)[i].getRaidus();
-		auto direction = (*balls)[i].getCurrDirection();
-		if (!(*balls)[i].hadChild() && pos.x <= radius + EPSILON && direction == LEFT)
+		auto pos = balls.value().getPos();
+		auto radius = balls.value().getRaidus();
+		auto direction = balls.value().getCurrDirection();
+		if (!balls.value().hadChild() && pos.x <= radius + EPSILON && direction == LEFT)
 		{
-			m_board.addBall((*balls)[i], SurvivalWidth);
-			(*balls)[i].creatingNewBall();
+			m_board.addBall(balls.value(), SurvivalWidth);
+			balls.value().creatingNewBall();
 		}
 		else if (pos.x <= -(radius + EPSILON) && direction == LEFT)
 		{
-			(*balls)[i].destroy();
+			balls.value().destroy();
 		}
-		if (!(*balls)[i].hadChild() && pos.x >= SurvivalWidth - (radius + EPSILON) && direction == RIGHT)
+		if (!balls.value().hadChild() && pos.x >= SurvivalWidth - (radius + EPSILON) && direction == RIGHT)
 		{
-			m_board.addBall((*balls)[i], -(SurvivalWidth));
-			(*balls)[i].creatingNewBall();
+			m_board.addBall(balls.value(), -(SurvivalWidth));
+			balls.value().creatingNewBall();
 		}
 		else if (pos.x >= SurvivalWidth + radius + EPSILON && direction == RIGHT)
 		{
-			(*balls)[i].destroy();
+			balls.value().destroy();
 		}
 	}
 }
