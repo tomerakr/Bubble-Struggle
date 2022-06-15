@@ -13,6 +13,8 @@ public:
 	bool timeEnd() const;
 	void addTime();
 
+	void setTime(const int seconds);
+
 private:
 	sf::Clock m_clock;
 	sf::Time m_time;

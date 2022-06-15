@@ -26,6 +26,11 @@ void Timer::addTime()
 	m_timeLeft += rand() % BONUS_TIME + BONUS_TIME;
 }
 
+void Timer::setTime(const int seconds)
+{
+	m_timeLeft = seconds;
+}
+
 const int Timer::getTimeLeft()
 {
 	return m_levelTime;

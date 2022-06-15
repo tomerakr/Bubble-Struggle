@@ -16,7 +16,7 @@ public:
 	GameScreen(Controller* ctrl);
 	Screen gamePlay(gameInfo& info);
 	void addTime();
-
+	void setTime(const int seconds) { m_bar.setTime(seconds); }
 
 private:
 	void game(const gameInfo& info);

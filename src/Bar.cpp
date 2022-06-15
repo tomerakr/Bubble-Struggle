@@ -89,6 +89,11 @@ void Bar::addTime()
 	m_timer.addTime();
 }
 
+void Bar::setTime(const int seconds)
+{
+	m_timer.setTime(seconds);
+}
+
 void Bar::draw(sf::RenderWindow& window, const std::vector<int> &bearsLives)
 {
 	window.draw(m_background);
