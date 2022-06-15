@@ -184,6 +184,18 @@ void Board::addGift(const sf::Vector2f& position)
 	}
 }
 
+void Board::addBall(const sf::Vector2f& pos, const b2Vec2& force, int index)
+{
+	m_balls.emplace_back(this, pos, force, index);
+}
+
+void Board::addBall(Ball& ball, int distance)
+{
+	auto pos = ball.getPos();
+	m_balls.emplace_back(this, sf::Vector2f(pos.x + distance - ball.getCurrDirection() * ball.getRaidus(), pos.y),
+		ball.getForce(), ball.getIndex());
+}
+
 void Board::nextLevel()
 {
 	++m_currLevel;

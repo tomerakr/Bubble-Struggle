@@ -154,6 +154,11 @@ gameInfo MenuScreen::menu()
 
 gameInfo MenuScreen::handlePress(const sf::Vector2f& mousePos)
 {
+	if (m_showHelp)
+	{
+		m_showHelp = false;
+		return m_info;
+	}
 	auto clickSound = false;
 	m_info._screen = Screen::menu;
 	switch (m_wantedMenu)
@@ -191,10 +196,6 @@ gameInfo MenuScreen::handlePress(const sf::Vector2f& mousePos)
 	if (clickSound)
 	{
 		Resources::instance().playSound(Sound::click);
-	}
-	if (m_showHelp)
-	{
-		m_showHelp = false;
 	}
 	
 	return m_info;

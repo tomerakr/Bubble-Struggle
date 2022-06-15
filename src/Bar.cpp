@@ -66,12 +66,12 @@ void Bar::setBearInfo(const gameInfo& info, const Objects& texture, sf::Rectangl
 		0, textureSize.x / static_cast<int>(bearTypes::MAX), textureSize.y));
 }
 
-void Bar::update(std::vector<Bear> &bears)
+void Bar::update(const std::vector<int> scores)
 {
-	for (auto& bear : bears)
+	for (int i = 0; i < scores.size(); ++i)
 	{
 		std::ostringstream ss;
-		ss << std::setw(5) << std::setfill('0') << std::to_string(bear.getScore());
+		ss << std::setw(5) << std::setfill('0') << std::to_string(scores[i]);
 		std::string s = ss.str();
 		m_scoreText.setString(s);
 	}
@@ -83,7 +83,7 @@ bool Bar::timeEnded() const
 	return m_timer.timeEnd();
 }
 
-void Bar::draw(sf::RenderWindow& window, std::vector<Bear> &bears)
+void Bar::draw(sf::RenderWindow& window, const std::vector<int> &bearsLives)
 {
 	window.draw(m_background);
 	m_timer.draw(window);
@@ -97,7 +97,7 @@ void Bar::draw(sf::RenderWindow& window, std::vector<Bear> &bears)
 		//drawBackgroundText(window, sf::Vector2f((j * (windowWidth - (40 + 15) * 4 + 5)) + pow(-1, j) * 25,
 		//	windowHeight - barHeight / 2 + 10), sf::Vector2f((40 + 15) * 4, 55)); // bears 
 
-		for (int i = 0; i < bears[j].getNumOfLives(); ++i)
+		for (int i = 0; i < bearsLives[j]; ++i)
 		{
 			m_lifeIcons[j].setPosition(
 				sf::Vector2f((((j + 1) % m_numOfBears) * windowWidth) + pow(-1, (j + 1) % m_numOfBears) * (50 + i * 55), windowHeight - barHeight / 2 + 10));

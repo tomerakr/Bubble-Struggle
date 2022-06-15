@@ -143,12 +143,14 @@ Screen GameScreen::playNormal()
 
 void GameScreen::update(float deltaTime)
 {
+	auto scores = std::vector<int>();
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
 	for (auto& bear : m_bears)
 	{
 		otherBear = bear.update(deltaTime, otherBear);
+		scores.push_back(bear.getScore());
 	}
-	m_bar.update(m_bears);
+	m_bar.update(scores);
 	m_board.update();
 
 	//if no balls left, proceed to next level
@@ -185,6 +187,7 @@ bool GameScreen::allBearsDead()
 
 void GameScreen::drawNormal()
 {
+	auto lives = std::vector<int>();
 	auto& window = m_controller->getWindow();
 	window.clear(sf::Color::White);
 	window.draw(m_background);
@@ -193,9 +196,10 @@ void GameScreen::drawNormal()
 	{
 		bear.drawRopes(window);
 		bear.draw(window);
+		lives.push_back(bear.getNumOfLives());
 	}
 	m_board.draw(window);
-	m_bar.draw(window, m_bears);
+	m_bar.draw(window, lives);
 
 	window.display();
 }
@@ -232,10 +236,12 @@ Screen GameScreen::playSurvival()
 
 void GameScreen::updateSurvival(float deltaTime)
 {
+	auto scores = std::vector<int>();
 	auto otherBear = std::make_pair(sf::Vector2f(), false);
 	for (auto& bear : m_bears)
 	{
 		otherBear = bear.update(deltaTime, otherBear);
+		scores.push_back(bear.getScore());
 	}
 	for (auto& bear : m_dummyBears)
 	{
@@ -245,7 +251,7 @@ void GameScreen::updateSurvival(float deltaTime)
 	updateBearSurvivalPosition();
 	updateBallSurvivalPosition();
 	addBallsSurvival(deltaTime);
-	m_bar.update(m_bears);
+	m_bar.update(scores);
 	m_board.update();
 }
 
@@ -353,7 +359,13 @@ void GameScreen::drawSurvival()
 	auto barView = sf::View(sf::FloatRect(0.f, windowHeight - barHeight, windowWidth, windowHeight));
 	barView.setViewport({ 0, (windowHeight - barHeight) / static_cast<float>(windowHeight), 1, 1 });
 	window.setView(barView);
-	m_bar.draw(window, m_bears);
+
+	auto lives = std::vector<int>();
+	for (auto& bear : m_bears)
+	{
+		lives.push_back(bear.getNumOfLives());
+	}
+	m_bar.draw(window, lives);
 
 	//================ M I N I - M A P ================
 	//auto miniMapView = sf::View(sf::FloatRect(-SurvivalWidth, 0, SurvivalWidth * 3, windowHeight - barHeight));
@@ -395,11 +407,13 @@ void GameScreen::setViews(sf::View& leftView, sf::View& rightView)
 
 void GameScreen::draw(sf::RenderWindow& window, sf::View& view)
 {
+	auto lives = std::vector<int>();
 	window.setView(view);
 	for (auto& bear : m_bears)
 	{
 		bear.drawRopes(window);
 		bear.draw(window);
+		lives.push_back(bear.getNumOfLives());
 	}
 	for (auto& bear : m_dummyBears)
 	{
@@ -407,7 +421,7 @@ void GameScreen::draw(sf::RenderWindow& window, sf::View& view)
 		bear.draw(window);
 	}
 	m_board.draw(window);
-	m_bar.draw(window, m_bears);
+	m_bar.draw(window, lives);
 }
 
 void GameScreen::clear()
