@@ -1,12 +1,10 @@
-=================================== G A M E ===================================
-Bubble Trouble
+G A M E - Bubble Trouble - [Game Video](https://www.youtube.com/watch?v=2vfWpLdXIw0)
+=========================
 
-================================== N A M E S ==================================
-Miriam Manolache	- *********
-Netanel Bondar		- *********
-Tomer Akrish		- *********
 
-============================= G A M E - R U L E S =============================
+
+G A M E - R U L E S
+=========================
 In Bubble Trouble your goal is to pop all the balls in each level without getting
 hit by the balls. In our version we actualized the normal game + survival mode.
 Normal: you can either play SOLO or DUO (same PC or online), play along the levels
@@ -23,7 +21,8 @@ Level Creator: you can create your own levels and play them, just click save and
 	you can choose which balls to put (8 - smallest, 0 - biggest) which direction
 	they'll go, choose to add walls or floors.
 
-================================ O B J E C T S ================================
+O B J E C T S
+=========================
 Ball	- The player needs to shoot ropes at the ball to make it split into 2 smaller balls. 
 				The ball disappears if small enough when hit.
 				If hits the player the lives decrease. If hit there is a chance for a gift to appear.
@@ -43,8 +42,9 @@ Button	- The player will see buttons when in the menu. Will need to press some o
 Gift	- Will appear at random when the player hits balls. There are gifts of freeze rope, add time, add additional rope to be shot
 				simultaneously by the same player, add lives.
 
-======================= F I L E - D E S C R I P T I O N =======================
----------------------------------- .h files -----------------------------------
+F I L E - D E S C R I P T I O N
+=========================
+## .h files
 Animation.h - accountable for the animation properties in the game.
 
 Ball.h - can create a ball with rigid body for the game or just the shape for level
@@ -63,7 +63,6 @@ ContactListener.h - accountable for collision detection.
 Controller.h - controls the game, whether will show the game the menu or level creator
 	has window member.
 
-************************ is called RectangleObject?? *****************************
 GameObject.h - has virtual draw function and pointer to b2Body.
 
 GameScreen.h - accountable for all the game activities: normal or survival game.
@@ -94,7 +93,7 @@ Tile.h - using it as a wall, floor, floating floor or any tile in the game.
 
 Timer.h - time in class.
 
----------------------------------- .cpp files ---------------------------------
+## .cpp files
 Animation.cpp - A class which manages all animations of objects that uses animation in the game, like the bears.
 					Based on movement and direction it shows the appropriate sprites.
 
@@ -121,7 +120,6 @@ ContactListener.cpp - Derived from the built in base class b2ContactListener.
 Controller.cpp - Controls the flow of the game. Manages different stages of the entire game flow like the menu, game screen,
 					and level creator.
 
-************************ is called RectangleObject?? *****************************
 GameObject.cpp - Base class for objects in the game like Button, Moving and Static Objects etc.
 					Handles the size, position and texture of the object. In addition has function to draws itself.
 
@@ -162,14 +160,17 @@ Timer.cpp - A class that simulates a timer based on number of seconds given to i
 				detects if the time ended.
 
 
-============================= C O N T A I N E R S =============================
+C O N T A I N E R S
+=========================
 Vectors - holding the game objects: bears, dummy bear (for survival level), balls, gifts
 
-============================= A L G O R I T H M S =============================
+A L G O R I T H M S
+=========================
 Endless level: So the level can be "endless", the program calculate the position
 	of the player, and swiches between two viwes, and resize them acorrdin to the player position.
 
-============================== K N O W N - B U G ==============================
+K N O W N - B U G
+=========================
 In the survival mode, if a ball is popped right between the 2 windows (survival move consists of 2 windows right next to each other)
 	there is undefined behavior.
 
@@ -182,7 +183,8 @@ When playing online, from each player's perspective the character is on the righ
 In the survival mode it takes 2 hits from balls so the lives will start to go down (as if we have 5 lives and not 3).
 
 
-=============================== C O M M E N T S ===============================
+C O M M E N T S
+=========================
 Survival mode: we created a endles level - you can go right or left forever and 
 	always go back to the same place (the level created in a circular mode).
 	Bubbles are randomly formed in different places every 7 seconds.
@@ -207,3 +209,10 @@ Because of the way box2D is built, it was not possible for us to create a d-tor 
 	We discussed this problem with the teacher and the advice that was given was to stick with our solution.
 
 In general, we found that the box2D engine has quite an unpredictable behavior that we couldn't put our finger on it.
+
+C O N T R I B U T O R S
+=========================
+- Tomer Akrish
+- Miriam Manolache
+- Netanel Bondar
+
